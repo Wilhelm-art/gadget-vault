@@ -4,7 +4,7 @@ import {
   Smartphone, Camera, ShieldCheck, Heart, 
   MapPin, Clock, ArrowRight, Star, BadgeCheck, Zap
 } from "lucide-react";
-import prisma from "@/lib/prisma";
+import { getCachedFeaturedProducts, getCachedStoreSettings } from "@/lib/queries";
 import ProductCard from "@/components/product/product-card";
 
 export const metadata = {
@@ -13,22 +13,11 @@ export const metadata = {
 };
 
 export default async function HomePage() {
-  // 1. Fetch featured products
-  const featuredProducts = await prisma.product.findMany({
-    where: {
-      isFeatured: true,
-      status: "ready",
-    },
-    take: 4,
-    include: {
-      images: {
-        orderBy: { sortOrder: "asc" },
-      },
-    },
-  });
+  // 1. Fetch featured products (Cached)
+  const featuredProducts = await getCachedFeaturedProducts();
 
-  // 2. Fetch store settings for location embed & address
-  const settings = await prisma.storeSettings.findFirst();
+  // 2. Fetch store settings for location embed & address (Cached)
+  const settings = await getCachedStoreSettings();
   const address = settings?.address || "Jl. Citeureup No.99, Cimahi Utara, Kota Cimahi, Jawa Barat 40512";
   const whatsapp = settings?.whatsapp || "628123456789";
   const operatingHours = "Senin - Sabtu: 09.00 - 18.00 WIB";

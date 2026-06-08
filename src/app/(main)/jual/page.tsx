@@ -1,13 +1,13 @@
 import React from "react";
 import { redirect } from "next/navigation";
 import { auth } from "@/auth";
-import prisma from "@/lib/prisma";
+import { getCachedCategories } from "@/lib/queries";
 import Breadcrumb from "@/components/layout/breadcrumb";
 import SellForm from "@/components/sell/sell-form";
 
 export const metadata = {
   title: "Jual Gadget Anda",
-  description: "Jual handphone, kamera, drone, atau aksesoris bekas Anda ke toko GadgetVault Cimahi/Bandung dengan taksiran harga tinggi dan pembayaran instan COD.",
+  description: "Jual handphone, kamera, drone, atau aksesoris bekas Anda ke toko GadgetVault Cimahi/Bandung dengan taksiran harga tinggi and pembayaran instan COD.",
 };
 
 export default async function SellToStorePage() {
@@ -17,10 +17,8 @@ export default async function SellToStorePage() {
     redirect("/login?callbackUrl=/jual");
   }
 
-  // 2. Fetch categories for selector
-  const categories = await prisma.category.findMany({
-    orderBy: { sortOrder: "asc" },
-  });
+  // 2. Fetch categories for selector (Cached)
+  const categories = await getCachedCategories();
 
   return (
     <div className="mx-auto max-w-4xl px-4 py-8 sm:px-6 lg:px-8">

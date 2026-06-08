@@ -1,5 +1,6 @@
 import React from "react";
 import prisma from "@/lib/prisma";
+import { getCachedCategories } from "@/lib/queries";
 import ProductCard from "@/components/product/product-card";
 import Breadcrumb from "@/components/layout/breadcrumb";
 import { Badge } from "@/components/ui/badge";
@@ -15,10 +16,8 @@ export default async function RentalCatalogPage({ searchParams }: PageProps) {
   const params = await searchParams;
   const categorySlug = params.category || "";
 
-  // 1. Fetch categories
-  const categories = await prisma.category.findMany({
-    orderBy: { sortOrder: "asc" },
-  });
+  // 1. Fetch categories (Cached)
+  const categories = await getCachedCategories();
 
   // 2. Build where clause
   const whereClause: any = {

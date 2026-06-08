@@ -1,6 +1,6 @@
 import React from "react";
 import { MapPin, Phone, Mail, Clock, Award, Users, ShieldCheck } from "lucide-react";
-import prisma from "@/lib/prisma";
+import { getCachedStoreSettings } from "@/lib/queries";
 import Breadcrumb from "@/components/layout/breadcrumb";
 
 export const metadata = {
@@ -9,8 +9,8 @@ export const metadata = {
 };
 
 export default async function AboutUsPage() {
-  // Fetch store settings for location & email
-  const settings = await prisma.storeSettings.findFirst();
+  // Fetch store settings for location & email (Cached)
+  const settings = await getCachedStoreSettings();
   
   const address = settings?.address || "Jl. Citeureup No.99, Cimahi Utara, Kota Cimahi, Jawa Barat 40512";
   const phone = settings?.phone || "022-1234567";

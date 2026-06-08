@@ -1,5 +1,6 @@
 import React from "react";
 import prisma from "@/lib/prisma";
+import { getCachedCategories } from "@/lib/queries";
 import ProductCard from "@/components/product/product-card";
 import ProductFilter from "@/components/product/product-filter";
 import Breadcrumb from "@/components/layout/breadcrumb";
@@ -26,10 +27,8 @@ export default async function CatalogPage({ searchParams }: PageProps) {
   const maxPrice = params.maxPrice ? parseFloat(params.maxPrice) : undefined;
   const sort = params.sort || "latest";
 
-  // 1. Fetch categories for filtering
-  const categories = await prisma.category.findMany({
-    orderBy: { sortOrder: "asc" },
-  });
+  // 1. Fetch categories for filtering (Cached)
+  const categories = await getCachedCategories();
 
   // 2. Build where clause dynamically
   const whereClause: any = {};

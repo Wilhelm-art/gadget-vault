@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 import { 
   Calendar, ShoppingBag, Coins, Upload, Info, Check, 
   MapPin, Clock, ShieldCheck, CreditCard, ChevronRight, X
@@ -478,9 +479,9 @@ export default function TransactionDetailClient({
                   href={img.imageUrl}
                   target="_blank"
                   rel="noreferrer"
-                  className="aspect-square rounded-xl border border-border bg-bg-secondary overflow-hidden block hover:opacity-90 transition-opacity"
+                  className="relative aspect-square rounded-xl border border-border bg-bg-secondary overflow-hidden block hover:opacity-90 transition-opacity"
                 >
-                  <img src={img.imageUrl} alt="Offer Item" className="w-full h-full object-cover" />
+                  <Image src={img.imageUrl} alt="Offer Item" fill sizes="80px" className="object-cover" />
                 </a>
               ))}
             </div>
@@ -607,7 +608,7 @@ export default function TransactionDetailClient({
                     {/* Preview Image */}
                     {previewUrl && (
                       <div className="relative w-32 h-32 rounded-xl border border-border overflow-hidden bg-bg-secondary mx-auto mt-2 group">
-                        <img src={previewUrl} alt="Transfer Proof" className="w-full h-full object-cover" />
+                        <Image src={previewUrl} alt="Transfer Proof" fill sizes="128px" className="object-cover" />
                         <button
                           type="button"
                           onClick={removeFile}
@@ -677,9 +678,9 @@ export default function TransactionDetailClient({
                     href={transaction.deposit.transferProofUrl}
                     target="_blank"
                     rel="noreferrer"
-                    className="block w-48 aspect-[3/4] rounded-xl border border-border overflow-hidden bg-bg-secondary hover:opacity-90 transition-opacity"
+                    className="relative block w-48 aspect-[3/4] rounded-xl border border-border overflow-hidden bg-bg-secondary hover:opacity-90 transition-opacity"
                   >
-                    <img src={transaction.deposit.transferProofUrl} alt="Deposit Proof" className="w-full h-full object-cover" />
+                    <Image src={transaction.deposit.transferProofUrl} alt="Deposit Proof" fill sizes="192px" className="object-cover" />
                   </a>
                 </div>
               </div>

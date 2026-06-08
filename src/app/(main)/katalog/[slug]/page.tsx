@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Metadata } from "next";
 import prisma from "@/lib/prisma";
+import { getCachedProductBySlug, getCachedRelatedProducts } from "@/lib/queries";
 import { auth } from "@/auth";
 import Breadcrumb from "@/components/layout/breadcrumb";
 import ProductGallery from "@/components/product/product-gallery";
@@ -17,9 +18,7 @@ interface PageProps {
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
-  const product = await prisma.product.findUnique({
-    where: { slug },
-  });
+  const product = await getCachedProductBySlug(slug);
 
   if (!product) {
     return {
@@ -41,18 +40,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 export default async function ProductDetailPage({ params }: PageProps) {
   const { slug } = await params;
 
-  // 1. Fetch product
-  const product = await prisma.product.findUnique({
-    where: { slug },
-    include: {
-      images: {
-        orderBy: { sortOrder: "asc" },
-      },
-      specs: {
-        orderBy: { sortOrder: "asc" },
-      },
-    },
-  });
+  // 1. Fetch product (Cached)
+  const product = await getCachedProductBySlug(slug);
 
   if (!product) {
     notFound();
@@ -63,7 +52,7 @@ export default async function ProductDetailPage({ params }: PageProps) {
   const isLoggedIn = !!session?.user;
   const userId = session?.user ? (session.user as any).id : null;
 
-  // 3. Check if in wishlist
+  // 3. Check if in wishlist (Direct query, since it is user-specific and dynamic)
   let initialInWishlist = false;
   if (isLoggedIn && userId) {
     const wish = await prisma.wishlist.findUnique({
@@ -77,20 +66,8 @@ export default async function ProductDetailPage({ params }: PageProps) {
     initialInWishlist = !!wish;
   }
 
-  // 4. Fetch related products (same category, excluding this product, limit 4)
-  const relatedProducts = await prisma.product.findMany({
-    where: {
-      categoryId: product.categoryId,
-      id: { not: product.id },
-      status: "ready",
-    },
-    take: 4,
-    include: {
-      images: {
-        orderBy: { sortOrder: "asc" },
-      },
-    },
-  });
+  // 4. Fetch related products (Cached)
+  const relatedProducts = await getCachedRelatedProducts(product.slug, product.categoryId);
 
   const getConditionLabel = (cond: string) => {
     switch (cond) {

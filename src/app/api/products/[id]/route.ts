@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { revalidateTag } from "next/cache";
 import { auth } from "@/auth";
 import prisma from "@/lib/prisma";
 import { deleteFile } from "@/lib/storage";
@@ -128,6 +129,10 @@ export async function PUT(
       return prod;
     });
 
+    revalidateTag("products", { expire: 0 });
+    revalidateTag("featured-products", { expire: 0 });
+    revalidateTag(`product-${updatedProduct.slug}`, { expire: 0 });
+
     return NextResponse.json(
       { message: "Produk berhasil diperbarui!", product: updatedProduct },
       { status: 200 }
@@ -169,9 +174,13 @@ export async function DELETE(
     }
 
     // 4. Delete product from database (specs and images will be deleted automatically due to Cascade)
-    await prisma.product.delete({
+    const deletedProduct = await prisma.product.delete({
       where: { id },
     });
+
+    revalidateTag("products", { expire: 0 });
+    revalidateTag("featured-products", { expire: 0 });
+    revalidateTag(`product-${deletedProduct.slug}`, { expire: 0 });
 
     return NextResponse.json({ message: "Produk berhasil dihapus." }, { status: 200 });
   } catch (error) {

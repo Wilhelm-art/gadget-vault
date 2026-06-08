@@ -1,6 +1,7 @@
 import React from "react";
 import { notFound, redirect } from "next/navigation";
 import prisma from "@/lib/prisma";
+import { getCachedProductBySlug, getCachedStoreSettings } from "@/lib/queries";
 import { auth } from "@/auth";
 import Breadcrumb from "@/components/layout/breadcrumb";
 import RentalForm from "@/components/rental/rental-form";
@@ -20,7 +21,7 @@ export default async function RentalBookingPage({ params }: PageProps) {
 
   const userId = (session.user as any).id;
 
-  // 2. Fetch user profile to check KYC status and address (city)
+  // 2. Fetch user profile to check KYC status and address (city) (Direct query: dynamic user-specific)
   const user = await prisma.user.findUnique({
     where: { id: userId },
   });
@@ -34,20 +35,15 @@ export default async function RentalBookingPage({ params }: PageProps) {
     redirect(`/kyc?notice=kyc_required&returnUrl=/sewa/${slug}`);
   }
 
-  // 3. Fetch product
-  const product = await prisma.product.findUnique({
-    where: { slug },
-    include: {
-      images: { orderBy: { sortOrder: "asc" } },
-    },
-  });
+  // 3. Fetch product (Cached)
+  const product = await getCachedProductBySlug(slug);
 
   if (!product || !product.isRentable || product.status !== "ready") {
     notFound();
   }
 
-  // 4. Fetch store settings (for deposit percentage & bank info)
-  const settings = await prisma.storeSettings.findFirst();
+  // 4. Fetch store settings (Cached)
+  const settings = await getCachedStoreSettings();
   if (!settings) {
     throw new Error("Store settings not initialized. Run seed script.");
   }

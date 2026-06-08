@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { Heart, ArrowRight, Smartphone, Eye } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -85,10 +86,12 @@ export default function WishlistClient({ initialWishlists }: WishlistClientProps
                 className="bg-white border border-border rounded-2xl overflow-hidden shadow-sm hover:shadow-md hover:border-text-muted/30 transition-all duration-300 flex flex-col justify-between group"
               >
                 <div className="relative aspect-[4/3] bg-bg-secondary overflow-hidden border-b border-border/60">
-                  <img
+                  <Image
                     src={hasImage || "https://images.unsplash.com/photo-1546054454-aa26e2b734c7?q=80&w=300"}
                     alt={prod.name}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    className="object-cover group-hover:scale-105 transition-transform duration-500"
                   />
                   <div className="absolute top-3 right-3 z-10">
                     <button

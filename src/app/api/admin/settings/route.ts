@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { revalidateTag } from "next/cache";
 import { auth } from "@/auth";
 import prisma from "@/lib/prisma";
 
@@ -81,6 +82,8 @@ export async function PUT(req: Request) {
         },
       });
     }
+
+    revalidateTag("store-settings", { expire: 0 });
 
     return NextResponse.json(
       { message: "Pengaturan toko berhasil diperbarui.", settings: updatedSettings },

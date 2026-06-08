@@ -1,6 +1,7 @@
 import React from "react";
 import { redirect } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import { Calendar, ShoppingBag, Coins, History, ArrowRight } from "lucide-react";
 import { auth } from "@/auth";
 import prisma from "@/lib/prisma";
@@ -206,10 +207,12 @@ function TransactionsContainer({
               <div className="flex gap-4">
                 <div className="relative w-16 h-16 rounded-xl border border-border overflow-hidden bg-bg-secondary shrink-0">
                   {item.product.images?.[0] ? (
-                    <img
+                    <Image
                       src={item.product.images[0].imageUrl}
                       alt={item.product.name}
-                      className="w-full h-full object-cover"
+                      fill
+                      sizes="64px"
+                      className="object-cover"
                     />
                   ) : (
                     <div className="w-full h-full bg-accent-gold-light flex items-center justify-center text-xs font-bold text-accent-gold">
@@ -268,10 +271,12 @@ function TransactionsContainer({
               <div className="flex gap-4">
                 <div className="relative w-16 h-16 rounded-xl border border-border overflow-hidden bg-bg-secondary shrink-0">
                   {item.product.images?.[0] ? (
-                    <img
+                    <Image
                       src={item.product.images[0].imageUrl}
                       alt={item.product.name}
-                      className="w-full h-full object-cover"
+                      fill
+                      sizes="64px"
+                      className="object-cover"
                     />
                   ) : (
                     <div className="w-full h-full bg-accent-gold-light flex items-center justify-center text-xs font-bold text-accent-gold">
@@ -325,10 +330,12 @@ function TransactionsContainer({
               <div className="flex gap-4">
                 <div className="relative w-16 h-16 rounded-xl border border-border overflow-hidden bg-bg-secondary shrink-0">
                   {item.images?.[0] ? (
-                    <img
+                    <Image
                       src={item.images[0].imageUrl}
                       alt={item.itemName}
-                      className="w-full h-full object-cover"
+                      fill
+                      sizes="64px"
+                      className="object-cover"
                     />
                   ) : (
                     <div className="w-full h-full bg-accent-gold-light flex items-center justify-center text-xs font-bold text-accent-gold">
