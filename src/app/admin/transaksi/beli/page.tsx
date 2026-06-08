@@ -38,7 +38,7 @@ export default async function AdminPurchasesQueuePage() {
         </p>
       </div>
 
-      <PurchaseQueueClient initialPurchases={purchases} />
+      <PurchaseQueueClient initialPurchases={JSON.parse(JSON.stringify(purchases))} />
     </div>
   );
 }

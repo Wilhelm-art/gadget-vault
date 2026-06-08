@@ -91,10 +91,10 @@ export default async function AdminCustomerDetailPage({ params }: PageProps) {
       </div>
 
       <CustomerDetailClient
-        customer={customer}
-        rentals={rentals}
-        purchases={purchases}
-        kycDoc={enrichedKycDoc}
+        customer={JSON.parse(JSON.stringify(customer))}
+        rentals={JSON.parse(JSON.stringify(rentals))}
+        purchases={JSON.parse(JSON.stringify(purchases))}
+        kycDoc={JSON.parse(JSON.stringify(enrichedKycDoc))}
       />
     </div>
   );

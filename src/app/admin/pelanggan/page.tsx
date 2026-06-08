@@ -52,7 +52,7 @@ export default async function AdminCustomersPage() {
         </p>
       </div>
 
-      <CustomerListClient initialCustomers={customers} />
+      <CustomerListClient initialCustomers={JSON.parse(JSON.stringify(customers))} />
     </div>
   );
 }

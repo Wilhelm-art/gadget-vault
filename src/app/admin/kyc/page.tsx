@@ -65,7 +65,7 @@ export default async function AdminKycQueuePage() {
         </p>
       </div>
 
-      <KycQueueClient initialDocs={enrichedDocs} />
+      <KycQueueClient initialDocs={JSON.parse(JSON.stringify(enrichedDocs))} />
     </div>
   );
 }

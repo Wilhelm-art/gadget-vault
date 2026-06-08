@@ -39,7 +39,7 @@ export default async function AdminSellQueuePage() {
         </p>
       </div>
 
-      <SellQueueClient initialOffers={offers} />
+      <SellQueueClient initialOffers={JSON.parse(JSON.stringify(offers))} />
     </div>
   );
 }

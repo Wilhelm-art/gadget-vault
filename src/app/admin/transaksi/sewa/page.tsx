@@ -41,7 +41,7 @@ export default async function AdminRentalsQueuePage() {
         </p>
       </div>
 
-      <RentalQueueClient initialRentals={rentals} />
+      <RentalQueueClient initialRentals={JSON.parse(JSON.stringify(rentals))} />
     </div>
   );
 }

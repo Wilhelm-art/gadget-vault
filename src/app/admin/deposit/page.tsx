@@ -61,7 +61,7 @@ export default async function AdminDepositQueuePage() {
         </p>
       </div>
 
-      <DepositQueueClient initialDeposits={enrichedDeposits} />
+      <DepositQueueClient initialDeposits={JSON.parse(JSON.stringify(enrichedDeposits))} />
     </div>
   );
 }

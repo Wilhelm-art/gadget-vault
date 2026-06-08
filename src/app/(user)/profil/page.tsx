@@ -63,7 +63,7 @@ export default async function UserProfilePage() {
         </p>
       </div>
 
-      <ProfileForm user={user} stats={stats} />
+      <ProfileForm user={JSON.parse(JSON.stringify(user))} stats={stats} />
     </div>
   );
 }

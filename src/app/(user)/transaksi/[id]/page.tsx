@@ -123,8 +123,8 @@ export default async function TransactionDetailPage({
       <TransactionDetailClient
         id={id}
         type={resolvedType}
-        transaction={transactionData}
-        storeSettings={storeSettings}
+        transaction={JSON.parse(JSON.stringify(transactionData))}
+        storeSettings={JSON.parse(JSON.stringify(storeSettings))}
       />
     </div>
   );
