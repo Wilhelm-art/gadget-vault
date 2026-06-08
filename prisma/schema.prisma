@@ -1,0 +1,248 @@
+datasource db {
+  provider = "postgresql"
+}
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+model User {
+  id              String               @id @default(uuid())
+  name            String
+  email           String               @unique
+  phone           String?
+  passwordHash    String?
+  address         String?
+  city            String?
+  province        String?
+  role            String               @default("customer") // "customer" | "admin"
+  kycStatus       String               @default("unverified") // "unverified" | "pending" | "verified" | "rejected"
+  profileImageUrl String?
+  isBlacklisted   Boolean              @default(false)
+  createdAt       DateTime             @default(now())
+  updatedAt       DateTime             @updatedAt
+  kycDocuments    KycDocument[]
+  rentals         RentalTransaction[]
+  purchases       PurchaseTransaction[]
+  sellOffers      SellOffer[]
+  wishlists       Wishlist[]
+  deposits        Deposit[]
+}
+
+model KycDocument {
+  id              String    @id @default(uuid())
+  userId          String
+  user            User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  ktpFrontUrl     String
+  ktpBackUrl      String
+  selfieKtpUrl    String
+  ktpNumber       String
+  status          String    @default("pending") // "pending" | "approved" | "rejected"
+  rejectionReason String?
+  verifiedBy      String?
+  verifiedAt      DateTime?
+  createdAt       DateTime  @default(now())
+}
+
+model Category {
+  id         String      @id @default(uuid())
+  name       String
+  slug       String      @unique
+  iconUrl    String?
+  sortOrder  Int         @default(0)
+  products   Product[]
+  sellOffers SellOffer[]
+}
+
+model Product {
+  id              String                @id @default(uuid())
+  categoryId      String
+  category        Category              @relation(fields: [categoryId], references: [id])
+  name            String
+  slug            String                @unique
+  description     String                @db.Text
+  brand           String
+  model           String
+  condition       String // "new" | "like_new" | "good" | "fair"
+  sellPrice       Decimal?              @db.Decimal(12, 2)
+  rentPriceDaily  Decimal?              @db.Decimal(12, 2)
+  rentPriceWeekly Decimal?              @db.Decimal(12, 2)
+  status          String                @default("ready") // "ready" | "rented" | "sold" | "maintenance" | "coming_soon"
+  isFeatured      Boolean               @default(false)
+  isRentable      Boolean               @default(false)
+  isSellable      Boolean               @default(false)
+  stockQuantity   Int                   @default(1)
+  createdAt       DateTime              @default(now())
+  updatedAt       DateTime              @updatedAt
+  images          ProductImage[]
+  specs           ProductSpec[]
+  rentals         RentalTransaction[]
+  purchases       PurchaseTransaction[]
+  wishlists       Wishlist[]
+}
+
+model ProductImage {
+  id          String   @id @default(uuid())
+  productId   String
+  product     Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  imageUrl    String
+  storagePath String
+  sortOrder   Int      @default(0)
+  isPrimary   Boolean  @default(false)
+}
+
+model ProductSpec {
+  id        String  @id @default(uuid())
+  productId String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  specKey   String
+  specValue String
+  sortOrder Int     @default(0)
+}
+
+model RentalTransaction {
+  id              String        @id @default(uuid())
+  transactionCode String        @unique
+  userId          String
+  user            User          @relation(fields: [userId], references: [id])
+  productId       String
+  product         Product       @relation(fields: [productId], references: [id])
+  startDate       DateTime
+  endDate         DateTime
+  durationDays    Int
+  dailyRate       Decimal       @db.Decimal(12, 2)
+  totalAmount     Decimal       @db.Decimal(12, 2)
+  depositAmount   Decimal       @default(0) @db.Decimal(12, 2)
+  status          String        @default("pending") // "pending" | "approved" | "rejected" | "picked_up" | "returned" | "completed" | "cancelled"
+  adminNotes      String?       @db.Text
+  approvedBy      String?
+  approvedAt      DateTime?
+  pickedUpAt      DateTime?
+  returnedAt      DateTime?
+  createdAt       DateTime      @default(now())
+  photos          RentalPhoto[]
+  deposit         Deposit?
+}
+
+model RentalPhoto {
+  id          String            @id @default(uuid())
+  rentalId    String
+  rental      RentalTransaction @relation(fields: [rentalId], references: [id], onDelete: Cascade)
+  type        String // "pickup" | "return"
+  photoUrl    String
+  storagePath String
+  takenAt     DateTime          @default(now())
+}
+
+model PurchaseTransaction {
+  id              String    @id @default(uuid())
+  transactionCode String    @unique
+  userId          String
+  user            User      @relation(fields: [userId], references: [id])
+  productId       String
+  product         Product   @relation(fields: [productId], references: [id])
+  amount          Decimal   @db.Decimal(12, 2)
+  status          String    @default("pending") // "pending" | "confirmed" | "checked" | "paid" | "completed" | "cancelled"
+  paymentMethod   String? // "cash" | "debit" | "transfer"
+  adminNotes      String?   @db.Text
+  approvedBy      String?
+  completedAt     DateTime?
+  createdAt       DateTime  @default(now())
+}
+
+model SellOffer {
+  id           String           @id @default(uuid())
+  userId       String
+  user         User             @relation(fields: [userId], references: [id])
+  itemName     String
+  categoryId   String
+  category     Category         @relation(fields: [categoryId], references: [id])
+  brand        String
+  model        String
+  condition    String // "like_new" | "good" | "fair" | "poor"
+  description  String           @db.Text
+  completeness String           @db.Text
+  askingPrice  Decimal?         @db.Decimal(12, 2)
+  offeredPrice Decimal?         @db.Decimal(12, 2)
+  status       String           @default("pending") // "pending" | "reviewed" | "offered" | "accepted" | "rejected" | "completed"
+  adminNotes   String?          @db.Text
+  createdAt    DateTime         @default(now())
+  updatedAt    DateTime         @updatedAt
+  images       SellOfferImage[]
+}
+
+model SellOfferImage {
+  id          String    @id @default(uuid())
+  sellOfferId String
+  sellOffer   SellOffer @relation(fields: [sellOfferId], references: [id], onDelete: Cascade)
+  imageUrl    String
+  storagePath String
+  sortOrder   Int       @default(0)
+}
+
+model Deposit {
+  id               String            @id @default(uuid())
+  rentalId         String            @unique
+  rental           RentalTransaction @relation(fields: [rentalId], references: [id], onDelete: Cascade)
+  userId           String
+  user             User              @relation(fields: [userId], references: [id])
+  amount           Decimal           @db.Decimal(12, 2)
+  transferProofUrl String?
+  storagePath      String?
+  bankName         String?
+  accountNumber    String?
+  status           String            @default("pending") // "pending" | "verified" | "refunded" | "forfeited"
+  verifiedBy       String?
+  verifiedAt       DateTime?
+  refundedAt       DateTime?
+  createdAt        DateTime          @default(now())
+}
+
+model Wishlist {
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  productId String
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  @@unique([userId, productId])
+}
+
+model StoreSettings {
+  id                String   @id @default(uuid())
+  storeName         String
+  address           String   @db.Text
+  phone             String
+  whatsapp          String
+  email             String
+  googleMapsEmbed   String   @db.Text
+  depositPercentage Decimal  @default(0.20) @db.Decimal(5, 2)
+  bankName          String
+  bankAccountNumber String
+  bankAccountName   String
+  operatingHours    Json
+  updatedAt         DateTime @updatedAt
+}
+
+model Notification {
+  id          String   @id @default(uuid())
+  userId      String
+  title       String
+  message     String
+  type        String // e.g. "kyc", "rental", "purchase", "sell", "deposit"
+  referenceId String?
+  isRead      Boolean  @default(false)
+  createdAt   DateTime @default(now())
+}
+
+model AdminLog {
+  id         String   @id @default(uuid())
+  adminId    String
+  action     String
+  entityType String
+  entityId   String
+  details    Json?
+  createdAt  DateTime @default(now())
+}

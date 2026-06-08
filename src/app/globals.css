@@ -1,0 +1,178 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-sans);
+  --font-display: var(--font-display);
+  --font-price: var(--font-price);
+  
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  
+  /* Custom color tokens from PRD */
+  --color-bg-primary: var(--bg-primary);
+  --color-bg-secondary: var(--bg-secondary);
+  --color-bg-tertiary: var(--bg-tertiary);
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-muted: var(--text-muted);
+  --color-accent-gold: var(--accent-gold);
+  --color-accent-gold-hover: var(--accent-gold-hover);
+  --color-accent-gold-light: var(--accent-gold-light);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-danger: var(--danger);
+  --color-info: var(--info);
+  
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+  
+  /* Custom micro-animations */
+  --animate-shimmer: shimmer 2s infinite linear;
+  --animate-lift: lift 0.2s ease-out;
+  --animate-fade-in-up: fadeInUp 0.4s ease-out forwards;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes lift {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-4px);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+:root {
+  /* Font Families mapped to layout next/font vars */
+  --font-sans: var(--font-inter), system-ui, sans-serif;
+  --font-display: var(--font-playfair-display), Georgia, serif;
+  --font-price: var(--font-dm-sans), sans-serif;
+
+  /* Luxury Minimalism Theme Colors */
+  --background: #FAFAF8;
+  --foreground: #1A1A1A;
+  --card: #FFFFFF;
+  --card-foreground: #1A1A1A;
+  --popover: #FFFFFF;
+  --popover-foreground: #1A1A1A;
+  
+  --primary: #C9A96E; /* Accent Gold */
+  --primary-foreground: #FFFFFF;
+  
+  --secondary: #F5F3EF; /* Warm light gray background */
+  --secondary-foreground: #1A1A1A;
+  
+  --muted: #F5F3EF;
+  --muted-foreground: #6B6B6B;
+  
+  --accent: #F5EFE0; /* Light gold background */
+  --accent-foreground: #B8944D; /* Darker gold text/hover */
+  
+  --destructive: #B44A4A; /* Danger Red */
+  --destructive-foreground: #FFFFFF;
+  
+  --border: #E5E2DC;
+  --input: #E5E2DC;
+  --ring: #C9A96E;
+  
+  --radius: 0.75rem;
+
+  /* Sidebar styling matching the theme */
+  --sidebar: #FFFFFF;
+  --sidebar-foreground: #1A1A1A;
+  --sidebar-primary: #C9A96E;
+  --sidebar-primary-foreground: #FFFFFF;
+  --sidebar-accent: #F5F3EF;
+  --sidebar-accent-foreground: #C9A96E;
+  --sidebar-border: #E5E2DC;
+  --sidebar-ring: #C9A96E;
+
+  /* Explicit PRD semantic variables */
+  --bg-primary: #FAFAF8;
+  --bg-secondary: #F5F3EF;
+  --bg-tertiary: #EDEAE4;
+  --text-primary: #1A1A1A;
+  --text-secondary: #6B6B6B;
+  --text-muted: #9CA3AF;
+  --accent-gold: #C9A96E;
+  --accent-gold-hover: #B8944D;
+  --accent-gold-light: #F5EFE0;
+  --success: #4A7C59;
+  --warning: #C4922A;
+  --danger: #B44A4A;
+  --info: #4A6FA5;
+  --border-color: #E5E2DC;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground font-sans selection:bg-accent-gold-light selection:text-accent-gold-hover;
+  }
+  html {
+    @apply h-full scroll-smooth;
+  }
+}
+
+/* Skeleton Loading Shimmer Effect utility */
+.shimmer-bg {
+  background: linear-gradient(90deg, #F5F3EF 25%, #EDEAE4 50%, #F5F3EF 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite linear;
+}

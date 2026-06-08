@@ -1,0 +1,17 @@
+User-agent: *
+Allow: /
+Allow: /katalog
+Allow: /sewa
+Allow: /jual
+Allow: /tentang
+Allow: /faq
+
+Disallow: /admin/
+Disallow: /api/
+Disallow: /profil
+Disallow: /transaksi/
+Disallow: /wishlist
+Disallow: /notifikasi
+Disallow: /kyc
+
+Sitemap: http://localhost:3000/sitemap.xml
