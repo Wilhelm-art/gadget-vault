@@ -114,6 +114,46 @@ async function main() {
     }
   });
 
+  // 5.1.2 Samsung Galaxy S24 Ultra
+  const s24Ultra = await prisma.product.create({
+    data: {
+      categoryId: categories['handphone'].id,
+      name: 'Samsung Galaxy S24 Ultra 256GB - Titanium Yellow',
+      slug: 'samsung-galaxy-s24-ultra-256gb-titanium-yellow',
+      brand: 'Samsung',
+      model: 'Galaxy S24 Ultra',
+      description: 'Samsung Galaxy S24 Ultra menawarkan kamera utama 200 MP yang luar biasa jernih, zoom optik 5x kelas profesional dengan sensor 50 MP, serta teknologi ProVisual Engine berbasis AI untuk detail foto malam hari yang menakjubkan. HP ini dirancang khusus untuk mengandalkan kualitas kamera terbaik di berbagai kondisi pencahayaan.',
+      condition: 'like_new',
+      sellPrice: 19999000.00,
+      rentPriceDaily: 220000.00,
+      rentPriceWeekly: 1300000.00,
+      status: 'ready',
+      isFeatured: true,
+      isRentable: true,
+      isSellable: true,
+      stockQuantity: 2,
+      images: {
+        create: [
+          {
+            imageUrl: '/products/galaxy-s24-ultra.webp',
+            storagePath: 'products/galaxy-s24-ultra.webp',
+            isPrimary: true,
+            sortOrder: 1,
+          }
+        ]
+      },
+      specs: {
+        create: [
+          { specKey: 'Layar', specValue: '6.8 inch Dynamic AMOLED 2X, 120Hz', sortOrder: 1 },
+          { specKey: 'Chipset', specValue: 'Snapdragon 8 Gen 3 for Galaxy (4 nm)', sortOrder: 2 },
+          { specKey: 'Penyimpanan', specValue: '256 GB / 12 GB RAM', sortOrder: 3 },
+          { specKey: 'Kamera Utama', specValue: '200 MP (wide) + 50 MP (periscope telephoto) + 10 MP (telephoto) + 12 MP (ultrawide)', sortOrder: 4 },
+          { specKey: 'Fitur Kamera', specValue: '8K Video, 5x Optical Zoom, Nightography AI, Space Zoom 100x', sortOrder: 5 }
+        ]
+      }
+    }
+  });
+
   // 5.2 Sony A7 IV
   const sonyCamera = await prisma.product.create({
     data: {
@@ -246,7 +286,7 @@ async function main() {
     }
   });
 
-  console.log('Sample products seeded:', [iphone.name, sonyCamera.name, droneDji.name, micDji.name]);
+  console.log('Sample products seeded:', [iphone.name, s24Ultra.name, sonyCamera.name, droneDji.name, micDji.name]);
   console.log('Seeding completed successfully!');
 }
 
