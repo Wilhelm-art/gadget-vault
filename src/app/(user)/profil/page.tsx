@@ -1,5 +1,6 @@
 import React, { Suspense } from "react";
 import { redirect } from "next/navigation";
+import { connection } from "next/server";
 import { User as UserIcon } from "lucide-react";
 import { auth } from "@/auth";
 import prisma from "@/lib/prisma";
@@ -58,6 +59,7 @@ export default async function UserProfilePage() {
 }
 
 async function ProfileContent() {
+  await connection();
   const session = await auth();
   if (!session || !session.user) {
     redirect("/login?callbackUrl=/profil");
