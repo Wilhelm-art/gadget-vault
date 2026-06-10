@@ -1,22 +1,14 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import { useSession, signOut } from "next-auth/react";
-import { Search, Heart, Bell, Menu, X, LogOut, User, Receipt, Shield, UserCheck, AlertTriangle } from "lucide-react";
-import { Button, buttonVariants } from "@/components/ui/button";
+import { Search, Heart, Bell, Menu, X, LogOut, User, Receipt, Shield, UserCheck } from "lucide-react";
+import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { Input } from "@/components/ui/input";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import { Badge } from "@/components/ui/badge";
 
 export default function Navbar() {
@@ -28,6 +20,20 @@ export default function Navbar() {
   
   const [searchQuery, setSearchQuery] = useState(searchParams.get("search") || "");
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+  const userMenuRef = useRef<HTMLDivElement>(null);
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (userMenuRef.current && !userMenuRef.current.contains(event.target as Node)) {
+        setIsUserMenuOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
 
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -123,9 +129,14 @@ export default function Navbar() {
 
             {/* User Dropdown / Auth Buttons */}
             {user ? (
-              <DropdownMenu>
-                <DropdownMenuTrigger
+              <div className="relative" ref={userMenuRef}>
+                {/* Avatar Trigger Button */}
+                <button
+                  type="button"
+                  onClick={() => setIsUserMenuOpen((prev) => !prev)}
                   className="flex items-center gap-1 focus:outline-none cursor-pointer bg-transparent border-0 p-0"
+                  aria-haspopup="true"
+                  aria-expanded={isUserMenuOpen}
                 >
                   <Avatar className="h-8 w-8 border border-border hover:border-accent-gold transition-colors">
                     <AvatarImage src={user.image || ""} alt={user.name || ""} />
@@ -133,63 +144,76 @@ export default function Navbar() {
                       {user.name ? user.name.charAt(0) : "U"}
                     </AvatarFallback>
                   </Avatar>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-56 bg-white border border-border rounded-xl shadow-lg mt-1 p-1">
-                  <DropdownMenuLabel className="px-3 py-2 flex flex-col gap-0.5">
-                    <div className="font-semibold text-text-primary text-sm truncate">{user.name}</div>
-                    <div className="text-xs text-text-secondary truncate mb-1">{user.email}</div>
-                    <div className="flex flex-wrap gap-1 mt-1">
-                      {user.role === "admin" && (
-                        <Badge className="bg-accent-gold/10 text-accent-gold border-accent-gold/20 text-[9px] py-0 px-1">Admin</Badge>
-                      )}
-                      {getKycBadge(user.kycStatus || "unverified")}
+                </button>
+
+                {/* Dropdown Panel */}
+                {isUserMenuOpen && (
+                  <div className="absolute right-0 top-full mt-2 w-56 bg-white border border-border rounded-xl shadow-lg z-50 p-1 animate-in fade-in-0 zoom-in-95">
+                    {/* User Info */}
+                    <div className="px-3 py-2 flex flex-col gap-0.5">
+                      <div className="font-semibold text-text-primary text-sm truncate">{user.name}</div>
+                      <div className="text-xs text-text-secondary truncate mb-1">{user.email}</div>
+                      <div className="flex flex-wrap gap-1 mt-1">
+                        {user.role === "admin" && (
+                          <Badge className="bg-accent-gold/10 text-accent-gold border-accent-gold/20 text-[9px] py-0 px-1">Admin</Badge>
+                        )}
+                        {getKycBadge(user.kycStatus || "unverified")}
+                      </div>
                     </div>
-                  </DropdownMenuLabel>
-                  <DropdownMenuSeparator className="bg-border" />
-                  
-                  {/* Admin specific link */}
-                  {user.role === "admin" && (
-                    <DropdownMenuItem className="focus:bg-bg-secondary focus:text-accent-gold rounded-lg px-3 py-2 cursor-pointer">
-                      <Link href="/admin" className="flex items-center gap-2 w-full">
+                    <div className="h-px bg-border -mx-1 my-1" />
+
+                    {/* Admin link */}
+                    {user.role === "admin" && (
+                      <Link
+                        href="/admin"
+                        onClick={() => setIsUserMenuOpen(false)}
+                        className="flex items-center gap-2 w-full px-3 py-2 text-sm rounded-lg hover:bg-bg-secondary hover:text-accent-gold transition-colors"
+                      >
                         <Shield className="h-4 w-4 text-accent-gold" />
                         <span>Admin Dashboard</span>
                       </Link>
-                    </DropdownMenuItem>
-                  )}
+                    )}
 
-                  <DropdownMenuItem className="focus:bg-bg-secondary focus:text-accent-gold rounded-lg px-3 py-2 cursor-pointer">
-                    <Link href="/profil" className="flex items-center gap-2 w-full">
+                    <Link
+                      href="/profil"
+                      onClick={() => setIsUserMenuOpen(false)}
+                      className="flex items-center gap-2 w-full px-3 py-2 text-sm rounded-lg hover:bg-bg-secondary hover:text-accent-gold transition-colors"
+                    >
                       <User className="h-4 w-4" />
                       <span>Profil Saya</span>
                     </Link>
-                  </DropdownMenuItem>
-                  
-                  <DropdownMenuItem className="focus:bg-bg-secondary focus:text-accent-gold rounded-lg px-3 py-2 cursor-pointer">
-                    <Link href="/transaksi" className="flex items-center gap-2 w-full">
+
+                    <Link
+                      href="/transaksi"
+                      onClick={() => setIsUserMenuOpen(false)}
+                      className="flex items-center gap-2 w-full px-3 py-2 text-sm rounded-lg hover:bg-bg-secondary hover:text-accent-gold transition-colors"
+                    >
                       <Receipt className="h-4 w-4" />
                       <span>Riwayat Transaksi</span>
                     </Link>
-                  </DropdownMenuItem>
 
-                  <DropdownMenuItem className="focus:bg-bg-secondary focus:text-accent-gold rounded-lg px-3 py-2 cursor-pointer">
-                    <Link href="/kyc" className="flex items-center gap-2 w-full">
+                    <Link
+                      href="/kyc"
+                      onClick={() => setIsUserMenuOpen(false)}
+                      className="flex items-center gap-2 w-full px-3 py-2 text-sm rounded-lg hover:bg-bg-secondary hover:text-accent-gold transition-colors"
+                    >
                       <UserCheck className="h-4 w-4" />
                       <span>Verifikasi KYC</span>
                     </Link>
-                  </DropdownMenuItem>
-                  
-                  <DropdownMenuSeparator className="bg-border" />
-                  <DropdownMenuItem
-                    className="focus:bg-danger/10 focus:text-danger rounded-lg px-3 py-2 cursor-pointer text-text-secondary"
-                    onClick={() => signOut({ callbackUrl: "/login" })}
-                  >
-                    <div className="flex items-center gap-2 w-full">
+
+                    <div className="h-px bg-border -mx-1 my-1" />
+
+                    <button
+                      type="button"
+                      onClick={() => { setIsUserMenuOpen(false); signOut({ callbackUrl: "/login" }); }}
+                      className="flex items-center gap-2 w-full px-3 py-2 text-sm rounded-lg hover:bg-danger/10 hover:text-danger text-text-secondary transition-colors"
+                    >
                       <LogOut className="h-4 w-4" />
                       <span>Keluar</span>
-                    </div>
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
+                    </button>
+                  </div>
+                )}
+              </div>
             ) : (
               <div className="hidden md:flex items-center gap-2">
                 <Link
