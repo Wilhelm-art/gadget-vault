@@ -1080,6 +1080,28 @@ Integrasi ke dalam **rental flow** (Modul 7):
 - Cross-browser: Chrome, Firefox, Safari, Edge
 - Lighthouse audit semua halaman utama
 
+### Keep-Alive Cron (Supabase Pause Prevention):
+
+Untuk mencegah database Supabase (free tier) di-pause otomatis oleh Supabase karena tidak ada aktivitas selama 7 hari, kita akan mengimplementasikan dua mekanisme keep-alive:
+
+1. **Next.js Cron API Route (Vercel Cron)**
+   - API route `/api/cron/keep-alive` yang melakukan query database ringan.
+   - Konfigurasi `vercel.json` untuk menjalankan cron secara terjadwal (misal 1-2 kali sehari).
+   - Validasi header `Authorization: Bearer CRON_SECRET` untuk keamanan.
+
+2. **GitHub Actions Workflow**
+   - Workflow `.github/workflows/keep-alive.yml` yang berjalan dengan schedule cron GitHub (misalnya setiap hari).
+   - Menjalankan script local `scripts/verify-prisma.ts` yang langsung melakukan koneksi dan query ke Supabase menggunakan `DATABASE_URL` yang disimpan di GitHub Secrets. Ini sangat berguna sebagai backup jika website sedang mati atau Vercel function terhenti.
+
+#### [NEW] [route.ts](file:///c:/Proyek/gadget-vault/src/app/api/cron/keep-alive/route.ts)
+- GET handler untuk mengecek authorization, menjalankan query database `prisma.user.findFirst()`, dan me-return response JSON status.
+
+#### [NEW] [vercel.json](file:///c:/Proyek/gadget-vault/vercel.json)
+- File konfigurasi Vercel untuk mendefinisikan cron path `/api/cron/keep-alive` dan schedule `0 0 * * *` (setiap hari pukul 00:00).
+
+#### [NEW] [keep-alive.yml](file:///c:/Proyek/gadget-vault/.github/workflows/keep-alive.yml)
+- GitHub workflow file untuk mendefinisikan schedule cron run, setup node, install, generate prisma client, dan run verification script.
+
 ---
 
 ## Keputusan Teknis (Dikonfirmasi ✅)
