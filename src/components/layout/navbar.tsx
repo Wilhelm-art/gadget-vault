@@ -123,7 +123,10 @@ export default function Navbar() {
             {/* User Dropdown / Auth Buttons */}
             {session ? (
               <DropdownMenu>
-                <DropdownMenuTrigger className="flex items-center gap-1 focus:outline-none cursor-pointer bg-transparent border-0 p-0">
+                <DropdownMenuTrigger
+                  render={<Link href="/profil" />}
+                  className="flex items-center gap-1 focus:outline-none cursor-pointer bg-transparent border-0 p-0"
+                >
                   <Avatar className="h-8 w-8 border border-border hover:border-accent-gold transition-colors">
                     <AvatarImage src={session.user?.image || ""} alt={session.user?.name || ""} />
                     <AvatarFallback className="bg-accent-gold-light text-accent-gold font-semibold uppercase text-xs">
