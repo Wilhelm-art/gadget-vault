@@ -21,6 +21,7 @@ import { Badge } from "@/components/ui/badge";
 
 export default function Navbar() {
   const { data: session } = useSession();
+  const user = session?.user as { id?: string; role?: string; kycStatus?: string; image?: string | null; name?: string | null; email?: string | null } | undefined;
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -106,14 +107,14 @@ export default function Navbar() {
           {/* Auth Section / Right side */}
           <div className="flex items-center gap-2 md:gap-4">
             {/* Wishlist Link (if logged in) */}
-            {session && (
+            {user && (
               <Link href="/wishlist" className="p-2 text-text-secondary hover:text-accent-gold transition-colors relative">
                 <Heart className="h-5 w-5" />
               </Link>
             )}
 
             {/* Notifications Link (if logged in) */}
-            {session && (
+            {user && (
               <Link href="/notifikasi" className="p-2 text-text-secondary hover:text-accent-gold transition-colors relative">
                 <Bell className="h-5 w-5" />
                 <span className="absolute top-1.5 right-1.5 h-2 w-2 rounded-full bg-accent-gold animate-pulse" />
@@ -121,34 +122,33 @@ export default function Navbar() {
             )}
 
             {/* User Dropdown / Auth Buttons */}
-            {session ? (
+            {user ? (
               <DropdownMenu>
                 <DropdownMenuTrigger
-                  render={<Link href="/profil" />}
                   className="flex items-center gap-1 focus:outline-none cursor-pointer bg-transparent border-0 p-0"
                 >
                   <Avatar className="h-8 w-8 border border-border hover:border-accent-gold transition-colors">
-                    <AvatarImage src={session.user?.image || ""} alt={session.user?.name || ""} />
+                    <AvatarImage src={user.image || ""} alt={user.name || ""} />
                     <AvatarFallback className="bg-accent-gold-light text-accent-gold font-semibold uppercase text-xs">
-                      {session.user?.name ? session.user.name.charAt(0) : "U"}
+                      {user.name ? user.name.charAt(0) : "U"}
                     </AvatarFallback>
                   </Avatar>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" className="w-56 bg-white border border-border rounded-xl shadow-lg mt-1 p-1">
                   <DropdownMenuLabel className="px-3 py-2 flex flex-col gap-0.5">
-                    <div className="font-semibold text-text-primary text-sm truncate">{session.user?.name}</div>
-                    <div className="text-xs text-text-secondary truncate mb-1">{session.user?.email}</div>
+                    <div className="font-semibold text-text-primary text-sm truncate">{user.name}</div>
+                    <div className="text-xs text-text-secondary truncate mb-1">{user.email}</div>
                     <div className="flex flex-wrap gap-1 mt-1">
-                      {session.user && (session.user as any).role === "admin" && (
+                      {user.role === "admin" && (
                         <Badge className="bg-accent-gold/10 text-accent-gold border-accent-gold/20 text-[9px] py-0 px-1">Admin</Badge>
                       )}
-                      {getKycBadge((session.user as any).kycStatus)}
+                      {getKycBadge(user.kycStatus || "unverified")}
                     </div>
                   </DropdownMenuLabel>
                   <DropdownMenuSeparator className="bg-border" />
                   
                   {/* Admin specific link */}
-                  {session.user && (session.user as any).role === "admin" && (
+                  {user.role === "admin" && (
                     <DropdownMenuItem className="focus:bg-bg-secondary focus:text-accent-gold rounded-lg px-3 py-2 cursor-pointer">
                       <Link href="/admin" className="flex items-center gap-2 w-full">
                         <Shield className="h-4 w-4 text-accent-gold" />
@@ -253,7 +253,7 @@ export default function Navbar() {
                 {link.name}
               </Link>
             ))}
-            {!session && (
+            {!user && (
               <div className="flex flex-col gap-2 pt-2 border-t border-border">
                 <Link
                   href="/login"

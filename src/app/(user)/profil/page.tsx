@@ -66,6 +66,9 @@ async function ProfileContent() {
   }
 
   const userId = (session.user as any).id;
+  if (!userId || typeof userId !== "string") {
+    redirect("/login?callbackUrl=/profil");
+  }
 
   // 1. Fetch user profile
   const user = await prisma.user.findUnique({
