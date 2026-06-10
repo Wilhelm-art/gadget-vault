@@ -1,10 +1,9 @@
 import React from "react";
-import { redirect } from "next/navigation";
 import Link from "next/link";
 import { 
   Users, UserCheck, Calendar, CircleDollarSign, Clock, 
-  ArrowRight, ShieldAlert, BadgePercent, CheckCircle, Package,
-  ChevronRight
+  ArrowRight, ShieldAlert, CheckCircle, Package,
+  ChevronRight, TrendingUp, AlertTriangle
 } from "lucide-react";
 import { auth } from "@/auth";
 import prisma from "@/lib/prisma";
@@ -13,16 +12,14 @@ import { Badge } from "@/components/ui/badge";
 import RevenueChart from "@/components/admin/revenue-chart";
 
 export const metadata = {
-  title: "Admin Overview",
+  title: "Admin Overview — GadgetVault",
   description: "Dashboard panel admin GadgetVault - Cimahi",
 };
 
 export default async function AdminDashboardOverview() {
-  // 1. Authenticate admin
+  // Auth handled by layout, just get session for greeting
   const session = await auth();
-  if (!session || !session.user || (session.user as any).role !== "admin") {
-    redirect("/login");
-  }
+  const adminName = (session?.user?.name || "Admin").split(" ")[0];
 
   // 2. Fetch overview counts
   const startOfMonth = new Date(new Date().getFullYear(), new Date().getMonth(), 1);
@@ -205,11 +202,25 @@ export default async function AdminDashboardOverview() {
     }).format(Number(val));
   };
 
+  // Greeting based on server time (WIB)
+  const hour = new Date().getUTCHours() + 7; // UTC+7
+  const greeting = hour < 11 ? "Selamat pagi" : hour < 15 ? "Selamat siang" : hour < 18 ? "Selamat sore" : "Selamat malam";
+
   return (
     <div className="space-y-8">
-      <div>
-        <h1 className="text-2xl font-bold tracking-tight text-text-primary font-display">Overview Dashboard</h1>
-        <p className="text-xs text-text-secondary">Selamat datang kembali Admin. Pantau performa bisnis dan antrian verifikasi Anda.</p>
+      {/* Header */}
+      <div className="flex items-start justify-between">
+        <div>
+          <p className="text-xs font-medium text-text-secondary mb-1">{greeting}, {adminName} 👋</p>
+          <h1 className="text-2xl font-bold tracking-tight text-text-primary font-display">Overview Dashboard</h1>
+          <p className="text-xs text-text-secondary mt-1">Pantau performa bisnis dan antrian verifikasi toko Anda hari ini.</p>
+        </div>
+        {(pendingKycCount > 0 || pendingDepositsCount > 0) && (
+          <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-amber-50 border border-amber-200 text-amber-700 text-xs font-semibold">
+            <AlertTriangle className="w-3.5 h-3.5" />
+            {pendingKycCount + pendingDepositsCount} item butuh perhatian
+          </div>
+        )}
       </div>
 
       {/* Stats Cards */}
@@ -317,13 +328,27 @@ function StatsCard({
   desc,
   icon,
   alert,
+  color = "gold",
 }: {
   title: string;
   value: string;
   desc: string;
   icon: React.ReactNode;
   alert?: boolean;
+  color?: "gold" | "blue" | "green" | "red";
 }) {
+  const colorMap = {
+    gold: "bg-amber-50 border-amber-200",
+    blue: "bg-blue-50 border-blue-200",
+    green: "bg-emerald-50 border-emerald-200",
+    red: "bg-red-50 border-red-200 ring-2 ring-red-100",
+  };
+  const iconBg = {
+    gold: "bg-amber-100",
+    blue: "bg-blue-100",
+    green: "bg-emerald-100",
+    red: "bg-red-100",
+  };
   return (
     <Card className={`p-5 rounded-2xl border bg-white shadow-sm flex items-start justify-between ${
       alert ? "border-amber-300 ring-2 ring-amber-100" : "border-border"
@@ -333,7 +358,7 @@ function StatsCard({
         <h3 className="font-price font-bold text-text-primary text-xl sm:text-2xl">{value}</h3>
         <p className="text-[10px] text-text-secondary">{desc}</p>
       </div>
-      <div className={`p-2.5 rounded-xl bg-accent-gold-light ${alert ? "animate-pulse" : ""}`}>{icon}</div>
+      <div className={`p-2.5 rounded-xl ${iconBg[color]} ${alert ? "animate-pulse" : ""}`}>{icon}</div>
     </Card>
   );
 }

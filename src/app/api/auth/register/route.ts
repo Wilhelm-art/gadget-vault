@@ -28,12 +28,27 @@ export async function POST(req: Request) {
 
     const { name, email, password, phone, address, city, province } = parsed.data;
 
-    // 2. Check if user already exists
+    // 2. Reject if body contains role=admin (security guard)
+    if ((body as any).role === "admin") {
+      return NextResponse.json(
+        { message: "Registrasi tidak diizinkan." },
+        { status: 403 }
+      );
+    }
+
+    // 3. Check if user already exists
     const existingUser = await prisma.user.findUnique({
       where: { email },
     });
 
     if (existingUser) {
+      // If existing user is an admin, don't reveal it
+      if (existingUser.role === "admin") {
+        return NextResponse.json(
+          { message: "Email sudah terdaftar. Silakan gunakan email lain." },
+          { status: 400 }
+        );
+      }
       return NextResponse.json(
         { message: "Email sudah terdaftar. Silakan gunakan email lain." },
         { status: 400 }

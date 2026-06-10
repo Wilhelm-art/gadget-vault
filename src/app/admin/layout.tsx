@@ -1,25 +1,43 @@
 import React from "react";
-import Navbar from "@/components/layout/navbar";
-import Footer from "@/components/layout/footer";
-import Sidebar from "@/components/layout/sidebar";
+import { redirect } from "next/navigation";
+import { auth } from "@/auth";
+import prisma from "@/lib/prisma";
+import AdminNavbar from "@/components/admin/admin-navbar";
+import AdminSidebar from "@/components/admin/admin-sidebar";
 
-export default function AdminLayout({
+export default async function AdminLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  // Auth guard — only admin role can access
+  const session = await auth();
+  if (!session || !session.user || (session.user as any).role !== "admin") {
+    redirect("/login");
+  }
+
+  // Fetch badge counts for sidebar
+  const [pendingKyc, pendingDeposit, pendingRentals] = await Promise.all([
+    prisma.user.count({ where: { kycStatus: "pending" } }),
+    prisma.deposit.count({ where: { status: "pending" } }),
+    prisma.rentalTransaction.count({ where: { status: "pending" } }),
+  ]);
+
   return (
-    <div className="min-h-screen flex flex-col bg-bg-primary">
-      <Navbar />
-      <div className="flex-grow">
-        <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-          <div className="flex flex-col md:flex-row gap-8">
-            <Sidebar type="admin" />
-            <main className="flex-1 animate-fade-in-up">{children}</main>
+    <div className="min-h-screen flex flex-col bg-slate-950">
+      <AdminNavbar />
+      <div className="flex flex-1 overflow-hidden">
+        <AdminSidebar
+          pendingKyc={pendingKyc}
+          pendingDeposit={pendingDeposit}
+          pendingRentals={pendingRentals}
+        />
+        <main className="flex-1 bg-slate-50 overflow-y-auto">
+          <div className="max-w-screen-xl mx-auto px-6 py-8">
+            {children}
           </div>
-        </div>
+        </main>
       </div>
-      <Footer />
     </div>
   );
 }
