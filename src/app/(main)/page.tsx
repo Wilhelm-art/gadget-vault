@@ -6,6 +6,9 @@ import {
 } from "lucide-react";
 import { getCachedFeaturedProducts, getCachedStoreSettings } from "@/lib/queries";
 import ProductCard from "@/components/product/product-card";
+import CinematicBackground from "@/components/layout/cinematic-background";
+
+
 
 export const metadata = {
   title: "GadgetVault — Jual, Beli & Sewa Gadget Cimahi Bandung",
@@ -25,17 +28,20 @@ export default async function HomePage() {
   return (
     <div className="space-y-20 pb-16">
       {/* 1. HERO SECTION */}
-      <section className="relative bg-bg-secondary border-b border-border py-20 sm:py-28 overflow-hidden">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+      <section className="relative bg-[#070706] text-white border-b border-white/5 py-24 sm:py-32 overflow-hidden">
+        {/* Cinematic Backdrop with Particle/Video animation */}
+        <CinematicBackground />
+
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-20 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           <div className="lg:col-span-7 space-y-6 text-left animate-fade-in-up">
-            <Badge className="bg-accent-gold-light text-accent-gold-hover border-accent-gold-light/40 font-bold px-3 py-1 text-xs">
+            <Badge className="bg-accent-gold/10 text-accent-gold border-accent-gold/25 font-bold px-3 py-1 text-xs backdrop-blur-md">
               ★ PREMIUM GADGET STORE
             </Badge>
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-display font-bold text-text-primary leading-tight">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-display font-bold text-white leading-tight">
               Sewa, Beli & Jual <br />
-              <span className="text-accent-gold-hover">Gadget Premium</span> di Cimahi
+              <span className="text-accent-gold">Gadget Premium</span> di Cimahi
             </h1>
-            <p className="text-sm sm:text-base text-text-secondary max-w-xl leading-relaxed">
+            <p className="text-sm sm:text-base text-neutral-300 max-w-xl leading-relaxed">
               Dapatkan akses ke handphone flagship, kamera mirrorless profesional, drone sinematik, dan berbagai aksesoris berkualitas. Transaksi aman secara offline (COD toko), verifikasi KYC instan, bebas deposit untuk warga Bandung/Cimahi.
             </p>
             <div className="flex flex-wrap gap-4 pt-2">
@@ -47,13 +53,13 @@ export default async function HomePage() {
               </Link>
               <Link
                 href="/katalog"
-                className="bg-white border border-border text-text-primary hover:border-text-secondary px-6 py-3.5 rounded-xl text-xs font-bold transition-all duration-200"
+                className="bg-white/5 border border-white/10 text-white hover:bg-white/10 hover:border-white/20 px-6 py-3.5 rounded-xl text-xs font-bold transition-all duration-200 backdrop-blur-sm"
               >
                 Jelajahi Katalog
               </Link>
               <Link
                 href="/jual"
-                className="bg-accent-gold-light/30 text-accent-gold-hover hover:bg-accent-gold-light/50 border border-accent-gold/10 px-6 py-3.5 rounded-xl text-xs font-bold transition-all duration-200"
+                className="bg-accent-gold-light/10 text-accent-gold hover:bg-accent-gold-light/20 border border-accent-gold/20 px-6 py-3.5 rounded-xl text-xs font-bold transition-all duration-200 backdrop-blur-sm"
               >
                 Jual Gadget Anda
               </Link>
@@ -62,15 +68,15 @@ export default async function HomePage() {
 
           {/* Visual element on right side */}
           <div className="lg:col-span-5 relative flex justify-center animate-fade-in">
-            <div className="relative w-72 h-96 sm:w-80 sm:h-[450px] rounded-3xl border-2 border-border/60 bg-white p-4 shadow-xl rotate-3 hover:rotate-0 transition-transform duration-500">
-              <div className="absolute top-4 left-4 right-4 bottom-4 rounded-2xl overflow-hidden bg-bg-secondary flex flex-col justify-between p-6">
+            <div className="relative w-72 h-96 sm:w-80 sm:h-[450px] rounded-3xl border border-white/15 bg-black/40 p-4 shadow-[0_0_50px_rgba(201,169,110,0.08)] backdrop-blur-md rotate-3 hover:rotate-0 transition-all duration-500">
+              <div className="absolute top-4 left-4 right-4 bottom-4 rounded-2xl overflow-hidden bg-black/30 flex flex-col justify-between p-6">
                 <div>
                   <span className="text-[10px] font-bold text-accent-gold uppercase tracking-wider">FEATURED UNIT</span>
-                  <h3 className="font-display font-bold text-text-primary text-xl mt-1">iPhone 14 Pro Max</h3>
-                  <p className="text-[11px] text-text-secondary mt-1">Tersedia untuk disewa mulai dari Rp 150k/hari</p>
+                  <h3 className="font-display font-bold text-white text-xl mt-1">iPhone 14 Pro Max</h3>
+                  <p className="text-[11px] text-neutral-400 mt-1">Tersedia untuk disewa mulai dari Rp 150k/hari</p>
                 </div>
                 <div className="w-full h-56 relative bg-transparent flex items-center justify-center my-4 overflow-visible">
-                  <div className="w-32 h-32 rounded-full bg-accent-gold-light/40 absolute blur-2xl animate-pulse" />
+                  <div className="w-32 h-32 rounded-full bg-accent-gold-light/20 absolute blur-2xl animate-pulse" />
                   
                   {/* Optimized 3D video tag (hidden by default until file is supplied) */}
                   <video
@@ -136,7 +142,7 @@ export default async function HomePage() {
                 </div>
                 <Link
                   href="/sewa"
-                  className="w-full text-center bg-text-primary text-white py-2.5 rounded-xl text-xs font-bold hover:bg-accent-gold transition-colors"
+                  className="w-full text-center bg-white text-black py-2.5 rounded-xl text-xs font-bold hover:bg-accent-gold hover:text-white transition-colors"
                 >
                   Booking Sekarang
                 </Link>
@@ -144,9 +150,6 @@ export default async function HomePage() {
             </div>
           </div>
         </div>
-        {/* Subtle decorative background shapes */}
-        <div className="absolute right-[-10%] bottom-[-20%] w-96 h-96 rounded-full bg-accent-gold-light/10 blur-3xl" />
-        <div className="absolute left-[-10%] top-[-20%] w-96 h-96 rounded-full bg-accent-gold-light/10 blur-3xl" />
       </section>
 
       {/* 2. CATEGORIES SECTION */}
