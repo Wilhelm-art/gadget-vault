@@ -148,7 +148,7 @@ export default function Navbar() {
 
                 {/* Dropdown Panel */}
                 {isUserMenuOpen && (
-                  <div className="absolute right-0 top-full mt-2 w-56 bg-white border border-border rounded-xl shadow-lg z-50 p-1 animate-in fade-in-0 zoom-in-95">
+                  <div className="absolute right-0 top-full mt-2 w-56 bg-popover border border-border rounded-xl shadow-lg z-50 p-1 animate-in fade-in-0 zoom-in-95">
                     {/* User Info */}
                     <div className="px-3 py-2 flex flex-col gap-0.5">
                       <div className="font-semibold text-text-primary text-sm truncate">{user.name}</div>
@@ -250,7 +250,7 @@ export default function Navbar() {
 
       {/* Mobile Drawer Navigation */}
       {isMobileMenuOpen && (
-        <div className="md:hidden border-t border-border bg-white px-4 py-4 space-y-4 animate-fade-in-up">
+        <div className="md:hidden border-t border-border bg-background px-4 py-4 space-y-4 animate-fade-in-up">
           {/* Search bar on mobile */}
           <form onSubmit={handleSearchSubmit} className="relative w-full">
             <Input
