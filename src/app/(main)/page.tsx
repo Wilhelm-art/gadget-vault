@@ -69,9 +69,70 @@ export default async function HomePage() {
                   <h3 className="font-display font-bold text-text-primary text-xl mt-1">iPhone 14 Pro Max</h3>
                   <p className="text-[11px] text-text-secondary mt-1">Tersedia untuk disewa mulai dari Rp 150k/hari</p>
                 </div>
-                <div className="w-full h-44 relative bg-transparent flex items-center justify-center my-4">
-                  <div className="w-32 h-32 rounded-full bg-accent-gold-light/40 absolute blur-xl animate-pulse" />
-                  <Smartphone className="w-20 h-20 text-accent-gold relative z-10" />
+                <div className="w-full h-56 relative bg-transparent flex items-center justify-center my-4 overflow-visible">
+                  <div className="w-32 h-32 rounded-full bg-accent-gold-light/40 absolute blur-2xl animate-pulse" />
+                  
+                  {/* Optimized 3D video tag (hidden by default until file is supplied) */}
+                  <video
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    preload="metadata"
+                    className="w-auto h-44 object-contain relative z-10 hidden"
+                  >
+                    <source src="/hero-3d.webm" type="video/webm" />
+                    <source src="/hero-3d.mp4" type="video/mp4" />
+                  </video>
+
+                  {/* High-Performance 3D CSS Smartphone Mockup (zero loading latency) */}
+                  <div className="phone-3d-wrapper relative z-10 scale-[0.85] origin-center">
+                    <div className="phone-3d-device">
+                      {/* Sides (Depth) */}
+                      <div className="phone-3d-side-left" />
+                      <div className="phone-3d-side-right" />
+                      <div className="phone-3d-side-top" />
+                      <div className="phone-3d-side-bottom" />
+                      
+                      {/* Front (Screen) */}
+                      <div className="phone-3d-face phone-3d-front flex flex-col justify-between p-3 select-none">
+                        {/* Dynamic Island */}
+                        <div className="w-10 h-3 bg-black rounded-full mx-auto mt-1" />
+                        
+                        {/* Wallpaper Screen Grid */}
+                        <div className="flex-1 flex flex-col justify-center items-center gap-1.5 my-2.5 rounded-2xl bg-gradient-to-br from-accent-gold/20 via-[#0e0e0e] to-accent-gold-light/10 border border-white/5 shadow-inner">
+                          <span className="text-[8px] font-bold text-accent-gold tracking-widest uppercase">VAULT</span>
+                          <span className="text-[11px] font-extrabold text-white font-sans tracking-wide">iPhone 14</span>
+                          <span className="text-[7px] text-text-secondary uppercase">Pro Max</span>
+                        </div>
+                        
+                        {/* Speaker Line */}
+                        <div className="w-8 h-[2px] bg-white/20 rounded-full mx-auto" />
+                      </div>
+                      
+                      {/* Back (Chassis & Camera Bump) */}
+                      <div className="phone-3d-face phone-3d-back p-3 select-none">
+                        {/* Apple-style mock logo */}
+                        <div className="w-6 h-6 rounded-full bg-accent-gold-light/10 border border-accent-gold/20 flex items-center justify-center mb-2">
+                          <div className="w-2.5 h-2.5 rounded-full bg-accent-gold" />
+                        </div>
+                        
+                        {/* Triple Camera Array Layout */}
+                        <div className="w-12 h-12 bg-black/40 rounded-xl border border-white/10 p-1.5 grid grid-cols-2 gap-1 absolute top-4 left-4">
+                          <div className="w-3.5 h-3.5 rounded-full bg-neutral-900 border border-neutral-700 flex items-center justify-center">
+                            <div className="w-1.5 h-1.5 rounded-full bg-black" />
+                          </div>
+                          <div className="w-3.5 h-3.5 rounded-full bg-neutral-900 border border-neutral-700 flex items-center justify-center">
+                            <div className="w-1.5 h-1.5 rounded-full bg-black" />
+                          </div>
+                          <div className="w-3.5 h-3.5 rounded-full bg-neutral-900 border border-neutral-700 flex items-center justify-center">
+                            <div className="w-1 h-1 rounded-full bg-black" />
+                          </div>
+                          <div className="w-2 h-2 rounded-full bg-neutral-800 self-center justify-self-center" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
                 <Link
                   href="/sewa"
