@@ -14,6 +14,10 @@ import { toast } from "sonner";
 
 const kycSchema = z.object({
   ktpNumber: z.string().length(16, "Nomor KTP harus tepat 16 digit"),
+  parentPhone: z.string()
+    .min(10, "Nomor HP orang tua minimal 10 digit")
+    .max(15, "Nomor HP orang tua maksimal 15 digit")
+    .regex(/^\d+$/, "Nomor HP orang tua harus berupa angka saja"),
 });
 
 export default function KycPage() {
@@ -24,10 +28,12 @@ export default function KycPage() {
   const [ktpFront, setKtpFront] = useState<File | null>(null);
   const [ktpBack, setKtpBack] = useState<File | null>(null);
   const [selfieKtp, setSelfieKtp] = useState<File | null>(null);
+  const [kk, setKk] = useState<File | null>(null);
   
   const [ktpFrontPreview, setKtpFrontPreview] = useState<string>("");
   const [ktpBackPreview, setKtpBackPreview] = useState<string>("");
   const [selfieKtpPreview, setSelfieKtpPreview] = useState<string>("");
+  const [kkPreview, setKkPreview] = useState<string>("");
   
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [dbKycStatus, setDbKycStatus] = useState<string>("unverified");
@@ -41,6 +47,7 @@ export default function KycPage() {
     resolver: zodResolver(kycSchema),
     defaultValues: {
       ktpNumber: "",
+      parentPhone: "",
     },
   });
 
@@ -96,6 +103,10 @@ export default function KycPage() {
       toast.error("Silakan unggah foto Selfie dengan KTP.");
       return;
     }
+    if (currentStep === 4 && !kk) {
+      toast.error("Silakan unggah foto Kartu Keluarga.");
+      return;
+    }
     setCurrentStep((prev) => prev + 1);
   };
 
@@ -103,8 +114,8 @@ export default function KycPage() {
     setCurrentStep((prev) => prev - 1);
   };
 
-  const onSubmit = async (data: { ktpNumber: string }) => {
-    if (!ktpFront || !ktpBack || !selfieKtp) {
+  const onSubmit = async (data: { ktpNumber: string; parentPhone: string }) => {
+    if (!ktpFront || !ktpBack || !selfieKtp || !kk) {
       toast.error("Semua dokumen wajib diunggah.");
       return;
     }
@@ -112,9 +123,11 @@ export default function KycPage() {
     setIsSubmitting(true);
     const formData = new FormData();
     formData.append("ktpNumber", data.ktpNumber);
+    formData.append("parentPhone", data.parentPhone);
     formData.append("ktpFront", ktpFront);
     formData.append("ktpBack", ktpBack);
     formData.append("selfieKtp", selfieKtp);
+    formData.append("kk", kk);
 
     try {
       const response = await fetch("/api/kyc", {
@@ -215,7 +228,7 @@ export default function KycPage() {
           
           {/* Progress Steps */}
           <div className="flex items-center justify-between mt-6 px-4">
-            {[1, 2, 3, 4].map((step) => (
+            {[1, 2, 3, 4, 5].map((step) => (
               <React.Fragment key={step}>
                 <div className="flex flex-col items-center">
                   <div
@@ -228,10 +241,10 @@ export default function KycPage() {
                     {step}
                   </div>
                   <span className="text-[10px] uppercase font-semibold text-text-secondary mt-1">
-                    {step === 1 ? "KTP Depan" : step === 2 ? "KTP Belakang" : step === 3 ? "Selfie" : "Nomor KTP"}
+                    {step === 1 ? "KTP Depan" : step === 2 ? "KTP Belakang" : step === 3 ? "Selfie" : step === 4 ? "KK" : "Konfirmasi"}
                   </span>
                 </div>
-                {step < 4 && (
+                {step < 5 && (
                   <div
                     className={`flex-1 h-0.5 mx-2 transition-all duration-300 ${
                       currentStep > step ? "bg-accent-gold" : "bg-bg-tertiary"
@@ -375,28 +388,87 @@ export default function KycPage() {
                 </div>
               )}
 
-              {/* Step 4: KTP Number & Submit */}
+              {/* Step 4: Kartu Keluarga */}
               {currentStep === 4 && (
-                <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 max-w-sm mx-auto text-center">
-                  <h3 className="text-lg font-medium text-text-primary">4. Konfirmasi Data</h3>
-                  <p className="text-xs text-text-secondary mb-4">
-                    Masukkan nomor induk kependudukan (NIK/KTP) Anda dengan benar untuk verifikasi.
+                <div className="space-y-4 text-center">
+                  <h3 className="text-lg font-medium text-text-primary">4. Foto Kartu Keluarga (KK)</h3>
+                  <p className="text-xs text-text-secondary max-w-md mx-auto">
+                    Unggah foto Kartu Keluarga (KK) Anda. Pastikan seluruh bagian dokumen terlihat jelas dan terbaca.
                   </p>
                   
-                  <div className="space-y-1 text-left">
-                    <label className="text-xs font-semibold text-text-secondary uppercase">
-                      Nomor KTP (16 Digit)
-                    </label>
-                    <Input
-                      id="ktpNumber"
-                      placeholder="3201xxxxxxxxxxxx"
-                      maxLength={16}
-                      disabled={isSubmitting}
-                      {...register("ktpNumber")}
-                    />
-                    {errors.ktpNumber && (
-                      <p className="text-xs text-danger">{errors.ktpNumber.message}</p>
+                  <div className="mt-4 flex flex-col items-center justify-center border-2 border-dashed border-border rounded-xl p-6 hover:border-accent-gold transition-colors bg-bg-primary min-h-[160px]">
+                    {kkPreview ? (
+                      <div className="relative w-full max-w-xs h-40">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                          src={kkPreview}
+                          alt="Kartu Keluarga"
+                          className="w-full h-full object-contain rounded-lg"
+                        />
+                      </div>
+                    ) : (
+                      <div className="space-y-2 text-center">
+                        <svg className="mx-auto h-12 w-12 text-text-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                        </svg>
+                        <p className="text-xs text-text-secondary">Pilih atau ambil foto Kartu Keluarga (KK)</p>
+                      </div>
                     )}
+                    <label className="mt-4 cursor-pointer">
+                      <span className="bg-accent-gold hover:bg-accent-gold-hover text-white px-4 py-2 rounded-lg text-xs font-medium transition-colors">
+                        {kk ? "Ubah Foto" : "Pilih File"}
+                      </span>
+                      <input
+                        type="file"
+                        className="hidden"
+                        accept="image/*"
+                        onChange={(e) => handleFileChange(e, setKk, setKkPreview)}
+                      />
+                    </label>
+                  </div>
+                </div>
+              )}
+
+              {/* Step 5: NIK, No HP Orang Tua & Submit */}
+              {currentStep === 5 && (
+                <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 max-w-sm mx-auto text-center">
+                  <h3 className="text-lg font-medium text-text-primary">5. Konfirmasi Data</h3>
+                  <p className="text-xs text-text-secondary mb-4">
+                    Lengkapi nomor NIK KTP Anda dan nomor telepon orang tua untuk validasi penjaminan.
+                  </p>
+                  
+                  <div className="space-y-4 text-left">
+                    <div className="space-y-1">
+                      <label className="text-xs font-semibold text-text-secondary uppercase">
+                        Nomor KTP (16 Digit)
+                      </label>
+                      <Input
+                        id="ktpNumber"
+                        placeholder="3201xxxxxxxxxxxx"
+                        maxLength={16}
+                        disabled={isSubmitting}
+                        {...register("ktpNumber")}
+                      />
+                      {errors.ktpNumber && (
+                        <p className="text-xs text-danger">{errors.ktpNumber.message}</p>
+                      )}
+                    </div>
+
+                    <div className="space-y-1">
+                      <label className="text-xs font-semibold text-text-secondary uppercase">
+                        No. HP Orang Tua / Penjamin
+                      </label>
+                      <Input
+                        id="parentPhone"
+                        placeholder="08xxxxxxxxxx"
+                        maxLength={15}
+                        disabled={isSubmitting}
+                        {...register("parentPhone")}
+                      />
+                      {errors.parentPhone && (
+                        <p className="text-xs text-danger">{errors.parentPhone.message}</p>
+                      )}
+                    </div>
                   </div>
 
                   <Button
@@ -421,7 +493,7 @@ export default function KycPage() {
           >
             Kembali
           </Button>
-          {currentStep < 4 ? (
+          {currentStep < 5 ? (
             <Button onClick={nextStep} className="bg-accent-gold text-white hover:bg-accent-gold-hover">
               Lanjut
             </Button>

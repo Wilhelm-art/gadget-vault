@@ -29,16 +29,18 @@ export default async function AdminKycQueuePage() {
   const enrichedDocs = await Promise.all(
     kycDocs.map(async (doc) => {
       try {
-        const [signedKtpFront, signedKtpBack, signedSelfieKtp] = await Promise.all([
+        const [signedKtpFront, signedKtpBack, signedSelfieKtp, signedKk] = await Promise.all([
           getSignedUrl("kyc", doc.ktpFrontUrl, 3600),
           getSignedUrl("kyc", doc.ktpBackUrl, 3600),
           getSignedUrl("kyc", doc.selfieKtpUrl, 3600),
+          doc.kkUrl ? getSignedUrl("kyc", doc.kkUrl, 3600) : Promise.resolve(""),
         ]);
         return {
           ...doc,
           signedKtpFront,
           signedKtpBack,
           signedSelfieKtp,
+          signedKk,
         };
       } catch (err) {
         console.error(`Error resolving signed URLs for KYC doc ${doc.id}:`, err);
@@ -47,6 +49,7 @@ export default async function AdminKycQueuePage() {
           signedKtpFront: "",
           signedKtpBack: "",
           signedSelfieKtp: "",
+          signedKk: "",
         };
       }
     })
