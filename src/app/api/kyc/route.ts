@@ -16,13 +16,15 @@ export async function POST(req: Request) {
     // 2. Parse form data
     const formData = await req.formData();
     const ktpNumber = formData.get("ktpNumber") as string;
+    const parentPhone = formData.get("parentPhone") as string;
     const ktpFrontFile = formData.get("ktpFront") as File | null;
     const ktpBackFile = formData.get("ktpBack") as File | null;
     const selfieKtpFile = formData.get("selfieKtp") as File | null;
+    const kkFile = formData.get("kk") as File | null;
 
-    if (!ktpNumber || !ktpFrontFile || !ktpBackFile || !selfieKtpFile) {
+    if (!ktpNumber || !parentPhone || !ktpFrontFile || !ktpBackFile || !selfieKtpFile || !kkFile) {
       return NextResponse.json(
-        { message: "Semua dokumen wajib diunggah dan nomor KTP wajib diisi." },
+        { message: "Semua dokumen (KTP Depan, Belakang, Selfie, KK) dan nomor KTP serta nomor telepon orang tua wajib diisi." },
         { status: 400 }
       );
     }
@@ -35,24 +37,36 @@ export async function POST(req: Request) {
       );
     }
 
+    // Validate parent phone number format
+    if (!/^\d{10,15}$/.test(parentPhone)) {
+      return NextResponse.json(
+        { message: "Nomor telepon orang tua harus terdiri dari 10-15 digit angka." },
+        { status: 400 }
+      );
+    }
+
     // 3. Convert files to buffers
     const ktpFrontBuffer = Buffer.from(await ktpFrontFile.arrayBuffer());
     const ktpBackBuffer = Buffer.from(await ktpBackFile.arrayBuffer());
     const selfieKtpBuffer = Buffer.from(await selfieKtpFile.arrayBuffer());
+    const kkBuffer = Buffer.from(await kkFile.arrayBuffer());
 
     // 4. Upload files to Supabase Storage (kyc bucket)
     // File names: kyc/[userId]/[doc_type].[extension]
     const ktpFrontExt = ktpFrontFile.name.split(".").pop() || "jpg";
     const ktpBackExt = ktpBackFile.name.split(".").pop() || "jpg";
     const selfieKtpExt = selfieKtpFile.name.split(".").pop() || "jpg";
+    const kkExt = kkFile.name.split(".").pop() || "jpg";
 
     const ktpFrontPath = `${userId}/ktp_front.${ktpFrontExt}`;
     const ktpBackPath = `${userId}/ktp_back.${ktpBackExt}`;
     const selfieKtpPath = `${userId}/selfie_ktp.${selfieKtpExt}`;
+    const kkPath = `${userId}/kk.${kkExt}`;
 
     await uploadFile(ktpFrontBuffer, "kyc", ktpFrontPath, ktpFrontFile.type);
     await uploadFile(ktpBackBuffer, "kyc", ktpBackPath, ktpBackFile.type);
     await uploadFile(selfieKtpBuffer, "kyc", selfieKtpPath, selfieKtpFile.type);
+    await uploadFile(kkBuffer, "kyc", kkPath, kkFile.type);
 
     // 5. Save or update KYC document in database
     // We use transaction to update user status to pending and create/update kycDocument
@@ -70,6 +84,8 @@ export async function POST(req: Request) {
           ktpFrontUrl: ktpFrontPath,
           ktpBackUrl: ktpBackPath,
           selfieKtpUrl: selfieKtpPath,
+          kkUrl: kkPath,
+          parentPhone,
           status: "pending",
         },
       });

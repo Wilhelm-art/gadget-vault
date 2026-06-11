@@ -38,6 +38,8 @@ model KycDocument {
   ktpBackUrl      String
   selfieKtpUrl    String
   ktpNumber       String
+  kkUrl           String?
+  parentPhone     String?
   status          String    @default("pending") // "pending" | "approved" | "rejected"
   rejectionReason String?
   verifiedBy      String?

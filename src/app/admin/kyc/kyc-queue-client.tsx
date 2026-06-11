@@ -183,10 +183,14 @@ export default function KycQueueClient({ initialDocs }: KycQueueClientProps) {
                   <p className="font-mono font-bold text-text-primary mt-0.5">{selectedDoc.ktpNumber}</p>
                 </div>
                 <div>
-                  <span className="text-text-secondary">No. HP:</span>
+                  <span className="text-text-secondary">No. HP Pelanggan:</span>
                   <p className="font-semibold text-text-primary mt-0.5">{selectedDoc.user.phone || "-"}</p>
                 </div>
                 <div>
+                  <span className="text-text-secondary">No. HP Orang Tua:</span>
+                  <p className="font-semibold text-text-primary mt-0.5">{selectedDoc.parentPhone || "-"}</p>
+                </div>
+                <div className="col-span-2">
                   <span className="text-text-secondary">Kota & Provinsi:</span>
                   <p className="font-semibold text-text-primary mt-0.5">{selectedDoc.user.city || "-"}, {selectedDoc.user.province || "-"}</p>
                 </div>
@@ -195,9 +199,9 @@ export default function KycQueueClient({ initialDocs }: KycQueueClientProps) {
               {/* Photos Comparison Panel */}
               <div className="space-y-3">
                 <span className="font-bold text-text-primary block">Dokumen Foto KYC:</span>
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
                   <div className="space-y-1">
-                    <span className="text-[9px] font-bold text-text-secondary uppercase">KTP Depan</span>
+                    <span className="text-[9px] font-bold text-text-secondary uppercase block">KTP Depan</span>
                     <a
                       href={selectedDoc.signedKtpFront}
                       target="_blank"
@@ -209,7 +213,7 @@ export default function KycQueueClient({ initialDocs }: KycQueueClientProps) {
                   </div>
                   
                   <div className="space-y-1">
-                    <span className="text-[9px] font-bold text-text-secondary uppercase">KTP Belakang</span>
+                    <span className="text-[9px] font-bold text-text-secondary uppercase block">KTP Belakang</span>
                     <a
                       href={selectedDoc.signedKtpBack}
                       target="_blank"
@@ -221,7 +225,7 @@ export default function KycQueueClient({ initialDocs }: KycQueueClientProps) {
                   </div>
 
                   <div className="space-y-1">
-                    <span className="text-[9px] font-bold text-text-secondary uppercase">Selfie + KTP</span>
+                    <span className="text-[9px] font-bold text-text-secondary uppercase block">Selfie + KTP</span>
                     <a
                       href={selectedDoc.signedSelfieKtp}
                       target="_blank"
@@ -230,6 +234,24 @@ export default function KycQueueClient({ initialDocs }: KycQueueClientProps) {
                     >
                       <img src={selectedDoc.signedSelfieKtp} alt="Selfie" className="w-full h-full object-cover" />
                     </a>
+                  </div>
+
+                  <div className="space-y-1">
+                    <span className="text-[9px] font-bold text-text-secondary uppercase block">Kartu Keluarga</span>
+                    {selectedDoc.signedKk ? (
+                      <a
+                        href={selectedDoc.signedKk}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="aspect-[4/3] block rounded-xl overflow-hidden border border-border bg-bg-secondary hover:opacity-95"
+                      >
+                        <img src={selectedDoc.signedKk} alt="Kartu Keluarga" className="w-full h-full object-cover" />
+                      </a>
+                    ) : (
+                      <div className="aspect-[4/3] flex items-center justify-center rounded-xl border border-border bg-bg-secondary text-text-muted text-[10px]">
+                        Tidak ada KK
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
