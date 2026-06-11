@@ -2,13 +2,12 @@ import React from "react";
 import Link from "next/link";
 import { 
   Smartphone, Camera, ShieldCheck, Heart, 
-  MapPin, Clock, ArrowRight, Star, BadgeCheck, Zap
+  MapPin, Clock, ArrowRight, Star, BadgeCheck, Zap,
+  Tag, Store, Headphones, ArrowUpRight
 } from "lucide-react";
 import { getCachedFeaturedProducts, getCachedStoreSettings } from "@/lib/queries";
 import ProductCard from "@/components/product/product-card";
 import CinematicBackground from "@/components/layout/cinematic-background";
-
-
 
 export const metadata = {
   title: "GadgetVault — Jual, Beli & Sewa Gadget Cimahi Bandung",
@@ -26,187 +25,252 @@ export default async function HomePage() {
   const operatingHours = "Senin - Sabtu: 09.00 - 18.00 WIB";
 
   return (
-    <div className="space-y-20 pb-16">
+    <div className="space-y-24 pb-20 bg-[#070706] text-[#e5e2df] overflow-x-hidden font-sans">
       {/* 1. HERO SECTION */}
-      <section className="relative bg-[#070706] text-white border-b border-white/5 py-24 sm:py-32 overflow-hidden">
+      <section className="relative min-h-[90vh] flex items-center overflow-hidden border-b border-border/10 py-16 sm:py-24">
         {/* Cinematic Backdrop with Particle/Video animation */}
         <CinematicBackground />
 
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-20 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-          <div className="lg:col-span-7 space-y-6 text-left animate-fade-in-up">
-            <Badge className="bg-accent-gold/10 text-accent-gold border-accent-gold/25 font-bold px-3 py-1 text-xs backdrop-blur-md">
-              ★ PREMIUM GADGET STORE
-            </Badge>
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-display font-bold text-white leading-tight">
-              Sewa, Beli & Jual <br />
-              <span className="text-accent-gold">Gadget Premium</span> di Cimahi
-            </h1>
-            <p className="text-sm sm:text-base text-neutral-300 max-w-xl leading-relaxed">
+        {/* Atmospheric Glow Background */}
+        <div className="absolute top-1/4 -right-1/4 w-[600px] h-[600px] bg-primary/5 blur-[120px] rounded-full pointer-events-none"></div>
+
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-20 grid grid-cols-1 lg:grid-cols-12 gap-16 items-center w-full">
+          {/* Left Column */}
+          <div className="lg:col-span-7 space-y-8 text-left animate-fade-in-up">
+            <div className="space-y-4">
+              <span className="font-mono text-xs text-primary hud-bracket uppercase tracking-[0.15em]">
+                PREMIUM GADGET ECOSYSTEM
+              </span>
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-display font-bold text-white leading-[1.1] tracking-tight">
+                Sewa, Beli & Jual <br />
+                <span className="text-primary italic font-normal">Gadget Premium</span> <br />
+                di Cimahi
+              </h1>
+            </div>
+            <p className="text-base sm:text-lg text-text-secondary max-w-xl leading-relaxed">
               Dapatkan akses ke handphone flagship, kamera mirrorless profesional, drone sinematik, dan berbagai aksesoris berkualitas. Transaksi aman secara offline (COD toko), verifikasi KYC instan, bebas deposit untuk warga Bandung/Cimahi.
             </p>
             <div className="flex flex-wrap gap-4 pt-2">
               <Link
                 href="/sewa"
-                className="bg-gradient-to-r from-accent-gold to-accent-gold-hover text-white px-6 py-3.5 rounded-xl text-xs font-bold shadow-md hover:from-accent-gold-hover hover:to-accent-gold transition-all duration-200"
+                className="bg-primary text-primary-foreground font-mono text-xs font-bold px-8 py-4.5 tracking-widest gold-hover transition-all duration-300 flex items-center gap-3 rounded-none"
               >
-                Mulai Sewa Sekarang
+                MULAI SEWA SEKARANG
+                <ArrowRight className="w-4 h-4" />
               </Link>
               <Link
                 href="/katalog"
-                className="bg-white/5 border border-white/10 text-white hover:bg-white/10 hover:border-white/20 px-6 py-3.5 rounded-xl text-xs font-bold transition-all duration-200 backdrop-blur-sm"
+                className="glass-card font-mono text-xs font-bold px-8 py-4.5 tracking-widest text-[#e5e2df] hover:bg-primary/10 transition-all duration-300 border border-primary/20 rounded-none"
               >
-                Jelajahi Katalog
+                JELAJAHI KATALOG
               </Link>
               <Link
                 href="/jual"
-                className="bg-accent-gold-light/10 text-accent-gold hover:bg-accent-gold-light/20 border border-accent-gold/20 px-6 py-3.5 rounded-xl text-xs font-bold transition-all duration-200 backdrop-blur-sm"
+                className="font-mono text-xs font-bold px-6 py-4.5 tracking-widest text-text-secondary hover:text-primary transition-all duration-300 flex items-center gap-2 rounded-none"
               >
-                Jual Gadget Anda
+                <Tag className="w-4 h-4" />
+                JUAL GADGET ANDA
               </Link>
             </div>
           </div>
 
-          {/* Visual element on right side */}
-          <div className="lg:col-span-5 relative flex justify-center animate-fade-in">
-            <div className="relative w-72 h-96 sm:w-80 sm:h-[450px] rounded-3xl border border-white/15 bg-black/40 p-4 shadow-[0_0_50px_rgba(201,169,110,0.08)] backdrop-blur-md rotate-3 hover:rotate-0 transition-all duration-500">
-              <div className="absolute top-4 left-4 right-4 bottom-4 rounded-2xl overflow-hidden bg-black/30 flex flex-col justify-between p-6">
-                <div>
-                  <span className="text-[10px] font-bold text-accent-gold uppercase tracking-wider">FEATURED UNIT</span>
-                  <h3 className="font-display font-bold text-white text-xl mt-1">iPhone 14 Pro Max</h3>
-                  <p className="text-[11px] text-neutral-400 mt-1">Tersedia untuk disewa mulai dari Rp 150k/hari</p>
-                </div>
-                <div className="w-full h-56 relative bg-transparent flex items-center justify-center my-4 overflow-visible">
-                  <div className="w-32 h-32 rounded-full bg-accent-gold-light/20 absolute blur-2xl animate-pulse" />
+          {/* Right Column (The Vault Hologram) */}
+          <div className="lg:col-span-5 relative flex justify-center items-center h-[500px] sm:h-[600px] w-full">
+            <div className="floating z-20 w-full max-w-[420px]">
+              <div className="glass-card rounded-xl p-1 overflow-hidden">
+                <div className="relative bg-[#0e0e0d]/80 p-6 sm:p-8 rounded-lg border border-primary/10">
+                  {/* HUD Decor */}
+                  <div className="absolute top-4 left-4 border-l-2 border-t-2 border-primary w-8 h-8 opacity-50"></div>
+                  <div className="absolute bottom-4 right-4 border-r-2 border-b-2 border-primary w-8 h-8 opacity-50"></div>
                   
-                  {/* Optimized 3D video tag (hidden by default until file is supplied) */}
-                  <video
-                    autoPlay
-                    loop
-                    muted
-                    playsInline
-                    preload="metadata"
-                    className="w-auto h-44 object-contain relative z-10 hidden"
-                  >
-                    <source src="/hero-3d.webm" type="video/webm" />
-                    <source src="/hero-3d.mp4" type="video/mp4" />
-                  </video>
-
-                  {/* High-Performance 3D CSS Smartphone Mockup (zero loading latency) */}
-                  <div className="phone-3d-wrapper relative z-10 scale-[0.85] origin-center">
-                    <div className="phone-3d-device">
-                      {/* Sides (Depth) */}
-                      <div className="phone-3d-side-left" />
-                      <div className="phone-3d-side-right" />
-                      <div className="phone-3d-side-top" />
-                      <div className="phone-3d-side-bottom" />
-                      
-                      {/* Front (Screen) */}
-                      <div className="phone-3d-face phone-3d-front flex flex-col justify-between p-3 select-none">
-                        {/* Dynamic Island */}
-                        <div className="w-10 h-3 bg-black rounded-full mx-auto mt-1" />
-                        
-                        {/* Wallpaper Screen Grid */}
-                        <div className="flex-1 flex flex-col justify-center items-center gap-1.5 my-2.5 rounded-2xl bg-gradient-to-br from-accent-gold/20 via-[#0e0e0e] to-accent-gold-light/10 border border-white/5 shadow-inner">
-                          <span className="text-[8px] font-bold text-accent-gold tracking-widest uppercase">VAULT</span>
-                          <span className="text-[11px] font-extrabold text-white font-sans tracking-wide">iPhone 14</span>
-                          <span className="text-[7px] text-text-secondary uppercase">Pro Max</span>
-                        </div>
-                        
-                        {/* Speaker Line */}
-                        <div className="w-8 h-[2px] bg-white/20 rounded-full mx-auto" />
-                      </div>
-                      
-                      {/* Back (Chassis & Camera Bump) */}
-                      <div className="phone-3d-face phone-3d-back p-3 select-none">
-                        {/* Apple-style mock logo */}
-                        <div className="w-6 h-6 rounded-full bg-accent-gold-light/10 border border-accent-gold/20 flex items-center justify-center mb-2">
-                          <div className="w-2.5 h-2.5 rounded-full bg-accent-gold" />
-                        </div>
-                        
-                        {/* Triple Camera Array Layout */}
-                        <div className="w-12 h-12 bg-black/40 rounded-xl border border-white/10 p-1.5 grid grid-cols-2 gap-1 absolute top-4 left-4">
-                          <div className="w-3.5 h-3.5 rounded-full bg-neutral-900 border border-neutral-700 flex items-center justify-center">
-                            <div className="w-1.5 h-1.5 rounded-full bg-black" />
-                          </div>
-                          <div className="w-3.5 h-3.5 rounded-full bg-neutral-900 border border-neutral-700 flex items-center justify-center">
-                            <div className="w-1.5 h-1.5 rounded-full bg-black" />
-                          </div>
-                          <div className="w-3.5 h-3.5 rounded-full bg-neutral-900 border border-neutral-700 flex items-center justify-center">
-                            <div className="w-1 h-1 rounded-full bg-black" />
-                          </div>
-                          <div className="w-2 h-2 rounded-full bg-neutral-800 self-center justify-self-center" />
-                        </div>
+                  <div className="flex justify-between items-start mb-6">
+                    <div className="font-mono text-xs text-text-secondary uppercase tracking-wider">
+                      STATUS: <span className="text-primary font-bold">[ READY ]</span>
+                    </div>
+                    <div className="font-mono text-xs text-primary font-bold">001-IPV-PRO</div>
+                  </div>
+                  
+                  <div className="relative group flex justify-center">
+                    <img 
+                      alt="iPhone 14 Pro Max" 
+                      className="w-auto h-[300px] sm:h-[360px] object-contain drop-shadow-[0_20px_50px_rgba(0,0,0,0.8)] transform group-hover:scale-105 transition-transform duration-700" 
+                      src="https://lh3.googleusercontent.com/aida-public/AB6AXuB6zz3eFrt6v2Tb4Jh8kCLTwi8Kv_wh-NFtu3C8KkMBq7zFBlJz0-t2zSfOGQ5eKavxGpiXMZaBdVwHrr8YhMevFnvrIi5uSFtvCN4VV5F_hWpnjX5eC-1tBwrFrLdfvLps0P1NzgFdPwRupKYgNDAlpAMJX91rfvpFfJhgkyzfJbVStdUZCYcNxKhNS8Dwh8sIKqE88bIxOH0_hg9AGcqofgdkErbp8V5DD6m4cQBAXk4EctdiE49snvgIznbjtfnSkLBQWmrWces" 
+                    />
+                    {/* Scanning Effect Overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-primary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                  </div>
+                  
+                  <div className="mt-8 space-y-2">
+                    <div className="font-mono text-[10px] tracking-[0.3em] text-primary font-bold uppercase">
+                      FEATURED UNIT
+                    </div>
+                    <div className="flex justify-between items-end">
+                      <h3 className="font-display text-xl text-white font-bold">iPhone 14 Pro Max</h3>
+                      <div className="text-right">
+                        <div className="font-mono text-[9px] text-text-secondary uppercase">START FROM</div>
+                        <div className="font-mono text-base font-bold text-primary">IDR 145K/Day</div>
                       </div>
                     </div>
                   </div>
                 </div>
-                <Link
-                  href="/sewa"
-                  className="w-full text-center bg-white text-black py-2.5 rounded-xl text-xs font-bold hover:bg-accent-gold hover:text-white transition-colors"
-                >
-                  Booking Sekarang
-                </Link>
               </div>
             </div>
+            {/* Decorative Radial Glow behind the card */}
+            <div className="absolute w-[350px] h-[350px] bg-primary/10 blur-[80px] rounded-full pointer-events-none"></div>
           </div>
         </div>
       </section>
 
-      {/* 2. CATEGORIES SECTION */}
+      {/* 2. CURATED COLLECTIONS BENTO SECTION */}
       <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-xl mx-auto space-y-2 mb-12">
-          <span className="text-[10px] font-bold text-accent-gold tracking-widest uppercase">Kategori Perangkat</span>
-          <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-text-primary font-display">
-            Pilih Gadget yang Anda Butuhkan
-          </h2>
-          <p className="text-xs sm:text-sm text-text-secondary">
-            Katalog lengkap gadget pilihan siap sewa atau beli COD offline
-          </p>
+        <div className="mb-16 flex flex-col sm:flex-row justify-between items-start sm:items-end gap-6">
+          <div className="space-y-4">
+            <span className="font-mono text-xs text-primary hud-bracket uppercase tracking-widest">
+              OUR FLEET
+            </span>
+            <h2 className="text-3xl font-bold tracking-tight text-white font-display">
+              Curated Collections
+            </h2>
+          </div>
+          <Link 
+            href="/katalog"
+            className="font-mono text-xs text-text-secondary tracking-widest flex items-center gap-2 cursor-pointer hover:text-primary transition-colors"
+          >
+            VIEW ALL CATEGORIES 
+            <ArrowUpRight className="w-4 h-4" />
+          </Link>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          <CategoryCard
-            name="Handphone & Tablet"
-            desc="iPhone flagship, Samsung Ultra, iPad Pro, dll."
-            slug="handphone"
-            icon={<Smartphone className="w-6 h-6 text-accent-gold" />}
-          />
-          <CategoryCard
-            name="Kamera & Lensa"
-            desc="Sony Alpha, Fujifilm, lensa wide/tele, dll."
-            slug="kamera"
-            icon={<Camera className="w-6 h-6 text-accent-gold" />}
-          />
-          <CategoryCard
-            name="Drone & Stabilizer"
-            desc="DJI Mavic, Avata, stabilizer gimbal handal."
-            slug="drone"
-            icon={<Zap className="w-6 h-6 text-accent-gold" />}
-          />
-          <CategoryCard
-            name="Aksesoris Premium"
-            desc="Mic wireless, tripod, battery pack, dll."
-            slug="aksesoris"
-            icon={<BadgeCheck className="w-6 h-6 text-accent-gold" />}
-          />
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
+          {/* Smartphones */}
+          <Link 
+            href="/katalog?category=handphone"
+            className="md:col-span-8 group cursor-pointer"
+          >
+            <div className="glass-card h-80 rounded-xl p-8 flex flex-col justify-between overflow-hidden relative border border-primary/10">
+              <img 
+                alt="Smartphones"
+                className="absolute inset-0 w-full h-full object-cover opacity-20 group-hover:scale-105 transition-transform duration-1000" 
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuD7d-vAJ9HaR3AZJr1Yh11KtITHQxS2eym2d0zz1kz6P4VNzUltwceGzuMGASuFzEaSY8P1qgdsaWEFOfrcIxr6-VoKF1iCyjh5Dost2Es9JvgHS2ZVL7lmLCiwl1uNoKnYlo4zK6pDimwtN9ysXPCNOiJAJU56ssaNcLaVxUMGb3dkV72BvRKVmmshE2EHFkKmO3MRYpF78cNp5wKYjToie682Dm3Nubn59kr0378k9fW3EzKknEx41Jg1wF_xV15h-WKduMLW_uA" 
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent z-0" />
+              <div className="z-10 flex justify-between items-start">
+                <h3 className="font-display text-2xl font-bold text-white">Smartphones</h3>
+                <div className="font-mono text-[10px] tracking-wider text-primary px-3 py-1 border border-primary/30">
+                  LATEST GEN
+                </div>
+              </div>
+              <div className="z-10">
+                <p className="text-sm text-text-secondary mb-4 max-w-sm leading-relaxed">
+                  From iPhone 15 Pro series to Samsung S24 Ultra. Optimized for productivity and social impact.
+                </p>
+                <span className="font-mono text-xs text-primary font-bold group-hover:text-white transition-colors flex items-center gap-1">
+                  DISCOVER NOW <ArrowRight className="w-4 h-4 group-hover:translate-x-2 transition-transform" />
+                </span>
+              </div>
+            </div>
+          </Link>
+
+          {/* Cameras */}
+          <Link 
+            href="/katalog?category=kamera"
+            className="md:col-span-4 group cursor-pointer"
+          >
+            <div className="glass-card h-80 rounded-xl p-8 flex flex-col justify-between overflow-hidden relative border border-primary/10">
+              <img 
+                alt="Cameras"
+                className="absolute inset-0 w-full h-full object-cover opacity-25 group-hover:scale-105 transition-transform duration-1000" 
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuA-UfNnGVmpF69QU9khyB7AyVhRAybBaggO7L2c1CV0gm3ZurE6ZUEBAo4dbyRhj82rJ8dOZHfHrTs1XnDVsbg-bMSeQh5sWkh8vIwZwRjhMlwdDOf178zkHYmnaAd7U1vDYI8f4x-Jwyqb8ahoXXBa5ePyk8Snl8-uDeraDtv96I0uB68Tw9sxy6jKFyWZmX58e6op-PPTaLhloKDQ6_yROYxkNXuIKdOkdjl5sfCFG6sZ1Py-CVX_P4qIaEl9UndqbzL4opGCgZg" 
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent z-0" />
+              <div className="z-10 flex justify-between items-start">
+                <h3 className="font-display text-2xl font-bold text-white">Cameras</h3>
+                <Camera className="w-5 h-5 text-primary" />
+              </div>
+              <div className="z-10">
+                <p className="text-xs text-text-secondary mb-4 leading-relaxed">
+                  Sony A7IV, Lumix S5IIX, & FujiFilm masterpieces.
+                </p>
+                <span className="font-mono text-xs text-primary font-bold group-hover:text-white transition-colors flex items-center gap-1">
+                  EXPLORE <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                </span>
+              </div>
+            </div>
+          </Link>
+
+          {/* Drones */}
+          <Link 
+            href="/katalog?category=drone"
+            className="md:col-span-4 group cursor-pointer"
+          >
+            <div className="glass-card h-80 rounded-xl p-8 flex flex-col justify-between overflow-hidden relative border border-primary/10">
+              <img 
+                alt="Drones"
+                className="absolute inset-0 w-full h-full object-cover opacity-25 group-hover:scale-105 transition-transform duration-1000" 
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuBFqai6lOU6BIPLomupm4E_WRN53MWPBiTCWSrgqmjEdWOKFyLYCEg7_CHaaFw0w9xz9j1YF5mAow1MAy9a9-ZBFDCE_-Ai5cB-5NJmGOTMY9kWE6kbGJRfw7sTfk-EY5fXrcvM2cZTy3NmVotPePk0R116imysWJlmWlwoYidzuwes7aPbrR10F3S6AyVZ-OgpRM6b0ar6M3t-URQPTOOBSPsVKxQfwPq0ikkdclP7Umv-kQ-M8uMlxSee65W7g0tVcUHW9a_FMwc" 
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent z-0" />
+              <div className="z-10 flex justify-between items-start">
+                <h3 className="font-display text-2xl font-bold text-white">Drones</h3>
+                <Zap className="w-5 h-5 text-primary" />
+              </div>
+              <div className="z-10">
+                <p className="text-xs text-text-secondary mb-4 leading-relaxed">
+                  DJI Air 3, Mavic 3 Pro, and FPV drones.
+                </p>
+                <span className="font-mono text-xs text-primary font-bold group-hover:text-white transition-colors flex items-center gap-1">
+                  EXPLORE <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                </span>
+              </div>
+            </div>
+          </Link>
+
+          {/* Accessories */}
+          <Link 
+            href="/katalog?category=aksesoris"
+            className="md:col-span-8 group cursor-pointer"
+          >
+            <div className="glass-card h-80 rounded-xl p-8 flex flex-col justify-between overflow-hidden relative border border-primary/10">
+              <img 
+                alt="Accessories"
+                className="absolute inset-0 w-full h-full object-cover opacity-20 group-hover:scale-105 transition-transform duration-1000" 
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuBgK-EZXG25JqJ6onx8pJpqalcu7JXrFHBcrmw0SDxqaOJ62ETwooN1I4dy25T6CCiNKFmZkW3iPiFdDLErHhaD93PVsbhBGG6psHFHIT4WHA_XbjH1LP251t9fFvR4JKNTXZzwuhtGOW8Myjd8SPupiU69aauhamAj4EVxrToc1PaDyl6H0HRVhVEsQSmdIgUJGldxb5Fr9G5wDHwJ2RghOfjsP9Eb_6ZIvPj2BRNq2r-djF8YB52vVlCybB591Esv6RA9kQtquuM" 
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent z-0" />
+              <div className="z-10 flex justify-between items-start">
+                <h3 className="font-display text-2xl font-bold text-white">Accessories</h3>
+                <Headphones className="w-5 h-5 text-primary" />
+              </div>
+              <div className="z-10">
+                <p className="text-sm text-text-secondary mb-4 max-w-md leading-relaxed">
+                  Essential gears for your digital lifestyle. Tripods, microphones, battery packs, and high-performance chargers.
+                </p>
+                <span className="font-mono text-xs text-primary font-bold group-hover:text-white transition-colors flex items-center gap-1">
+                  DISCOVER NOW <ArrowRight className="w-4 h-4 group-hover:translate-x-2 transition-transform" />
+                </span>
+              </div>
+            </div>
+          </Link>
         </div>
       </section>
 
       {/* 3. FEATURED PRODUCTS SECTION */}
       {featuredProducts.length > 0 && (
         <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-end mb-10">
+          <div className="flex justify-between items-end mb-12">
             <div>
-              <span className="text-[10px] font-bold text-accent-gold tracking-widest uppercase block mb-1">Rekomendasi Terbaik</span>
-              <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-text-primary font-display">
+              <span className="font-mono text-xs text-primary hud-bracket uppercase tracking-widest block mb-2">
+                REKOMENDASI TERBAIK
+              </span>
+              <h2 className="text-3xl font-bold tracking-tight text-white font-display">
                 Unit Featured Terlaris
               </h2>
             </div>
             <Link
               href="/katalog"
-              className="text-xs font-bold text-accent-gold hover:text-accent-gold-hover flex items-center gap-1 hover:underline"
+              className="font-mono text-xs text-primary hover:text-white flex items-center gap-1 hover:underline tracking-wider"
             >
-              Lihat Semua Katalog <ArrowRight className="w-4 h-4" />
+              LIHAT SEMUA KATALOG <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
 
@@ -219,44 +283,71 @@ export default async function HomePage() {
       )}
 
       {/* 4. VALUE PROPOSITION (USP) SECTION */}
-      <section className="bg-bg-secondary border-y border-border py-16 sm:py-20">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-xl mx-auto space-y-2 mb-12">
-            <span className="text-[10px] font-bold text-accent-gold tracking-widest uppercase">Keunggulan Kami</span>
-            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-text-primary font-display">
-              Kenapa Memilih GadgetVault?
+      <section className="relative py-24 bg-[#0e0e0d] border-y border-border/10 overflow-hidden">
+        <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent"></div>
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="text-center max-w-xl mx-auto space-y-4 mb-16">
+            <span className="font-mono text-xs text-primary hud-bracket uppercase tracking-widest">
+              VAULT SECURITY
+            </span>
+            <h2 className="text-3xl font-bold tracking-tight text-white font-display">
+              Transact with Total Confidence
             </h2>
-            <p className="text-xs sm:text-sm text-text-secondary">
+            <p className="text-sm text-text-secondary leading-relaxed">
               Layanan jual, beli, dan sewa gadget terbaik di Cimahi/Bandung dengan transparansi penuh.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <UspCard
-              title="KYC Aman & Cepat"
-              desc="Verifikasi dokumen identitas secara digital dalam waktu 1x24 jam untuk keamanan bersama."
-            />
-            <UspCard
-              title="Bebas Jaminan KTP Lokal"
-              desc="Warga Kota Bandung & Cimahi tidak perlu mentransfer deposit uang jaminan sewa gadget."
-            />
-            <UspCard
-              title="Cek Unit Offline (COD)"
-              desc="Datang langsung ke gerai kami untuk memvalidasi kondisi fisik unit sebelum membawa pulang."
-            />
-            <UspCard
-              title="Unit Premium Terawat"
-              desc="Seluruh unit gadget kami orisinal, mulus, bergaransi, dan diuji berkala oleh tim ahli."
-            />
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+            {/* COD Toko */}
+            <div className="text-center space-y-6 group">
+              <div className="mx-auto w-20 h-20 rounded-full border border-primary/30 flex items-center justify-center bg-primary/5 glowing-gold transition-all duration-500 group-hover:scale-105 group-hover:border-primary">
+                <Store className="w-8 h-8 text-primary" />
+              </div>
+              <div className="space-y-3">
+                <h3 className="font-display text-xl text-white font-bold">COD Toko Fisik</h3>
+                <p className="text-sm text-text-secondary leading-relaxed">
+                  Kunjungi hub kami di Cimahi untuk inspeksi unit secara langsung. Transaksi aman, transparan, dan terpercaya.
+                </p>
+              </div>
+            </div>
+
+            {/* KYC Instant */}
+            <div className="text-center space-y-6 group">
+              <div className="mx-auto w-20 h-20 rounded-full border border-primary/30 flex items-center justify-center bg-primary/5 glowing-gold transition-all duration-500 group-hover:scale-105 group-hover:border-primary">
+                <ShieldCheck className="w-8 h-8 text-primary" />
+              </div>
+              <div className="space-y-3">
+                <h3 className="font-display text-xl text-white font-bold">KYC Instan</h3>
+                <p className="text-sm text-text-secondary leading-relaxed">
+                  Proses verifikasi data digital super cepat. Mulai sewa hanya dalam hitungan menit setelah data terverifikasi.
+                </p>
+              </div>
+            </div>
+
+            {/* No Deposit */}
+            <div className="text-center space-y-6 group">
+              <div className="mx-auto w-20 h-20 rounded-full border border-primary/30 flex items-center justify-center bg-primary/5 glowing-gold transition-all duration-500 group-hover:scale-105 group-hover:border-primary">
+                <BadgeCheck className="w-8 h-8 text-primary" />
+              </div>
+              <div className="space-y-3">
+                <h3 className="font-display text-xl text-white font-bold">Bebas Deposit</h3>
+                <p className="text-sm text-text-secondary leading-relaxed">
+                  Khusus warga dengan KTP Bandung & Cimahi, nikmati layanan sewa tanpa uang jaminan tambahan.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
       {/* 5. TESTIMONIALS SECTION */}
       <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-xl mx-auto space-y-2 mb-12">
-          <span className="text-[10px] font-bold text-accent-gold tracking-widest uppercase">Ulasan Pelanggan</span>
-          <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-text-primary font-display">
+        <div className="text-center max-w-xl mx-auto space-y-3 mb-16">
+          <span className="font-mono text-xs text-primary hud-bracket uppercase tracking-widest">
+            REVIEWS
+          </span>
+          <h2 className="text-3xl font-bold tracking-tight text-white font-display">
             Apa Kata Mereka?
           </h2>
         </div>
@@ -284,46 +375,48 @@ export default async function HomePage() {
       <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
           {/* Info details */}
-          <div className="lg:col-span-5 bg-white border border-border p-8 rounded-3xl flex flex-col justify-between space-y-6 shadow-sm">
+          <div className="lg:col-span-5 glass-card p-8 rounded-3xl flex flex-col justify-between space-y-8 border border-primary/10 bg-[#0e0e0d]/50">
             <div className="space-y-4">
-              <span className="text-[10px] font-bold text-accent-gold tracking-wider uppercase">KUNJUNGI GERAI KAMI</span>
-              <h3 className="text-2xl font-bold font-display text-text-primary">GadgetVault Cimahi</h3>
-              <p className="text-xs text-text-secondary leading-relaxed">
+              <span className="font-mono text-xs text-primary hud-bracket uppercase tracking-wider">
+                KUNJUNGI GERAI KAMI
+              </span>
+              <h3 className="text-2xl font-bold font-display text-white">GadgetVault Cimahi</h3>
+              <p className="text-sm text-text-secondary leading-relaxed">
                 Silakan datang langsung ke toko kami untuk mengambil unit sewa, melakukan cek fisik COD, atau mencairkan dana penjualan gadget Anda.
               </p>
             </div>
 
-            <div className="space-y-3.5 border-t border-border/60 pt-6 text-xs">
+            <div className="space-y-4 border-t border-primary/10 pt-6 text-sm">
               <div className="flex gap-3 items-start">
-                <MapPin className="w-5 h-5 text-accent-gold shrink-0 mt-0.5" />
+                <MapPin className="w-5 h-5 text-primary shrink-0 mt-0.5" />
                 <div>
-                  <span className="font-bold text-text-primary">Alamat Toko:</span>
-                  <p className="text-text-secondary mt-0.5">{address}</p>
+                  <span className="font-bold text-white">Alamat Toko:</span>
+                  <p className="text-text-secondary mt-1 leading-relaxed">{address}</p>
                 </div>
               </div>
               <div className="flex gap-3 items-start">
-                <Clock className="w-5 h-5 text-accent-gold shrink-0 mt-0.5" />
+                <Clock className="w-5 h-5 text-primary shrink-0 mt-0.5" />
                 <div>
-                  <span className="font-bold text-text-primary">Jam Operasional:</span>
-                  <p className="text-text-secondary mt-0.5">{operatingHours}</p>
+                  <span className="font-bold text-white">Jam Operasional:</span>
+                  <p className="text-text-secondary mt-1">{operatingHours}</p>
                 </div>
               </div>
             </div>
 
-            <div className="pt-6 border-t border-border/60">
+            <div className="pt-6 border-t border-primary/10">
               <a
                 href={`https://wa.me/${whatsapp}`}
                 target="_blank"
                 rel="noreferrer"
-                className="block w-full text-center bg-accent-gold hover:bg-accent-gold-hover text-white py-3.5 rounded-xl text-xs font-bold transition-all"
+                className="block w-full text-center bg-primary hover:bg-primary-foreground hover:text-primary-foreground font-mono text-xs font-bold py-4 tracking-widest transition-all duration-300 rounded-none border border-primary text-[#070706] gold-hover"
               >
-                Tanya Jawab via WhatsApp
+                TANYA JAWAB VIA WHATSAPP
               </a>
             </div>
           </div>
 
           {/* Maps Embed iframe */}
-          <div className="lg:col-span-7 bg-bg-secondary border border-border rounded-3xl overflow-hidden min-h-[300px] shadow-sm relative">
+          <div className="lg:col-span-7 bg-[#0e0e0d] border border-primary/10 rounded-3xl overflow-hidden min-h-[350px] relative shadow-2xl">
             {settings?.googleMapsEmbed ? (
               <div 
                 className="w-full h-full"
@@ -333,7 +426,7 @@ export default async function HomePage() {
               <iframe
                 title="Peta Lokasi GadgetVault"
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1980.5985871234125!2d107.5453!3d-6.8724!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e68e4...!2sCimahi!5e0!3m2!1sid!2sid!4v1700000000000"
-                className="w-full h-full border-0 absolute inset-0"
+                className="w-full h-full border-0 absolute inset-0 opacity-80 grayscale invert contrast-125"
                 allowFullScreen
                 loading="lazy"
               />
@@ -341,45 +434,6 @@ export default async function HomePage() {
           </div>
         </div>
       </section>
-    </div>
-  );
-}
-
-function CategoryCard({
-  name,
-  desc,
-  slug,
-  icon,
-}: {
-  name: string;
-  desc: string;
-  slug: string;
-  icon: React.ReactNode;
-}) {
-  return (
-    <Link
-      href={`/katalog?category=${slug}`}
-      className="bg-white border border-border rounded-2xl p-6 hover:border-accent-gold hover:shadow-md transition-all duration-300 group text-left block"
-    >
-      <div className="p-3 bg-accent-gold-light/40 rounded-xl w-fit group-hover:bg-accent-gold group-hover:text-white transition-colors duration-300">
-        {icon}
-      </div>
-      <h3 className="font-bold text-text-primary text-sm mt-4 group-hover:text-accent-gold transition-colors">
-        {name}
-      </h3>
-      <p className="text-xs text-text-secondary mt-1.5 leading-relaxed">
-        {desc}
-      </p>
-    </Link>
-  );
-}
-
-function UspCard({ title, desc }: { title: string; desc: string }) {
-  return (
-    <div className="bg-white border border-border p-6 rounded-2xl shadow-sm text-left space-y-2">
-      <div className="h-2 w-10 bg-accent-gold rounded-full" />
-      <h3 className="font-bold text-text-primary text-sm pt-2">{title}</h3>
-      <p className="text-xs text-text-secondary leading-relaxed">{desc}</p>
     </div>
   );
 }
@@ -394,14 +448,14 @@ function TestimonialCard({
   quote: string;
 }) {
   return (
-    <div className="bg-white border border-border p-6 rounded-2xl shadow-sm flex flex-col justify-between text-left space-y-4">
-      <p className="text-xs text-text-secondary italic leading-relaxed">
+    <div className="glass-card p-8 rounded-2xl flex flex-col justify-between text-left space-y-6 border border-primary/10 bg-[#0e0e0d]/40">
+      <p className="text-sm text-text-secondary italic leading-relaxed">
         &ldquo;{quote}&rdquo;
       </p>
-      <div className="flex justify-between items-center pt-4 border-t border-border/60">
+      <div className="flex justify-between items-center pt-4 border-t border-primary/10">
         <div>
-          <h4 className="font-bold text-text-primary text-xs">{name}</h4>
-          <span className="text-[10px] text-text-secondary mt-0.5 block">{role}</span>
+          <h4 className="font-bold text-white text-sm">{name}</h4>
+          <span className="font-mono text-[10px] text-text-muted mt-1 block uppercase tracking-wider">{role}</span>
         </div>
         <div className="flex text-amber-400">
           {[...Array(5)].map((_, i) => (
@@ -410,20 +464,5 @@ function TestimonialCard({
         </div>
       </div>
     </div>
-  );
-}
-
-// Custom badge component
-function Badge({
-  className,
-  children,
-}: {
-  className?: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <span className={`inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium border ${className}`}>
-      {children}
-    </span>
   );
 }
