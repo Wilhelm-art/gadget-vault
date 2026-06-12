@@ -42,6 +42,7 @@ export default function SellForm({ categories }: SellFormProps) {
   const router = useRouter();
   const [step, setStep] = useState(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   // Form States
   const [itemName, setItemName] = useState("");
@@ -131,6 +132,10 @@ export default function SellForm({ categories }: SellFormProps) {
   // Form submission
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    // Prevent double submission
+    if (isSubmitting || isSubmitted) return;
+
     setIsSubmitting(true);
 
     try {
@@ -165,16 +170,17 @@ export default function SellForm({ categories }: SellFormProps) {
       const data = await res.json();
 
       if (res.ok) {
+        setIsSubmitted(true); // Permanently lock the button
         toast.success("Penawaran jual gadget Anda berhasil diajukan!");
         router.push("/transaksi");
       } else {
         toast.error(data.message || "Gagal mengajukan penawaran.");
+        setIsSubmitting(false); // Only re-enable on failure
       }
     } catch (err) {
       console.error(err);
       toast.error("Terjadi kesalahan koneksi ke server.");
-    } finally {
-      setIsSubmitting(false);
+      setIsSubmitting(false); // Only re-enable on failure
     }
   };
 
@@ -582,10 +588,10 @@ export default function SellForm({ categories }: SellFormProps) {
           ) : (
             <Button
               type="submit"
-              disabled={isSubmitting}
-              className="bg-gradient-to-r from-accent-gold to-accent-gold-hover text-white hover:from-accent-gold-hover hover:to-accent-gold px-6 py-5 rounded-xl text-xs font-bold shadow-md ml-auto gap-1"
+              disabled={isSubmitting || isSubmitted}
+              className="bg-gradient-to-r from-accent-gold to-accent-gold-hover text-white hover:from-accent-gold-hover hover:to-accent-gold px-6 py-5 rounded-xl text-xs font-bold shadow-md ml-auto gap-1 disabled:opacity-60 disabled:cursor-not-allowed"
             >
-              {isSubmitting ? "Mengirim..." : "Kirim Penawaran Jual"}
+              {isSubmitted ? "✓ Penawaran Terkirim" : isSubmitting ? "Mengirim..." : "Kirim Penawaran Jual"}
             </Button>
           )}
         </div>
