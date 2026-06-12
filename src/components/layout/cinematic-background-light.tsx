@@ -42,11 +42,11 @@ export default function CinematicBackgroundLight() {
       constructor() {
         this.x = Math.random() * width;
         this.y = Math.random() * height;
-        // Super slow cinematic drift speeds
-        this.vx = (Math.random() - 0.5) * 0.25;
-        this.vy = (Math.random() - 0.5) * 0.25;
-        this.size = Math.random() * 2 + 1; // 1px to 3px
-        this.alpha = Math.random() * 0.35 + 0.08; // subtle
+        // Super drift speed
+        this.vx = (Math.random() - 0.5) * 0.2;
+        this.vy = (Math.random() - 0.5) * 0.2;
+        this.size = Math.random() * 2.5 + 1.5; // 1.5px to 4px
+        this.alpha = Math.random() * 0.4 + 0.15; // 0.15 to 0.55 opacity
         this.baseColor = Math.random() > 0.4 ? "201, 169, 110" : "116, 90, 39"; // Gold (#c9a96e) or Deep Bronze (#745a27)
       }
 
@@ -141,7 +141,7 @@ export default function CinematicBackgroundLight() {
           const dy = particles[i].y - particles[j].y;
           const dist = Math.hypot(dx, dy);
           if (dist < 120) {
-            const alpha = ((120 - dist) / 120) * 0.07;
+            const alpha = ((120 - dist) / 120) * 0.15;
             ctx.strokeStyle = `rgba(201, 169, 110, ${alpha})`;
             ctx.lineWidth = 0.5;
             ctx.beginPath();
@@ -170,14 +170,14 @@ export default function CinematicBackgroundLight() {
   return (
     <div
       ref={containerRef}
-      className="absolute inset-0 w-full h-full z-0 overflow-hidden bg-[#FAFAF8] pointer-events-none"
+      className="absolute inset-0 w-full h-full z-0 overflow-hidden pointer-events-none"
     >
-      {/* Light premium gradient overlays */}
-      <div className="absolute inset-0 bg-gradient-to-b from-[#FAFAF8]/50 via-[#FAFAF8]/90 to-[#FAFAF8] z-10 pointer-events-none" />
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,rgba(201,169,110,0.11),transparent_60%)] z-10 pointer-events-none" />
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_70%,rgba(201,169,110,0.06),transparent_50%)] z-10 pointer-events-none" />
+      {/* Warm ambient background radials behind the canvas */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,rgba(201,169,110,0.15),transparent_60%)] pointer-events-none" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_70%,rgba(201,169,110,0.08),transparent_50%)] pointer-events-none" />
       
-      <canvas ref={canvasRef} className="w-full h-full block z-0 opacity-90 pointer-events-none" />
+      {/* Interactive canvas on top of radials, but behind hero content */}
+      <canvas ref={canvasRef} className="w-full h-full block opacity-100 pointer-events-none" />
     </div>
   );
 }
