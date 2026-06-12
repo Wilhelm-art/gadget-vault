@@ -10,6 +10,9 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { toast } from "sonner";
 import { format, differenceInCalendarDays, isBefore, startOfDay, parseISO } from "date-fns";
+import { id } from "date-fns/locale";
+import { Calendar } from "@/components/ui/calendar";
+import { DateRange } from "react-day-picker";
 
 interface RentalFormProps {
   product: {
@@ -44,6 +47,7 @@ export default function RentalForm({
 
   const [startDateStr, setStartDateStr] = useState("");
   const [endDateStr, setEndDateStr] = useState("");
+  const [range, setRange] = useState<DateRange | undefined>(undefined);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const [durationDays, setDurationDays] = useState(0);
@@ -52,6 +56,20 @@ export default function RentalForm({
 
   const dailyRate = parseFloat(product.rentPriceDaily || "0");
   const depositPercent = parseFloat(settings.depositPercentage || "0.20");
+
+  // Sync calendar selection to string states for form submission
+  useEffect(() => {
+    if (range?.from) {
+      setStartDateStr(format(range.from, "yyyy-MM-dd"));
+    } else {
+      setStartDateStr("");
+    }
+    if (range?.to) {
+      setEndDateStr(format(range.to, "yyyy-MM-dd"));
+    } else {
+      setEndDateStr("");
+    }
+  }, [range]);
 
   // Calculate duration and pricing
   useEffect(() => {
@@ -81,7 +99,47 @@ export default function RentalForm({
     }
   }, [startDateStr, endDateStr, dailyRate, userLocation.isOutOfTown, depositPercent]);
 
-  // Check if dates conflict with booked date ranges
+  // Check if date is booked
+  const isBooked = (date: Date) => {
+    const dateT = startOfDay(date).getTime();
+    return bookedRanges.some((range) => {
+      const start = startOfDay(new Date(range.start)).getTime();
+      const end = startOfDay(new Date(range.end)).getTime();
+      return dateT >= start && dateT <= end;
+    });
+  };
+
+  // Check if date is available (not booked and not in the past)
+  const isAvailable = (date: Date) => {
+    const today = startOfDay(new Date());
+    const dateT = startOfDay(date).getTime();
+    return dateT >= today.getTime() && !isBooked(date);
+  };
+
+  const handleRangeSelect = (newRange: DateRange | undefined) => {
+    if (newRange?.from && newRange?.to) {
+      // Check if any date in between from and to is booked
+      let current = startOfDay(newRange.from);
+      const end = startOfDay(newRange.to);
+      let hasBooked = false;
+      while (current <= end) {
+        if (isBooked(current)) {
+          hasBooked = true;
+          break;
+        }
+        current = new Date(current.getTime() + 24 * 60 * 60 * 1000);
+      }
+
+      if (hasBooked) {
+        toast.error("Rentang tanggal sewa tidak boleh melewati tanggal yang sudah disewa.");
+        setRange(undefined);
+        return;
+      }
+    }
+    setRange(newRange);
+  };
+
+  // Check if dates conflict with booked date ranges (fallback for form submit)
   const isRangeBooked = (start: Date, end: Date) => {
     const startT = start.getTime();
     const endT = end.getTime();
@@ -178,57 +236,60 @@ export default function RentalForm({
               </div>
             </div>
 
-            {/* Date inputs */}
+            {/* Inline Date Picker Calendar */}
             <div className="space-y-4">
-              <h4 className="text-sm font-semibold text-text-primary uppercase tracking-wider">Jadwal Sewa</h4>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="space-y-1">
-                  <label className="text-xs font-semibold text-text-secondary uppercase">Tanggal Mulai</label>
-                  <div className="relative">
-                    <Input
-                      type="date"
-                      min={todayStr}
-                      value={startDateStr}
-                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => setStartDateStr(e.target.value)}
-                      className="bg-bg-secondary w-full"
-                      disabled={isSubmitting}
-                      required
-                    />
-                  </div>
-                </div>
-                <div className="space-y-1">
-                  <label className="text-xs font-semibold text-text-secondary uppercase">Tanggal Selesai</label>
-                  <div className="relative">
-                    <Input
-                      type="date"
-                      min={startDateStr || todayStr}
-                      value={endDateStr}
-                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEndDateStr(e.target.value)}
-                      className="bg-bg-secondary w-full"
-                      disabled={isSubmitting}
-                      required
-                    />
-                  </div>
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 border-b border-border/40 pb-2">
+                <h4 className="text-sm font-semibold text-text-primary uppercase tracking-wider">Pilih Jadwal Sewa</h4>
+                <div className="flex gap-4 text-[10px] font-semibold uppercase">
+                  <span className="flex items-center gap-1 text-emerald-700">
+                    <span className="h-2 w-2 rounded-full bg-emerald-500" /> Tersedia
+                  </span>
+                  <span className="flex items-center gap-1 text-red-700">
+                    <span className="h-2 w-2 rounded-full bg-red-500" /> Sedang Disewa
+                  </span>
                 </div>
               </div>
-            </div>
 
-            {/* Booked dates warning info */}
-            {bookedRanges.length > 0 && (
-              <div className="p-4 bg-bg-secondary border border-border rounded-xl space-y-2">
-                <div className="flex items-center gap-2 text-xs font-semibold text-text-primary">
-                  <Info className="h-4 w-4 text-accent-gold" />
-                  <span>Jadwal Terisi (Tidak Tersedia):</span>
-                </div>
-                <div className="flex flex-wrap gap-2">
-                  {bookedRanges.map((range, idx) => (
-                    <Badge key={idx} variant="outline" className="border-danger/30 text-danger bg-danger/5 text-[10px]">
-                      {format(parseISO(range.start), "dd MMM")} &mdash; {format(parseISO(range.end), "dd MMM yyyy")}
-                    </Badge>
-                  ))}
-                </div>
+              <p className="text-xs text-text-secondary leading-relaxed">
+                Silakan pilih rentang tanggal mulai hingga selesai sewa langsung pada kalender di bawah ini. Tanggal yang berwarna merah tidak tersedia untuk dipilih.
+              </p>
+
+              <div className="flex justify-center p-4 bg-bg-secondary rounded-2xl border border-border">
+                <Calendar
+                  mode="range"
+                  selected={range}
+                  onSelect={handleRangeSelect}
+                  disabled={[
+                    { before: new Date() },
+                    isBooked
+                  ]}
+                  modifiers={{
+                    booked: isBooked,
+                    available: isAvailable,
+                  }}
+                  className="w-full max-w-sm"
+                />
               </div>
-            )}
+
+              {startDateStr && endDateStr ? (
+                <div className="flex items-center justify-between p-4 bg-accent-gold-light/40 border border-accent-gold/20 rounded-xl text-xs">
+                  <div className="flex items-center gap-2">
+                    <CalendarIcon className="h-4 w-4 text-accent-gold animate-pulse" />
+                    <div>
+                      <span className="font-semibold text-text-secondary">Tanggal Sewa Terpilih:</span>
+                      <div className="font-bold text-text-primary mt-0.5">
+                        {format(new Date(startDateStr), "dd MMMM yyyy", { locale: id })} &mdash; {format(new Date(endDateStr), "dd MMMM yyyy", { locale: id })}
+                      </div>
+                    </div>
+                  </div>
+                  <Badge className="bg-accent-gold text-white font-semibold px-2.5 py-1">{durationDays} Hari</Badge>
+                </div>
+              ) : (
+                <div className="p-4 bg-bg-secondary border border-border border-dashed rounded-xl text-center text-xs text-text-muted">
+                  Silakan klik tanggal mulai dan tanggal selesai sewa pada kalender di atas.
+                </div>
+              )}
+            </div>
           </CardContent>
         </Card>
 

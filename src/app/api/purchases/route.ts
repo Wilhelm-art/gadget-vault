@@ -10,6 +10,19 @@ export async function POST(req: Request) {
     }
 
     const userId = (session.user as any).id;
+
+    // Verify that the user exists in the database (handles stale session cookies)
+    const user = await prisma.user.findUnique({
+      where: { id: userId },
+    });
+
+    if (!user) {
+      return NextResponse.json(
+        { message: "Sesi Anda telah kedaluwarsa atau akun tidak ditemukan. Silakan keluar dan masuk kembali." },
+        { status: 401 }
+      );
+    }
+
     const { productId } = await req.json();
 
     if (!productId) {
@@ -74,10 +87,10 @@ export async function POST(req: Request) {
       { message: "Pengajuan pembelian berhasil dibuat.", transaction },
       { status: 201 }
     );
-  } catch (error) {
+  } catch (error: any) {
     console.error("Purchases API Error:", error);
     return NextResponse.json(
-      { message: "Terjadi kesalahan internal. Silakan coba lagi." },
+      { message: `Terjadi kesalahan internal: ${error?.message || String(error)}` },
       { status: 500 }
     );
   }

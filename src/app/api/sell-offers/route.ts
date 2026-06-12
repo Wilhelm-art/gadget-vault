@@ -13,6 +13,18 @@ export async function POST(req: Request) {
 
     const userId = (session.user as any).id;
 
+    // Verify that the user exists in the database (handles stale session cookies)
+    const user = await prisma.user.findUnique({
+      where: { id: userId },
+    });
+
+    if (!user) {
+      return NextResponse.json(
+        { message: "Sesi Anda telah kedaluwarsa atau akun tidak ditemukan. Silakan keluar dan masuk kembali." },
+        { status: 401 }
+      );
+    }
+
     // 2. Parse form data
     const formData = await req.formData();
     const itemName = formData.get("itemName") as string;

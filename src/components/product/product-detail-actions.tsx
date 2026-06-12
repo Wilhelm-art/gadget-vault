@@ -76,7 +76,7 @@ export default function ProductDetailActions({
   const handleRentClick = () => {
     if (!isLoggedIn) {
       toast.error("Silakan masuk terlebih dahulu.");
-      router.push(`/login?callbackUrl=/katalog/${productSlug}`);
+      router.push(`/login?callbackUrl=/sewa/${productSlug}`);
       return;
     }
     router.push(`/sewa/${productSlug}`);

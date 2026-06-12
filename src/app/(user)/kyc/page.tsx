@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { toast } from "sonner";
+import { Info } from "lucide-react";
 
 const kycSchema = z.object({
   ktpNumber: z.string().length(16, "Nomor KTP harus tepat 16 digit"),
@@ -23,6 +24,10 @@ const kycSchema = z.object({
 export default function KycPage() {
   const { data: session, update: updateSession } = useSession();
   const router = useRouter();
+  const searchParams = useSearchParams();
+  
+  const returnUrl = searchParams.get("returnUrl") || "";
+  const notice = searchParams.get("notice") || "";
   
   const [currentStep, setCurrentStep] = useState(1);
   const [ktpFront, setKtpFront] = useState<File | null>(null);
@@ -155,6 +160,9 @@ export default function KycPage() {
 
   // 1. If KYC is verified
   if (dbKycStatus === "approved" || (session?.user as any)?.kycStatus === "verified") {
+    const targetUrl = returnUrl || "/katalog";
+    const buttonText = returnUrl ? "Lanjutkan Reservasi Sewa" : "Jelajahi Katalog";
+
     return (
       <div className="max-w-2xl mx-auto py-12 px-4">
         <Card className="border-success/30 bg-white">
@@ -170,8 +178,8 @@ export default function KycPage() {
             </CardDescription>
           </CardHeader>
           <CardFooter className="flex justify-center">
-            <Button onClick={() => router.push("/katalog")} className="bg-accent-gold text-white hover:bg-accent-gold-hover">
-              Jelajahi Katalog
+            <Button onClick={() => router.push(targetUrl)} className="bg-accent-gold text-white hover:bg-accent-gold-hover">
+              {buttonText}
             </Button>
           </CardFooter>
         </Card>
@@ -181,6 +189,20 @@ export default function KycPage() {
 
   // 2. If KYC is pending verification
   if (dbKycStatus === "pending") {
+    // Determine backUrl
+    let backUrl = "/";
+    let backLabel = "Kembali ke Beranda";
+    if (returnUrl) {
+      const match = returnUrl.match(/\/sewa\/([a-zA-Z0-9_-]+)/);
+      if (match && match[1]) {
+        backUrl = `/katalog/${match[1]}`;
+        backLabel = "Kembali ke Detail Produk";
+      } else {
+        backUrl = returnUrl;
+        backLabel = "Kembali ke Halaman Sebelumnya";
+      }
+    }
+
     return (
       <div className="max-w-2xl mx-auto py-12 px-4 animate-fade-in-up">
         <Card className="border-warning/30 bg-white shadow-sm">
@@ -196,11 +218,14 @@ export default function KycPage() {
             </CardDescription>
           </CardHeader>
           <CardContent className="text-center text-text-secondary text-sm">
-            Kami akan mengirimkan notifikasi setelah dokumen selesai diverifikasi. Terima kasih atas kesabaran Anda.
+            Kami akan mengirimkan notifikasi setelah dokumen selesai diverifikasi. Anda belum dapat melakukan transaksi sewa gadget sampai status Anda disetujui.
           </CardContent>
-          <CardFooter className="flex justify-center">
-            <Button variant="outline" onClick={() => router.push("/")} className="border-accent-gold text-accent-gold hover:bg-accent-gold-light">
-              Kembali ke Beranda
+          <CardFooter className="flex flex-col sm:flex-row justify-center gap-3 w-full">
+            <Button variant="outline" onClick={() => router.push(backUrl)} className="w-full sm:w-auto border-accent-gold text-accent-gold hover:bg-accent-gold-light">
+              {backLabel}
+            </Button>
+            <Button onClick={() => router.push("/")} className="w-full sm:w-auto bg-bg-tertiary text-text-primary hover:bg-bg-secondary border border-border">
+              Ke Beranda
             </Button>
           </CardFooter>
         </Card>
@@ -211,6 +236,16 @@ export default function KycPage() {
   // 3. KYC Form Wizard (Unverified / Rejected)
   return (
     <div className="max-w-2xl mx-auto py-12 px-4 animate-fade-in-up">
+      {notice === "kyc_required" && (
+        <div className="mb-6 p-4 bg-warning/10 border border-warning/20 rounded-xl text-sm text-warning flex items-start gap-2.5 shadow-sm">
+          <Info className="h-5 w-5 shrink-0 mt-0.5 text-warning" />
+          <div className="flex flex-col gap-1">
+            <span className="font-semibold text-text-primary">Verifikasi KYC Diperlukan</span>
+            <span>Anda wajib melengkapi verifikasi identitas (KYC) di bawah ini terlebih dahulu sebelum dapat melanjutkan reservasi sewa gadget.</span>
+          </div>
+        </div>
+      )}
+
       {dbKycStatus === "rejected" && (
         <div className="mb-6 p-4 bg-danger/10 border border-danger/20 rounded-xl text-sm text-danger flex flex-col gap-1">
           <span className="font-semibold">⚠️ Pengajuan KYC Sebelumnya Ditolak</span>
