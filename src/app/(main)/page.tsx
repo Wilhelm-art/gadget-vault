@@ -23,7 +23,7 @@ export default async function HomePage() {
   const operatingHours = "Senin - Sabtu: 09.00 - 18.00 WIB";
 
   return (
-    <div className="space-y-28 pb-24 bg-[#FAFAF8] text-[#1A1C1C] overflow-x-hidden font-sans paper-noise">
+    <div className="space-y-28 pb-24 bg-transparent text-[#1A1C1C] overflow-x-hidden font-sans paper-noise">
 
       {/* ── 1. HERO SECTION ── */}
       <section className="relative min-h-[88vh] flex items-center overflow-hidden border-b border-[#E8E4DB] py-20 sm:py-28">

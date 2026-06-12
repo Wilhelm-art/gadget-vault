@@ -10,7 +10,7 @@ export default function MainLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="min-h-screen flex flex-col bg-bg-primary pb-16 md:pb-0 relative">
+    <div className="min-h-screen flex flex-col bg-transparent pb-16 md:pb-0 relative">
       <ScrollParallaxBackground />
       <Navbar />
       <main className="flex-grow relative z-[1]">{children}</main>
