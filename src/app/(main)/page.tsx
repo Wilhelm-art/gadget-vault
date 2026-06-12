@@ -1,5 +1,6 @@
 import React from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { 
   Smartphone, Camera, ShieldCheck, Heart, 
   MapPin, Clock, ArrowRight, Star, BadgeCheck, Zap,
@@ -7,6 +8,7 @@ import {
 } from "lucide-react";
 import { getCachedFeaturedProducts, getCachedStoreSettings } from "@/lib/queries";
 import ProductCard from "@/components/product/product-card";
+import CinematicBackgroundLight from "@/components/layout/cinematic-background-light";
 
 export const metadata = {
   title: "GadgetVault — Jual, Beli & Sewa Gadget Cimahi Bandung",
@@ -21,15 +23,12 @@ export default async function HomePage() {
   const operatingHours = "Senin - Sabtu: 09.00 - 18.00 WIB";
 
   return (
-    <div className="space-y-28 pb-24 bg-[#FAFAF8] text-[#1A1C1C] overflow-x-hidden font-sans">
+    <div className="space-y-28 pb-24 bg-[#FAFAF8] text-[#1A1C1C] overflow-x-hidden font-sans paper-noise">
 
       {/* ── 1. HERO SECTION ── */}
       <section className="relative min-h-[88vh] flex items-center overflow-hidden border-b border-[#E8E4DB] py-20 sm:py-28">
-        {/* Warm ambient background radials */}
-        <div className="absolute inset-0 pointer-events-none overflow-hidden">
-          <div className="absolute -top-32 -right-32 w-[700px] h-[700px] bg-[#c9a96e]/6 blur-[140px] rounded-full" />
-          <div className="absolute bottom-0 -left-48 w-[500px] h-[500px] bg-[#c9a96e]/4 blur-[120px] rounded-full" />
-        </div>
+        {/* Animated & Interactive Premium Background */}
+        <CinematicBackgroundLight />
 
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-16 items-center w-full">
           {/* Left Column */}
@@ -101,11 +100,14 @@ export default async function HomePage() {
                 </div>
 
                 {/* Product image */}
-                <div className="relative group flex justify-center bg-white px-8 py-6">
-                  <img
+                <div className="relative group flex justify-center bg-white h-[280px] sm:h-[320px] w-full">
+                  <Image
                     alt="iPhone 14 Pro Max"
-                    className="w-auto h-[280px] sm:h-[320px] object-contain drop-shadow-[0_12px_36px_rgba(0,0,0,0.12)] transform group-hover:scale-105 transition-transform duration-700"
                     src="https://lh3.googleusercontent.com/aida-public/AB6AXuB6zz3eFrt6v2Tb4Jh8kCLTwi8Kv_wh-NFtu3C8KkMBq7zFBlJz0-t2zSfOGQ5eKavxGpiXMZaBdVwHrr8YhMevFnvrIi5uSFtvCN4VV5F_hWpnjX5eC-1tBwrFrLdfvLps0P1NzgFdPwRupKYgNDAlpAMJX91rfvpFfJhgkyzfJbVStdUZCYcNxKhNS8Dwh8sIKqE88bIxOH0_hg9AGcqofgdkErbp8V5DD6m4cQBAXk4EctdiE49snvgIznbjtfnSkLBQWmrWces"
+                    fill
+                    priority
+                    sizes="(max-width: 768px) 100vw, 400px"
+                    className="object-contain px-8 py-6 drop-shadow-[0_12px_36px_rgba(0,0,0,0.12)] transform group-hover:scale-105 transition-transform duration-700"
                   />
                 </div>
 
@@ -152,10 +154,12 @@ export default async function HomePage() {
           {/* Smartphones — wide */}
           <Link href="/katalog?category=handphone" className="md:col-span-8 group cursor-pointer">
             <div className="h-80 rounded-2xl overflow-hidden relative border border-[#E8E4DB] shadow-sm hover:shadow-lg transition-shadow duration-300 bg-white">
-              <img
+              <Image
                 alt="Smartphones"
-                className="absolute inset-0 w-full h-full object-cover opacity-70 group-hover:scale-105 transition-transform duration-1000"
                 src="https://lh3.googleusercontent.com/aida-public/AB6AXuD7d-vAJ9HaR3AZJr1Yh11KtITHQxS2eym2d0zz1kz6P4VNzUltwceGzuMGASuFzEaSY8P1qgdsaWEFOfrcIxr6-VoKF1iCyjh5Dost2Es9JvgHS2ZVL7lmLCiwl1uNoKnYlo4zK6pDimwtN9ysXPCNOiJAJU56ssaNcLaVxUMGb3dkV72BvRKVmmshE2EHFkKmO3MRYpF78cNp5wKYjToie682Dm3Nubn59kr0378k9fW3EzKknEx41Jg1wF_xV15h-WKduMLW_uA"
+                fill
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 66vw, 800px"
+                className="object-cover opacity-70 group-hover:scale-105 transition-transform duration-1000"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-white/95 via-white/40 to-transparent z-0" />
               <div className="absolute inset-0 z-10 p-8 flex flex-col justify-between">
@@ -178,10 +182,12 @@ export default async function HomePage() {
           {/* Cameras — narrow */}
           <Link href="/katalog?category=kamera" className="md:col-span-4 group cursor-pointer">
             <div className="h-80 rounded-2xl overflow-hidden relative border border-[#E8E4DB] shadow-sm hover:shadow-lg transition-shadow duration-300 bg-white">
-              <img
+              <Image
                 alt="Cameras"
-                className="absolute inset-0 w-full h-full object-cover opacity-70 group-hover:scale-105 transition-transform duration-1000"
                 src="https://lh3.googleusercontent.com/aida-public/AB6AXuA-UfNnGVmpF69QU9khyB7AyVhRAybBaggO7L2c1CV0gm3ZurE6ZUEBAo4dbyRhj82rJ8dOZHfHrTs1XnDVsbg-bMSeQh5sWkh8vIwZwRjhMlwdDOf178zkHYmnaAd7U1vDYI8f4x-Jwyqb8ahoXXBa5ePyk8Snl8-uDeraDtv96I0uB68Tw9sxy6jKFyWZmX58e6op-PPTaLhloKDQ6_yROYxkNXuIKdOkdjl5sfCFG6sZ1Py-CVX_P4qIaEl9UndqbzL4opGCgZg"
+                fill
+                sizes="(max-width: 768px) 100vw, 400px"
+                className="object-cover opacity-70 group-hover:scale-105 transition-transform duration-1000"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-white/95 via-white/40 to-transparent z-0" />
               <div className="absolute inset-0 z-10 p-8 flex flex-col justify-between">
@@ -204,10 +210,12 @@ export default async function HomePage() {
           {/* Drones — narrow */}
           <Link href="/katalog?category=drone" className="md:col-span-4 group cursor-pointer">
             <div className="h-80 rounded-2xl overflow-hidden relative border border-[#E8E4DB] shadow-sm hover:shadow-lg transition-shadow duration-300 bg-white">
-              <img
+              <Image
                 alt="Drones"
-                className="absolute inset-0 w-full h-full object-cover opacity-70 group-hover:scale-105 transition-transform duration-1000"
                 src="https://lh3.googleusercontent.com/aida-public/AB6AXuBFqai6lOU6BIPLomupm4E_WRN53MWPBiTCWSrgqmjEdWOKFyLYCEg7_CHaaFw0w9xz9j1YF5mAow1MAy9a9-ZBFDCE_-Ai5cB-5NJmGOTMY9kWE6kbGJRfw7sTfk-EY5fXrcvM2cZTy3NmVotPePk0R116imysWJlmWlwoYidzuwes7aPbrR10F3S6AyVZ-OgpRM6b0ar6M3t-URQPTOOBSPsVKxQfwPq0ikkdclP7Umv-kQ-M8uMlxSee65W7g0tVcUHW9a_FMwc"
+                fill
+                sizes="(max-width: 768px) 100vw, 400px"
+                className="object-cover opacity-70 group-hover:scale-105 transition-transform duration-1000"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-white/95 via-white/40 to-transparent z-0" />
               <div className="absolute inset-0 z-10 p-8 flex flex-col justify-between">
@@ -230,10 +238,12 @@ export default async function HomePage() {
           {/* Accessories — wide */}
           <Link href="/katalog?category=aksesoris" className="md:col-span-8 group cursor-pointer">
             <div className="h-80 rounded-2xl overflow-hidden relative border border-[#E8E4DB] shadow-sm hover:shadow-lg transition-shadow duration-300 bg-white">
-              <img
+              <Image
                 alt="Accessories"
-                className="absolute inset-0 w-full h-full object-cover opacity-70 group-hover:scale-105 transition-transform duration-1000"
                 src="https://lh3.googleusercontent.com/aida-public/AB6AXuBgK-EZXG25JqJ6onx8pJpqalcu7JXrFHBcrmw0SDxqaOJ62ETwooN1I4dy25T6CCiNKFmZkW3iPiFdDLErHhaD93PVsbhBGG6psHFHIT4WHA_XbjH1LP251t9fFvR4JKNTXZzwuhtGOW8Myjd8SPupiU69aauhamAj4EVxrToc1PaDyl6H0HRVhVEsQSmdIgUJGldxb5Fr9G5wDHwJ2RghOfjsP9Eb_6ZIvPj2BRNq2r-djF8YB52vVlCybB591Esv6RA9kQtquuM"
+                fill
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 66vw, 800px"
+                className="object-cover opacity-70 group-hover:scale-105 transition-transform duration-1000"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-white/95 via-white/40 to-transparent z-0" />
               <div className="absolute inset-0 z-10 p-8 flex flex-col justify-between">

@@ -59,6 +59,9 @@ export default function RootLayout({
       lang="id"
       className={`${inter.variable} ${playfairDisplay.variable} ${dmSans.variable} ${hankenGrotesk.variable} ${jetbrainsMono.variable} h-full antialiased`}
     >
+      <head>
+        <link rel="preconnect" href="https://lh3.googleusercontent.com" crossOrigin="anonymous" />
+      </head>
       <body className="min-h-full flex flex-col bg-bg-primary text-text-primary font-sans">
         <Providers>
           {children}
