@@ -1,12 +1,69 @@
-import React from "react";
+import React, { Suspense } from "react";
 import Link from "next/link";
 import { Package, Plus, Edit, Trash2, CheckCircle2, AlertCircle } from "lucide-react";
 import prisma from "@/lib/prisma";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import AdminProductActions from "@/components/admin/admin-product-actions";
+import { connection } from "next/server";
+
+export const unstable_instant = {
+  prefetch: "runtime",
+  samples: [
+    {
+      searchParams: { search: "" },
+      cookies: [],
+      headers: [
+        ["x-forwarded-proto", "https"],
+        ["x-forwarded-host", "localhost:3000"],
+        ["x-instant-validation", "true"],
+      ],
+    },
+  ],
+};
 
 export default async function AdminProductsPage() {
+  return (
+    <div className="space-y-6">
+      {/* Header */}
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+        <div>
+          <h1 className="text-2xl font-bold tracking-tight text-text-primary">Manajemen Produk</h1>
+          <p className="text-sm text-text-secondary mt-1">
+            Tambah, ubah, dan kelola katalog produk yang ditampilkan di website.
+          </p>
+        </div>
+        <Link
+          href="/admin/produk/tambah"
+          className={buttonVariants({ className: "bg-accent-gold text-white hover:bg-accent-gold-hover gap-2" })}
+        >
+          <Plus className="h-4 w-4" />
+          Tambah Produk
+        </Link>
+      </div>
+
+      <Suspense fallback={<TableSkeleton />}>
+        <AdminProductsContent />
+      </Suspense>
+    </div>
+  );
+}
+
+function TableSkeleton() {
+  return (
+    <div className="bg-white border border-border rounded-2xl p-6 shadow-sm space-y-4 animate-pulse">
+      <div className="h-8 bg-slate-200 rounded w-1/4" />
+      <div className="space-y-3">
+        {[1, 2, 3, 4, 5].map((i) => (
+          <div key={i} className="h-10 bg-slate-200 rounded" />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+async function AdminProductsContent() {
+  await connection();
   // 1. Fetch products with categories
   const products = await prisma.product.findMany({
     orderBy: { createdAt: "desc" },
@@ -56,24 +113,7 @@ export default async function AdminProductsPage() {
   };
 
   return (
-    <div className="space-y-6">
-      {/* Header */}
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-        <div>
-          <h1 className="text-2xl font-bold tracking-tight text-text-primary">Manajemen Produk</h1>
-          <p className="text-sm text-text-secondary mt-1">
-            Tambah, ubah, dan kelola katalog produk yang ditampilkan di website.
-          </p>
-        </div>
-        <Link
-          href="/admin/produk/tambah"
-          className={buttonVariants({ className: "bg-accent-gold text-white hover:bg-accent-gold-hover gap-2" })}
-        >
-          <Plus className="h-4 w-4" />
-          Tambah Produk
-        </Link>
-      </div>
-
+    <>
       {/* Products Table */}
       {products.length === 0 ? (
         <div className="text-center py-16 bg-white border border-border rounded-2xl p-8">
@@ -139,6 +179,7 @@ export default async function AdminProductsPage() {
           </div>
         </div>
       )}
-    </div>
+    </>
   );
 }
+

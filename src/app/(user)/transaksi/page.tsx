@@ -1,5 +1,6 @@
-import React from "react";
+import React, { Suspense } from "react";
 import { redirect } from "next/navigation";
+import { connection } from "next/server";
 import Link from "next/link";
 import Image from "next/image";
 import { Calendar, ShoppingBag, Coins, History, ArrowRight } from "lucide-react";
@@ -7,13 +8,57 @@ import { auth } from "@/auth";
 import prisma from "@/lib/prisma";
 import { Badge } from "@/components/ui/badge";
 import Breadcrumb from "@/components/layout/breadcrumb";
-
 export const metadata = {
   title: "Riwayat Transaksi",
   description: "Lihat dan kelola riwayat pemesanan sewa, pembelian, dan penawaran jual gadget Anda di GadgetVault.",
 };
 
+export const unstable_instant = {
+  prefetch: "runtime",
+  samples: [
+    {
+      searchParams: { search: "" },
+      cookies: [],
+      headers: [
+        ["x-forwarded-proto", "https"],
+        ["x-forwarded-host", "localhost:3000"],
+      ],
+    },
+  ],
+};
+
 export default async function UserTransactionsPage() {
+  return (
+    <div className="space-y-6">
+      <div className="space-y-2">
+        <h1 className="text-2xl font-bold tracking-tight text-text-primary flex items-center gap-2">
+          <History className="h-6 w-6 text-accent-gold" /> Riwayat Transaksi Anda
+        </h1>
+        <p className="text-xs text-text-secondary">
+          Kelola reservasi sewa gadget, request beli, atau taksiran jual gadget bekas Anda.
+        </p>
+      </div>
+
+      <Suspense
+        fallback={
+          <div className="h-96 bg-white border border-border rounded-2xl p-8 animate-pulse shadow-sm flex flex-col justify-between">
+            <div className="space-y-4">
+              <div className="h-6 bg-bg-secondary rounded w-1/4" />
+              <div className="h-10 bg-bg-secondary rounded" />
+              <div className="h-10 bg-bg-secondary rounded" />
+            </div>
+            <div className="h-12 bg-bg-secondary rounded w-1/3 self-end" />
+          </div>
+        }
+      >
+        <TransactionsContent />
+      </Suspense>
+    </div>
+  );
+}
+
+async function TransactionsContent() {
+  await connection();
   const session = await auth();
   if (!session || !session.user) {
     redirect("/login?callbackUrl=/transaksi");
@@ -125,28 +170,18 @@ export default async function UserTransactionsPage() {
   };
 
   return (
-    <div className="space-y-6">
-      <div className="space-y-2">
-        <h1 className="text-2xl font-bold tracking-tight text-text-primary flex items-center gap-2">
-          <History className="h-6 w-6 text-accent-gold" /> Riwayat Transaksi Anda
-        </h1>
-        <p className="text-xs text-text-secondary">
-          Kelola reservasi sewa gadget, request beli, atau taksiran jual gadget bekas Anda.
-        </p>
-      </div>
-
-      <TransactionsContainer
-        rentals={rentals}
-        purchases={purchases}
-        sellOffers={sellOffers}
-        formatRupiah={formatRupiah}
-        getRentalStatusBadge={getRentalStatusBadge}
-        getPurchaseStatusBadge={getPurchaseStatusBadge}
-        getSellStatusBadge={getSellStatusBadge}
-      />
-    </div>
+    <TransactionsContainer
+      rentals={rentals}
+      purchases={purchases}
+      sellOffers={sellOffers}
+      formatRupiah={formatRupiah}
+      getRentalStatusBadge={getRentalStatusBadge}
+      getPurchaseStatusBadge={getPurchaseStatusBadge}
+      getSellStatusBadge={getSellStatusBadge}
+    />
   );
 }
+
 
 // Client container for interactive tab switching
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";

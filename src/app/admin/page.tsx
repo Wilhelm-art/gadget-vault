@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import Link from "next/link";
 import { 
   Users, UserCheck, Calendar, CircleDollarSign, Clock, 
@@ -16,7 +16,71 @@ export const metadata = {
   description: "Dashboard panel admin GadgetVault - Cimahi",
 };
 
+import { connection } from "next/server";
+
+export const unstable_instant = {
+  prefetch: "runtime",
+  samples: [
+    {
+      searchParams: { search: "" },
+      cookies: [],
+      headers: [
+        ["x-forwarded-proto", "https"],
+        ["x-forwarded-host", "localhost:3000"],
+        ["x-instant-validation", "true"],
+      ],
+    },
+  ],
+};
+
 export default async function AdminDashboardOverview() {
+  return (
+    <Suspense fallback={<AdminDashboardSkeleton />}>
+      <AdminDashboardOverviewContent />
+    </Suspense>
+  );
+}
+
+function AdminDashboardSkeleton() {
+  return (
+    <div className="space-y-8 animate-pulse">
+      {/* Header Skeleton */}
+      <div className="flex items-start justify-between">
+        <div className="space-y-2 w-1/3">
+          <div className="h-3 bg-slate-200 rounded w-1/2" />
+          <div className="h-6 bg-slate-200 rounded" />
+          <div className="h-3 bg-slate-200 rounded w-2/3" />
+        </div>
+      </div>
+
+      {/* Stats Cards Skeleton */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        {[1, 2, 3, 4].map((i) => (
+          <div key={i} className="p-5 rounded-2xl border border-slate-200 bg-white h-32 flex justify-between">
+            <div className="space-y-3 w-2/3">
+              <div className="h-3 bg-slate-200 rounded w-2/3" />
+              <div className="h-6 bg-slate-200 rounded" />
+              <div className="h-3 bg-slate-200 rounded w-1/2" />
+            </div>
+            <div className="w-10 h-10 bg-slate-200 rounded-xl" />
+          </div>
+        ))}
+      </div>
+
+      {/* Main Grid Skeleton */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="lg:col-span-2 h-80 bg-white border border-slate-200 rounded-2xl p-5" />
+        <div className="h-80 bg-white border border-slate-200 rounded-2xl p-5" />
+      </div>
+
+      {/* Recent Activity Skeleton */}
+      <div className="bg-white border border-slate-200 rounded-2xl p-6 h-64" />
+    </div>
+  );
+}
+
+async function AdminDashboardOverviewContent() {
+  await connection();
   // Auth handled by layout, just get session for greeting
   const session = await auth();
   const adminName = (session?.user?.name || "Admin").split(" ")[0];
