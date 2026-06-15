@@ -23,10 +23,10 @@ export default async function HomePage() {
   const operatingHours = "Senin - Sabtu: 09.00 - 18.00 WIB";
 
   return (
-    <div className="space-y-32 pb-24 bg-transparent text-[#1A1C1C] overflow-x-hidden font-sans paper-noise">
+    <div className="space-y-36 pb-24 bg-transparent text-[#1A1C1C] overflow-x-hidden font-sans paper-noise font-light">
 
       {/* ── 1. HERO SECTION ── */}
-      <section className="relative min-h-[90vh] flex items-center overflow-hidden border-b border-[#E8E4DB] py-24 sm:py-32">
+      <section className="relative min-h-[92vh] flex items-center overflow-hidden border-b border-[#E8E4DB] py-24 sm:py-32">
         {/* Animated & Interactive Premium Background */}
         <CinematicBackgroundLight />
 
@@ -39,34 +39,34 @@ export default async function HomePage() {
             </span>
 
             <div className="space-y-4">
-              <h1 className="text-4xl sm:text-5xl lg:text-[4rem] font-display font-medium text-[#1A1C1C] leading-[1.05] tracking-tight">
+              <h1 className="text-4xl sm:text-5xl lg:text-[4.5rem] font-display font-medium text-[#1A1C1C] leading-[1.0] tracking-tight">
                 Sewa, Beli &amp; Jual <br />
-                <span className="text-[#745a27] font-semibold italic">Gadget Premium</span> <br />
-                di Cimahi
+                <span className="text-[#745a27] font-semibold italic">Gadget Flagship</span> <br />
+                di Cimahi &amp; Bandung
               </h1>
             </div>
 
-            <p className="text-base sm:text-lg text-[#4d463a] max-w-xl leading-relaxed">
-              Dapatkan akses ke handphone flagship, kamera mirrorless profesional, drone sinematik, dan berbagai aksesoris berkualitas. Transaksi aman secara offline (COD toko), verifikasi KYC instan, bebas deposit untuk warga Bandung/Cimahi.
+            <p className="text-base sm:text-lg text-[#4d463a] max-w-xl font-light leading-relaxed">
+              Koleksi terkurasi dari handphone flagship, kamera mirrorless profesional, drone sinematik, dan aksesoris berkualitas. KYC instan, COD toko fisik, bebas deposit.
             </p>
 
             <div className="flex flex-wrap gap-4 pt-2">
               <Link
                 href="/sewa"
-                className="bg-[#745a27] hover:bg-[#5f491f] text-white font-sans text-xs font-semibold tracking-wider uppercase px-8 py-4.5 rounded-full transition-all duration-300 flex items-center gap-2.5 shadow-[0_4px_20px_rgba(116,90,39,0.15)] hover:shadow-[0_8px_30px_rgba(116,90,39,0.25)] hover:-translate-y-0.5"
+                className="bg-[#745a27] hover:bg-[#5f491f] text-white font-sans text-xs font-semibold tracking-wider uppercase px-10 py-5 rounded-full transition-all duration-300 flex items-center gap-3 shadow-[0_4px_25px_rgba(116,90,39,0.12)] hover:shadow-[0_8px_30px_rgba(116,90,39,0.22)] hover:-translate-y-0.5"
               >
                 Mulai Sewa Sekarang
                 <ArrowRight className="w-4 h-4" />
               </Link>
               <Link
                 href="/katalog"
-                className="bg-white/80 text-[#1A1C1C] font-sans text-xs font-semibold tracking-wider uppercase px-8 py-4.5 rounded-full border border-[#E8E4DB] hover:border-[#745a27] hover:text-[#745a27] transition-all duration-300 shadow-sm hover:shadow-md hover:-translate-y-0.5 backdrop-blur-sm"
+                className="bg-white/80 text-[#1A1C1C] font-sans text-xs font-semibold tracking-wider uppercase px-10 py-5 rounded-full border border-[#E8E4DB] hover:border-[#745a27] hover:text-[#745a27] transition-all duration-300 shadow-sm hover:shadow-md hover:-translate-y-0.5 backdrop-blur-sm"
               >
                 Jelajahi Katalog
               </Link>
               <Link
                 href="/jual"
-                className="text-xs font-bold tracking-wider uppercase px-6 py-4.5 text-[#4d463a] hover:text-[#745a27] transition-all duration-300 flex items-center gap-2 hover:translate-x-1"
+                className="text-xs font-bold tracking-wider uppercase px-6 py-5 text-[#4d463a] hover:text-[#745a27] transition-all duration-300 flex items-center gap-2 hover:translate-x-1.5"
               >
                 <Tag className="w-4 h-4" />
                 Jual Gadget
@@ -84,49 +84,54 @@ export default async function HomePage() {
             </div>
           </div>
 
-          {/* Right Column — Floating Product Card */}
-          <div className="lg:col-span-5 relative flex justify-center items-center h-[500px] sm:h-[560px] w-full">
+          {/* Right Column — Asymmetrical Overlapping Showcase Stack */}
+          <div className="lg:col-span-5 relative flex justify-center items-center h-[520px] sm:h-[580px] w-full">
             {/* Decorative ambient glow */}
-            <div className="absolute w-[320px] h-[320px] bg-[#c9a96e]/10 blur-[80px] rounded-full pointer-events-none" />
+            <div className="absolute w-[360px] h-[360px] bg-[#c9a96e]/10 blur-[90px] rounded-full pointer-events-none" />
 
-            <div className="floating z-20 w-full max-w-[380px]">
-              <div className="bg-white/80 backdrop-blur-md rounded-3xl border border-[#E8E4DB] shadow-[0_32px_80px_rgba(201,169,110,0.14),0_8px_32px_rgba(26,28,28,0.04)] overflow-hidden paper-noise transition-transform duration-700 hover:scale-[1.01]">
-                {/* Card header */}
-                <div className="px-6 py-4.5 flex justify-between items-center border-b border-[#E8E4DB]/50">
-                  <span className="text-[10px] font-bold text-[#7f7668] uppercase tracking-[0.15em]">
-                    Unit Pilihan Hub
-                  </span>
-                  <span className="text-[9px] font-bold tracking-[0.1em] text-emerald-600 bg-emerald-500/10 border border-emerald-500/20 px-2.5 py-0.5 rounded-full uppercase">
-                    Tersedia
-                  </span>
+            {/* Back Card: Mirrorless Camera (slightly rotated and offset) */}
+            <div className="absolute w-[250px] h-[330px] bg-white/60 backdrop-blur-sm border border-[#E8E4DB] rounded-3xl shadow-[0_20px_50px_rgba(201,169,110,0.06)] paper-noise -rotate-6 -translate-x-12 -translate-y-8 opacity-70 hover:opacity-100 hover:scale-105 transition-all duration-500 z-10 flex flex-col justify-between p-5 group/back">
+              <div className="flex justify-between items-center">
+                <span className="text-[9px] font-bold text-[#7f7668] tracking-[0.15em] uppercase">Mirrorless</span>
+                <span className="w-1.5 h-1.5 rounded-full bg-[#c9a96e]" />
+              </div>
+              <div className="relative h-[150px] w-full my-3 flex items-center justify-center">
+                <Image
+                  alt="Sony A7IV"
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuB6zz3eFrt6v2Tb4Jh8kCLTwi8Kv_wh-NFtu3C8KkMBq7zFBlJz0-t2zSfOGQ5eKavxGpiXMZaBdVwHrr8YhMevFnvrIi5uSFtvCN4VV5F_hWpnjX5eC-1tBwrFrLdfvLps0P1NzgFdPwRupKYgNDAlpAMJX91rfvpFfJhgkyzfJbVStdUZCYcNxKhNS8Dwh8sIKqE88bIxOH0_hg9AGcqofgdkErbp8V5DD6m4cQBAXk4EctdiE49snvgIznbjtfnSkLBQWmrWces"
+                  fill
+                  className="object-contain p-2 group-hover/back:scale-105 transition-transform duration-700 ease-out"
+                />
+              </div>
+              <div className="flex justify-between items-end border-t border-[#E8E4DB]/40 pt-3">
+                <div className="text-left">
+                  <p className="text-[9px] text-[#7f7668] uppercase tracking-wider">Sony A7 IV</p>
+                  <p className="font-display text-xs font-bold text-[#1A1C1C]">Body Only</p>
                 </div>
+                <p className="font-mono text-xs font-bold text-[#745a27]">Rp 320K/H</p>
+              </div>
+            </div>
 
-                {/* Product image with gallery podium shadow */}
-                <div className="relative group flex justify-center bg-transparent h-[280px] sm:h-[320px] w-full items-center p-8">
-                  <div className="absolute bottom-6 w-[70%] h-4 bg-black/[0.04] blur-md rounded-full" />
-                  <Image
-                    alt="iPhone 14 Pro Max"
-                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuB6zz3eFrt6v2Tb4Jh8kCLTwi8Kv_wh-NFtu3C8KkMBq7zFBlJz0-t2zSfOGQ5eKavxGpiXMZaBdVwHrr8YhMevFnvrIi5uSFtvCN4VV5F_hWpnjX5eC-1tBwrFrLdfvLps0P1NzgFdPwRupKYgNDAlpAMJX91rfvpFfJhgkyzfJbVStdUZCYcNxKhNS8Dwh8sIKqE88bIxOH0_hg9AGcqofgdkErbp8V5DD6m4cQBAXk4EctdiE49snvgIznbjtfnSkLBQWmrWces"
-                    fill
-                    priority
-                    sizes="(max-width: 768px) 100vw, 400px"
-                    className="object-contain p-8 drop-shadow-[0_16px_32px_rgba(0,0,0,0.08)] transform group-hover:translate-y-[-6px] transition-transform duration-700 ease-out"
-                  />
+            {/* Front Card: Flagship Smartphone (centered and rotated) */}
+            <div className="absolute w-[270px] h-[350px] bg-white/95 border border-[#E8E4DB] shadow-[0_32px_80px_rgba(201,169,110,0.12),0_8px_32px_rgba(26,28,28,0.04)] rounded-3xl paper-noise rotate-3 translate-x-12 translate-y-12 hover:rotate-0 hover:scale-[1.03] transition-all duration-500 z-20 flex flex-col justify-between p-6 group/front">
+              <div className="flex justify-between items-center">
+                <span className="text-[9px] font-bold text-[#7f7668] tracking-[0.15em] uppercase">Flagship</span>
+                <span className="text-[9px] font-bold tracking-[0.1em] text-emerald-600 bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 rounded-full uppercase">NEW</span>
+              </div>
+              <div className="relative h-[160px] w-full my-3 flex items-center justify-center">
+                <Image
+                  alt="iPhone 14 Pro Max"
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuB6zz3eFrt6v2Tb4Jh8kCLTwi8Kv_wh-NFtu3C8KkMBq7zFBlJz0-t2zSfOGQ5eKavxGpiXMZaBdVwHrr8YhMevFnvrIi5uSFtvCN4VV5F_hWpnjX5eC-1tBwrFrLdfvLps0P1NzgFdPwRupKYgNDAlpAMJX91rfvpFfJhgkyzfJbVStdUZCYcNxKhNS8Dwh8sIKqE88bIxOH0_hg9AGcqofgdkErbp8V5DD6m4cQBAXk4EctdiE49snvgIznbjtfnSkLBQWmrWces"
+                  fill
+                  className="object-contain p-2 drop-shadow-[0_16px_32px_rgba(0,0,0,0.06)] group-hover/front:scale-105 transition-transform duration-700 ease-out"
+                />
+              </div>
+              <div className="flex justify-between items-end border-t border-[#E8E4DB]/40 pt-3">
+                <div className="text-left">
+                  <p className="text-[9px] text-[#7f7668] uppercase tracking-wider">iPhone 14 Pro Max</p>
+                  <p className="font-display text-xs font-bold text-[#1A1C1C]">256GB Deep Purple</p>
                 </div>
-
-                {/* Card footer */}
-                <div className="px-6 py-6 border-t border-[#E8E4DB]/50 bg-white/60">
-                  <div className="flex justify-between items-center">
-                    <div>
-                      <div className="text-[10px] font-semibold text-[#7f7668] uppercase tracking-[0.08em] mb-1">iPhone 14 Pro Max</div>
-                      <h3 className="font-display text-base font-bold text-[#1A1C1C]">256GB · Deep Purple</h3>
-                    </div>
-                    <div className="text-right">
-                      <div className="text-[9px] font-semibold text-[#7f7668] uppercase tracking-[0.08em] mb-0.5">Sewa Harian</div>
-                      <div className="font-mono text-base font-bold text-[#745a27]">Rp 145K<span className="text-[10px] font-normal text-text-secondary/60">/hari</span></div>
-                    </div>
-                  </div>
-                </div>
+                <p className="font-mono text-xs font-bold text-[#745a27]">Rp 145K/H</p>
               </div>
             </div>
           </div>
@@ -333,7 +338,13 @@ export default async function HomePage() {
                 desc: "Khusus warga dengan KTP Bandung & Cimahi, nikmati layanan sewa tanpa uang jaminan tambahan."
               }
             ].map((item) => (
-              <div key={item.title} className="bg-white/50 backdrop-blur-sm p-8 rounded-3xl border border-[#E8E4DB]/50 shadow-[0_8px_30px_rgba(201,169,110,0.03)] hover:shadow-[0_16px_40px_rgba(201,169,110,0.08)] hover:border-[#c9a96e]/60 transition-all duration-500 text-center space-y-6 group cursor-default">
+              <div key={item.title} className="relative bg-white/50 backdrop-blur-sm p-8 sm:p-10 rounded-3xl border border-[#E8E4DB]/50 shadow-[0_8px_30px_rgba(201,169,110,0.03)] hover:shadow-[0_16px_40px_rgba(201,169,110,0.08)] hover:border-[#c9a96e]/60 transition-all duration-500 text-center space-y-6 group cursor-default overflow-hidden">
+                {/* HUD Corner Brackets */}
+                <div className="absolute top-3 left-3 w-2.5 h-2.5 border-t border-l border-[#c9a96e]/40 pointer-events-none group-hover:border-[#745a27] transition-colors duration-350" />
+                <div className="absolute top-3 right-3 w-2.5 h-2.5 border-t border-r border-[#c9a96e]/40 pointer-events-none group-hover:border-[#745a27] transition-colors duration-350" />
+                <div className="absolute bottom-3 left-3 w-2.5 h-2.5 border-b border-l border-[#c9a96e]/40 pointer-events-none group-hover:border-[#745a27] transition-colors duration-350" />
+                <div className="absolute bottom-3 right-3 w-2.5 h-2.5 border-b border-r border-[#c9a96e]/40 pointer-events-none group-hover:border-[#745a27] transition-colors duration-350" />
+
                 <div className="mx-auto w-16 h-16 rounded-full flex items-center justify-center bg-[#F5F0E6] border border-[#c9a96e]/20 glowing-gold transition-all duration-500 group-hover:scale-105 group-hover:bg-[#c9a96e]/15">
                   {item.icon}
                 </div>
@@ -349,16 +360,16 @@ export default async function HomePage() {
 
       {/* ── 5. TESTIMONIALS ── */}
       <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-xl mx-auto space-y-3 mb-16">
+        <div className="text-center max-w-xl mx-auto space-y-3 mb-20">
           <span className="inline-flex items-center gap-2 text-[10px] font-bold tracking-[0.2em] text-[#745a27] uppercase bg-[#F5F0E6]/80 px-4 py-1.5 rounded-full border border-[#c9a96e]/20">
             ✦ ULASAN PELANGGAN
           </span>
           <h2 className="text-3xl font-medium tracking-tight text-[#1A1C1C] font-display">
-            Apa Kata Mereka?
+            Ulasan Terkurasi
           </h2>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
           <TestimonialCard
             name="Andi Wijaya"
             role="Penyewa Drone DJI · Dago"
@@ -454,18 +465,18 @@ function TestimonialCard({
   quote: string;
 }) {
   return (
-    <div className="bg-white/60 backdrop-blur-sm border border-[#E8E4DB] p-8 rounded-3xl flex flex-col justify-between text-left space-y-6 shadow-[0_8px_30px_rgba(201,169,110,0.03)] hover:shadow-[0_16px_40px_rgba(201,169,110,0.08)] hover:border-[#c9a96e]/50 hover:-translate-y-1 transition-all duration-500 paper-noise">
-      <p className="text-sm text-[#4d463a] italic leading-relaxed font-sans">
+    <div className="border-l-2 border-[#745a27] pl-6 py-2 flex flex-col justify-between text-left space-y-6 hover:border-[#c9a96e] transition-colors duration-300">
+      <p className="text-base text-[#4d463a] italic leading-relaxed font-sans font-light">
         &ldquo;{quote}&rdquo;
       </p>
-      <div className="flex justify-between items-center pt-5 border-t border-[#E8E4DB]/50">
+      <div className="flex justify-between items-center pt-2">
         <div>
-          <h4 className="font-bold text-[#1A1C1C] text-sm font-sans">{name}</h4>
-          <span className="text-[10px] text-[#7f7668] mt-0.5 block uppercase tracking-[0.1em] font-semibold">{role}</span>
+          <h4 className="font-bold text-[#1A1C1C] text-xs font-sans uppercase tracking-wider">{name}</h4>
+          <span className="text-[9px] text-[#7f7668] mt-0.5 block uppercase tracking-[0.1em] font-semibold">{role}</span>
         </div>
         <div className="flex text-[#c9a96e] gap-0.5">
           {[...Array(5)].map((_, i) => (
-            <Star key={i} className="w-3.5 h-3.5 fill-current" />
+            <Star key={i} className="w-2.5 h-2.5 fill-current" />
           ))}
         </div>
       </div>
