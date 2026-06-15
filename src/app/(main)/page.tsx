@@ -23,25 +23,25 @@ export default async function HomePage() {
   const operatingHours = "Senin - Sabtu: 09.00 - 18.00 WIB";
 
   return (
-    <div className="space-y-28 pb-24 bg-transparent text-[#1A1C1C] overflow-x-hidden font-sans paper-noise">
+    <div className="space-y-32 pb-24 bg-transparent text-[#1A1C1C] overflow-x-hidden font-sans paper-noise">
 
       {/* ── 1. HERO SECTION ── */}
-      <section className="relative min-h-[88vh] flex items-center overflow-hidden border-b border-[#E8E4DB] py-20 sm:py-28">
+      <section className="relative min-h-[90vh] flex items-center overflow-hidden border-b border-[#E8E4DB] py-24 sm:py-32">
         {/* Animated & Interactive Premium Background */}
         <CinematicBackgroundLight />
 
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-16 items-center w-full">
           {/* Left Column */}
-          <div className="lg:col-span-7 space-y-8 text-left animate-fade-in-up">
+          <div className="lg:col-span-7 space-y-10 text-left animate-fade-in-up">
             {/* Category chip */}
-            <span className="inline-flex items-center gap-2 bg-[#F5F0E6] text-[#745a27] text-xs font-semibold tracking-widest uppercase px-4 py-2 rounded-full border border-[#c9a96e]/30">
+            <span className="inline-flex items-center gap-2 text-[10px] font-bold tracking-[0.2em] text-[#745a27] uppercase bg-[#F5F0E6]/80 px-4 py-2 rounded-full border border-[#c9a96e]/20 backdrop-blur-sm">
               ✦ PREMIUM GADGET ECOSYSTEM
             </span>
 
             <div className="space-y-4">
-              <h1 className="text-4xl sm:text-5xl lg:text-[3.75rem] font-display font-bold text-[#1A1C1C] leading-[1.1] tracking-tight">
+              <h1 className="text-4xl sm:text-5xl lg:text-[4rem] font-display font-medium text-[#1A1C1C] leading-[1.05] tracking-tight">
                 Sewa, Beli &amp; Jual <br />
-                <span className="text-[#c9a96e] italic font-semibold">Gadget Premium</span> <br />
+                <span className="text-[#745a27] font-semibold italic">Gadget Premium</span> <br />
                 di Cimahi
               </h1>
             </div>
@@ -53,31 +53,31 @@ export default async function HomePage() {
             <div className="flex flex-wrap gap-4 pt-2">
               <Link
                 href="/sewa"
-                className="bg-[#c9a96e] text-white font-sans text-sm font-semibold px-8 py-4 tracking-wide rounded-md hover:bg-[#b8944d] transition-all duration-300 flex items-center gap-3 shadow-md hover:shadow-lg hover:-translate-y-0.5"
+                className="bg-[#745a27] hover:bg-[#5f491f] text-white font-sans text-xs font-semibold tracking-wider uppercase px-8 py-4.5 rounded-full transition-all duration-300 flex items-center gap-2.5 shadow-[0_4px_20px_rgba(116,90,39,0.15)] hover:shadow-[0_8px_30px_rgba(116,90,39,0.25)] hover:-translate-y-0.5"
               >
                 Mulai Sewa Sekarang
                 <ArrowRight className="w-4 h-4" />
               </Link>
               <Link
                 href="/katalog"
-                className="bg-white text-[#1A1C1C] font-sans text-sm font-semibold px-8 py-4 tracking-wide rounded-md border border-[#E8E4DB] hover:border-[#c9a96e] hover:text-[#745a27] transition-all duration-300 shadow-sm hover:shadow-md"
+                className="bg-white/80 text-[#1A1C1C] font-sans text-xs font-semibold tracking-wider uppercase px-8 py-4.5 rounded-full border border-[#E8E4DB] hover:border-[#745a27] hover:text-[#745a27] transition-all duration-300 shadow-sm hover:shadow-md hover:-translate-y-0.5 backdrop-blur-sm"
               >
                 Jelajahi Katalog
               </Link>
               <Link
                 href="/jual"
-                className="text-sm font-semibold px-6 py-4 tracking-wide text-[#4d463a] hover:text-[#c9a96e] transition-all duration-300 flex items-center gap-2"
+                className="text-xs font-bold tracking-wider uppercase px-6 py-4.5 text-[#4d463a] hover:text-[#745a27] transition-all duration-300 flex items-center gap-2 hover:translate-x-1"
               >
                 <Tag className="w-4 h-4" />
-                Jual Gadget Anda
+                Jual Gadget
               </Link>
             </div>
 
             {/* Trust badges */}
-            <div className="flex flex-wrap gap-6 pt-4 border-t border-[#E8E4DB]">
+            <div className="flex flex-wrap gap-8 pt-6 border-t border-[#E8E4DB]/60 w-fit">
               {["KYC Instan", "Bebas Deposit*", "COD Toko Fisik", "100% Verified"].map((badge) => (
-                <div key={badge} className="flex items-center gap-2 text-xs text-[#4d463a]">
-                  <BadgeCheck className="w-4 h-4 text-[#c9a96e]" />
+                <div key={badge} className="flex items-center gap-2 text-[10px] font-semibold tracking-wider uppercase text-[#7f7668]">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#c9a96e]" />
                   <span>{badge}</span>
                 </div>
               ))}
@@ -89,38 +89,41 @@ export default async function HomePage() {
             {/* Decorative ambient glow */}
             <div className="absolute w-[320px] h-[320px] bg-[#c9a96e]/10 blur-[80px] rounded-full pointer-events-none" />
 
-            <div className="floating z-20 w-full max-w-[400px]">
-              <div className="bg-white rounded-2xl border border-[#E8E4DB] shadow-[0_16px_60px_rgba(201,169,110,0.12),0_4px_16px_rgba(26,28,28,0.06)] overflow-hidden">
+            <div className="floating z-20 w-full max-w-[380px]">
+              <div className="bg-white/80 backdrop-blur-md rounded-3xl border border-[#E8E4DB] shadow-[0_32px_80px_rgba(201,169,110,0.14),0_8px_32px_rgba(26,28,28,0.04)] overflow-hidden paper-noise transition-transform duration-700 hover:scale-[1.01]">
                 {/* Card header */}
-                <div className="bg-[#FAFAF8] px-6 py-4 flex justify-between items-center border-b border-[#E8E4DB]">
-                  <div className="text-xs font-semibold text-[#4d463a] uppercase tracking-wider">
-                    Unit Pilihan
-                  </div>
-                  <div className="gold-chip">TERSEDIA</div>
+                <div className="px-6 py-4.5 flex justify-between items-center border-b border-[#E8E4DB]/50">
+                  <span className="text-[10px] font-bold text-[#7f7668] uppercase tracking-[0.15em]">
+                    Unit Pilihan Hub
+                  </span>
+                  <span className="text-[9px] font-bold tracking-[0.1em] text-emerald-600 bg-emerald-500/10 border border-emerald-500/20 px-2.5 py-0.5 rounded-full uppercase">
+                    Tersedia
+                  </span>
                 </div>
 
-                {/* Product image */}
-                <div className="relative group flex justify-center bg-white h-[280px] sm:h-[320px] w-full">
+                {/* Product image with gallery podium shadow */}
+                <div className="relative group flex justify-center bg-transparent h-[280px] sm:h-[320px] w-full items-center p-8">
+                  <div className="absolute bottom-6 w-[70%] h-4 bg-black/[0.04] blur-md rounded-full" />
                   <Image
                     alt="iPhone 14 Pro Max"
                     src="https://lh3.googleusercontent.com/aida-public/AB6AXuB6zz3eFrt6v2Tb4Jh8kCLTwi8Kv_wh-NFtu3C8KkMBq7zFBlJz0-t2zSfOGQ5eKavxGpiXMZaBdVwHrr8YhMevFnvrIi5uSFtvCN4VV5F_hWpnjX5eC-1tBwrFrLdfvLps0P1NzgFdPwRupKYgNDAlpAMJX91rfvpFfJhgkyzfJbVStdUZCYcNxKhNS8Dwh8sIKqE88bIxOH0_hg9AGcqofgdkErbp8V5DD6m4cQBAXk4EctdiE49snvgIznbjtfnSkLBQWmrWces"
                     fill
                     priority
                     sizes="(max-width: 768px) 100vw, 400px"
-                    className="object-contain px-8 py-6 drop-shadow-[0_12px_36px_rgba(0,0,0,0.12)] transform group-hover:scale-105 transition-transform duration-700"
+                    className="object-contain p-8 drop-shadow-[0_16px_32px_rgba(0,0,0,0.08)] transform group-hover:translate-y-[-6px] transition-transform duration-700 ease-out"
                   />
                 </div>
 
                 {/* Card footer */}
-                <div className="px-6 py-5 border-t border-[#E8E4DB] bg-white">
-                  <div className="flex justify-between items-end">
+                <div className="px-6 py-6 border-t border-[#E8E4DB]/50 bg-white/60">
+                  <div className="flex justify-between items-center">
                     <div>
-                      <div className="text-xs text-[#7f7668] uppercase tracking-wider mb-1">iPhone 14 Pro Max</div>
-                      <h3 className="font-display text-lg font-bold text-[#1A1C1C]">256GB · Deep Purple</h3>
+                      <div className="text-[10px] font-semibold text-[#7f7668] uppercase tracking-[0.08em] mb-1">iPhone 14 Pro Max</div>
+                      <h3 className="font-display text-base font-bold text-[#1A1C1C]">256GB · Deep Purple</h3>
                     </div>
                     <div className="text-right">
-                      <div className="text-[10px] text-[#7f7668] uppercase tracking-wide mb-0.5">Mulai dari</div>
-                      <div className="font-mono text-base font-bold text-[#c9a96e]">Rp 145K/Hari</div>
+                      <div className="text-[9px] font-semibold text-[#7f7668] uppercase tracking-[0.08em] mb-0.5">Sewa Harian</div>
+                      <div className="font-mono text-base font-bold text-[#745a27]">Rp 145K<span className="text-[10px] font-normal text-text-secondary/60">/hari</span></div>
                     </div>
                   </div>
                 </div>
@@ -134,44 +137,44 @@ export default async function HomePage() {
       <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mb-12 flex flex-col sm:flex-row justify-between items-start sm:items-end gap-6">
           <div className="space-y-3">
-            <span className="inline-flex items-center gap-2 bg-[#F5F0E6] text-[#745a27] text-xs font-semibold tracking-widest uppercase px-4 py-1.5 rounded-full border border-[#c9a96e]/30">
-              KOLEKSI KAMI
+            <span className="inline-flex items-center gap-2 text-[10px] font-bold tracking-[0.2em] text-[#745a27] uppercase bg-[#F5F0E6]/80 px-4 py-1.5 rounded-full border border-[#c9a96e]/20">
+              ✦ KOLEKSI KAMI
             </span>
-            <h2 className="text-3xl font-bold tracking-tight text-[#1A1C1C] font-display">
+            <h2 className="text-3xl font-medium tracking-tight text-[#1A1C1C] font-display">
               Curated Collections
             </h2>
           </div>
           <Link
             href="/katalog"
-            className="text-sm font-semibold text-[#4d463a] tracking-wider flex items-center gap-2 hover:text-[#c9a96e] transition-colors"
+            className="text-xs font-semibold text-[#4d463a] tracking-widest uppercase flex items-center gap-2 hover:text-[#745a27] transition-colors"
           >
             LIHAT SEMUA KATEGORI
             <ArrowUpRight className="w-4 h-4" />
           </Link>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-5">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
           {/* Smartphones — wide */}
           <Link href="/katalog?category=handphone" className="md:col-span-8 group cursor-pointer">
-            <div className="h-80 rounded-2xl overflow-hidden relative border border-[#E8E4DB] shadow-sm hover:shadow-lg transition-shadow duration-300 bg-white">
+            <div className="h-80 rounded-3xl overflow-hidden relative border border-[#E8E4DB] shadow-[0_8px_30px_rgba(201,169,110,0.03)] hover:shadow-[0_20px_50px_rgba(201,169,110,0.1)] hover:border-[#c9a96e] hover:-translate-y-0.5 transition-all duration-500 bg-white/60 backdrop-blur-md paper-noise">
               <Image
                 alt="Smartphones"
                 src="https://lh3.googleusercontent.com/aida-public/AB6AXuD7d-vAJ9HaR3AZJr1Yh11KtITHQxS2eym2d0zz1kz6P4VNzUltwceGzuMGASuFzEaSY8P1qgdsaWEFOfrcIxr6-VoKF1iCyjh5Dost2Es9JvgHS2ZVL7lmLCiwl1uNoKnYlo4zK6pDimwtN9ysXPCNOiJAJU56ssaNcLaVxUMGb3dkV72BvRKVmmshE2EHFkKmO3MRYpF78cNp5wKYjToie682Dm3Nubn59kr0378k9fW3EzKknEx41Jg1wF_xV15h-WKduMLW_uA"
                 fill
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 66vw, 800px"
-                className="object-cover opacity-70 group-hover:scale-105 transition-transform duration-1000"
+                className="object-cover opacity-60 group-hover:scale-[1.02] transition-transform duration-1000 ease-out"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-white/95 via-white/40 to-transparent z-0" />
+              <div className="absolute inset-0 bg-gradient-to-t from-white via-white/40 to-transparent z-0" />
               <div className="absolute inset-0 z-10 p-8 flex flex-col justify-between">
                 <div className="flex justify-between items-start">
                   <h3 className="font-display text-2xl font-bold text-[#1A1C1C]">Smartphones</h3>
-                  <span className="gold-chip">TERBARU</span>
+                  <span className="text-[9px] font-bold tracking-[0.1em] text-[#745a27] bg-[#F5F0E6] border border-[#c9a96e]/20 px-2.5 py-0.5 rounded-full uppercase">NEW</span>
                 </div>
                 <div>
                   <p className="text-sm text-[#4d463a] mb-4 max-w-sm leading-relaxed">
-                    From iPhone 15 Pro series to Samsung S24 Ultra. Optimized for productivity and content creation.
+                    Mulai dari iPhone 15 Pro series hingga Samsung S24 Ultra. Dioptimalkan untuk produktivitas &amp; kreasi konten.
                   </p>
-                  <span className="text-sm font-semibold text-[#c9a96e] flex items-center gap-1 group-hover:gap-2 transition-all">
+                  <span className="text-xs font-semibold text-[#745a27] tracking-wider uppercase flex items-center gap-1.5 group-hover:gap-2.5 transition-all">
                     Lihat Semua <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                   </span>
                 </div>
@@ -181,26 +184,26 @@ export default async function HomePage() {
 
           {/* Cameras — narrow */}
           <Link href="/katalog?category=kamera" className="md:col-span-4 group cursor-pointer">
-            <div className="h-80 rounded-2xl overflow-hidden relative border border-[#E8E4DB] shadow-sm hover:shadow-lg transition-shadow duration-300 bg-white">
+            <div className="h-80 rounded-3xl overflow-hidden relative border border-[#E8E4DB] shadow-[0_8px_30px_rgba(201,169,110,0.03)] hover:shadow-[0_20px_50px_rgba(201,169,110,0.1)] hover:border-[#c9a96e] hover:-translate-y-0.5 transition-all duration-500 bg-white/60 backdrop-blur-md paper-noise">
               <Image
                 alt="Cameras"
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuA-UfNnGVmpF69QU9khyB7AyVhRAybBaggO7L2c1CV0gm3ZurE6ZUEBAo4dbyRhj82rJ8dOZHfHrTs1XnDVsbg-bMSeQh5sWkh8vIwZwRjhMlwdDOf178zkHYmnaAd7U1vDYI8f4x-Jwyqb8ahoXXBa5ePyk8Snl8-uDeraDtv96I0uB68Tw9sxy6jKFyWZmX58e6op-PPTaLhloKDQ6_yROYxkNXuIKdOkdjl5sfCFG6sZ1Py-CVX_P4qIaEl9UndqbzL4opGCgZg"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXu-UfNnGVmpF69QU9khyB7AyVhRAybBaggO7L2c1CV0gm3ZurE6ZUEBAo4dbyRhj82rJ8dOZHfHrTs1XnDVsbg-bMSeQh5sWkh8vIwZwRjhMlwdDOf178zkHYmnaAd7U1vDYI8f4x-Jwyqb8ahoXXBa5ePyk8Snl8-uDeraDtv96I0uB68Tw9sxy6jKFyWZmX58e6op-PPTaLhloKDQ6_yROYxkNXuIKdOkdjl5sfCFG6sZ1Py-CVX_P4qIaEl9UndqbzL4opGCgZg"
                 fill
                 sizes="(max-width: 768px) 100vw, 400px"
-                className="object-cover opacity-70 group-hover:scale-105 transition-transform duration-1000"
+                className="object-cover opacity-60 group-hover:scale-[1.02] transition-transform duration-1000 ease-out"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-white/95 via-white/40 to-transparent z-0" />
+              <div className="absolute inset-0 bg-gradient-to-t from-white via-white/40 to-transparent z-0" />
               <div className="absolute inset-0 z-10 p-8 flex flex-col justify-between">
                 <div className="flex justify-between items-start">
                   <h3 className="font-display text-2xl font-bold text-[#1A1C1C]">Cameras</h3>
-                  <Camera className="w-5 h-5 text-[#c9a96e]" />
+                  <Camera className="w-5 h-5 text-[#745a27]" />
                 </div>
                 <div>
                   <p className="text-xs text-[#4d463a] mb-4 leading-relaxed">
-                    Sony A7IV, Lumix S5IIX, &amp; FujiFilm masterpieces.
+                    Masterpiece dari Sony A7IV, Lumix S5IIX, &amp; Fujifilm.
                   </p>
-                  <span className="text-sm font-semibold text-[#c9a96e] flex items-center gap-1 group-hover:gap-2 transition-all">
-                    Explore <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                  <span className="text-xs font-semibold text-[#745a27] tracking-wider uppercase flex items-center gap-1.5 group-hover:gap-2.5 transition-all">
+                    Jelajahi <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
                   </span>
                 </div>
               </div>
@@ -209,26 +212,26 @@ export default async function HomePage() {
 
           {/* Drones — narrow */}
           <Link href="/katalog?category=drone" className="md:col-span-4 group cursor-pointer">
-            <div className="h-80 rounded-2xl overflow-hidden relative border border-[#E8E4DB] shadow-sm hover:shadow-lg transition-shadow duration-300 bg-white">
+            <div className="h-80 rounded-3xl overflow-hidden relative border border-[#E8E4DB] shadow-[0_8px_30px_rgba(201,169,110,0.03)] hover:shadow-[0_20px_50px_rgba(201,169,110,0.1)] hover:border-[#c9a96e] hover:-translate-y-0.5 transition-all duration-500 bg-white/60 backdrop-blur-md paper-noise">
               <Image
                 alt="Drones"
                 src="https://lh3.googleusercontent.com/aida-public/AB6AXuBFqai6lOU6BIPLomupm4E_WRN53MWPBiTCWSrgqmjEdWOKFyLYCEg7_CHaaFw0w9xz9j1YF5mAow1MAy9a9-ZBFDCE_-Ai5cB-5NJmGOTMY9kWE6kbGJRfw7sTfk-EY5fXrcvM2cZTy3NmVotPePk0R116imysWJlmWlwoYidzuwes7aPbrR10F3S6AyVZ-OgpRM6b0ar6M3t-URQPTOOBSPsVKxQfwPq0ikkdclP7Umv-kQ-M8uMlxSee65W7g0tVcUHW9a_FMwc"
                 fill
                 sizes="(max-width: 768px) 100vw, 400px"
-                className="object-cover opacity-70 group-hover:scale-105 transition-transform duration-1000"
+                className="object-cover opacity-60 group-hover:scale-[1.02] transition-transform duration-1000 ease-out"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-white/95 via-white/40 to-transparent z-0" />
+              <div className="absolute inset-0 bg-gradient-to-t from-white via-white/40 to-transparent z-0" />
               <div className="absolute inset-0 z-10 p-8 flex flex-col justify-between">
                 <div className="flex justify-between items-start">
                   <h3 className="font-display text-2xl font-bold text-[#1A1C1C]">Drones</h3>
-                  <Zap className="w-5 h-5 text-[#c9a96e]" />
+                  <Zap className="w-5 h-5 text-[#745a27]" />
                 </div>
                 <div>
                   <p className="text-xs text-[#4d463a] mb-4 leading-relaxed">
-                    DJI Air 3, Mavic 3 Pro, and FPV drones.
+                    DJI Air 3, Mavic 3 Pro, dan FPV cinematic setup.
                   </p>
-                  <span className="text-sm font-semibold text-[#c9a96e] flex items-center gap-1 group-hover:gap-2 transition-all">
-                    Explore <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                  <span className="text-xs font-semibold text-[#745a27] tracking-wider uppercase flex items-center gap-1.5 group-hover:gap-2.5 transition-all">
+                    Jelajahi <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
                   </span>
                 </div>
               </div>
@@ -237,25 +240,25 @@ export default async function HomePage() {
 
           {/* Accessories — wide */}
           <Link href="/katalog?category=aksesoris" className="md:col-span-8 group cursor-pointer">
-            <div className="h-80 rounded-2xl overflow-hidden relative border border-[#E8E4DB] shadow-sm hover:shadow-lg transition-shadow duration-300 bg-white">
+            <div className="h-80 rounded-3xl overflow-hidden relative border border-[#E8E4DB] shadow-[0_8px_30px_rgba(201,169,110,0.03)] hover:shadow-[0_20px_50px_rgba(201,169,110,0.1)] hover:border-[#c9a96e] hover:-translate-y-0.5 transition-all duration-500 bg-white/60 backdrop-blur-md paper-noise">
               <Image
                 alt="Accessories"
                 src="https://lh3.googleusercontent.com/aida-public/AB6AXuBgK-EZXG25JqJ6onx8pJpqalcu7JXrFHBcrmw0SDxqaOJ62ETwooN1I4dy25T6CCiNKFmZkW3iPiFdDLErHhaD93PVsbhBGG6psHFHIT4WHA_XbjH1LP251t9fFvR4JKNTXZzwuhtGOW8Myjd8SPupiU69aauhamAj4EVxrToc1PaDyl6H0HRVhVEsQSmdIgUJGldxb5Fr9G5wDHwJ2RghOfjsP9Eb_6ZIvPj2BRNq2r-djF8YB52vVlCybB591Esv6RA9kQtquuM"
                 fill
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 66vw, 800px"
-                className="object-cover opacity-70 group-hover:scale-105 transition-transform duration-1000"
+                className="object-cover opacity-60 group-hover:scale-[1.02] transition-transform duration-1000 ease-out"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-white/95 via-white/40 to-transparent z-0" />
+              <div className="absolute inset-0 bg-gradient-to-t from-white via-white/40 to-transparent z-0" />
               <div className="absolute inset-0 z-10 p-8 flex flex-col justify-between">
                 <div className="flex justify-between items-start">
                   <h3 className="font-display text-2xl font-bold text-[#1A1C1C]">Accessories</h3>
-                  <Headphones className="w-5 h-5 text-[#c9a96e]" />
+                  <Headphones className="w-5 h-5 text-[#745a27]" />
                 </div>
                 <div>
                   <p className="text-sm text-[#4d463a] mb-4 max-w-md leading-relaxed">
-                    Essential gears for your digital lifestyle. Tripods, microphones, battery packs, and high-performance chargers.
+                    Gears esensial untuk mendukung kreativitas Anda. Tripod kokoh, mikrofon nirkabel, baterai cadangan, &amp; charger performa tinggi.
                   </p>
-                  <span className="text-sm font-semibold text-[#c9a96e] flex items-center gap-1 group-hover:gap-2 transition-all">
+                  <span className="text-xs font-semibold text-[#745a27] tracking-wider uppercase flex items-center gap-1.5 group-hover:gap-2.5 transition-all">
                     Lihat Semua <ArrowRight className="w-4 h-4 group-hover:translate-x-2 transition-transform" />
                   </span>
                 </div>
@@ -270,16 +273,16 @@ export default async function HomePage() {
         <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-end mb-12">
             <div>
-              <span className="inline-flex items-center gap-2 bg-[#F5F0E6] text-[#745a27] text-xs font-semibold tracking-widest uppercase px-4 py-1.5 rounded-full border border-[#c9a96e]/30 mb-3 block w-fit">
-                REKOMENDASI TERBAIK
+              <span className="inline-flex items-center gap-2 text-[10px] font-bold tracking-[0.2em] text-[#745a27] uppercase bg-[#F5F0E6]/80 px-4 py-1.5 rounded-full border border-[#c9a96e]/20 mb-3 block w-fit">
+                ✦ REKOMENDASI TERBAIK
               </span>
-              <h2 className="text-3xl font-bold tracking-tight text-[#1A1C1C] font-display">
-                Unit Featured Terlaris
+              <h2 className="text-3xl font-medium tracking-tight text-[#1A1C1C] font-display">
+                Featured Masterpieces
               </h2>
             </div>
             <Link
               href="/katalog"
-              className="text-sm font-semibold text-[#c9a96e] hover:text-[#b8944d] flex items-center gap-1 tracking-wider transition-colors"
+              className="text-xs font-semibold tracking-wider uppercase text-[#745a27] hover:text-[#5f491f] flex items-center gap-1.5 transition-colors"
             >
               LIHAT SEMUA <ArrowRight className="w-4 h-4" />
             </Link>
@@ -294,17 +297,17 @@ export default async function HomePage() {
       )}
 
       {/* ── 4. VALUE PROPOSITION (USP) ── */}
-      <section className="relative py-24 bg-white border-y border-[#E8E4DB] overflow-hidden">
+      <section className="relative py-28 bg-white/40 backdrop-blur-md border-y border-[#E8E4DB] overflow-hidden paper-noise">
         {/* Top gold line */}
         <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-[#c9a96e]/40 to-transparent" />
         <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-[#c9a96e]/20 to-transparent" />
 
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="text-center max-w-xl mx-auto space-y-4 mb-16">
-            <span className="inline-flex items-center gap-2 bg-[#F5F0E6] text-[#745a27] text-xs font-semibold tracking-widest uppercase px-4 py-1.5 rounded-full border border-[#c9a96e]/30">
-              KEUNGGULAN LAYANAN
+          <div className="text-center max-w-xl mx-auto space-y-4 mb-20">
+            <span className="inline-flex items-center gap-2 text-[10px] font-bold tracking-[0.2em] text-[#745a27] uppercase bg-[#F5F0E6]/80 px-4 py-1.5 rounded-full border border-[#c9a96e]/20">
+              ✦ KEUNGGULAN LAYANAN
             </span>
-            <h2 className="text-3xl font-bold tracking-tight text-[#1A1C1C] font-display">
+            <h2 className="text-3xl font-medium tracking-tight text-[#1A1C1C] font-display">
               Transaksi Penuh Kepercayaan
             </h2>
             <p className="text-sm text-[#4d463a] leading-relaxed">
@@ -312,30 +315,30 @@ export default async function HomePage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
               {
-                icon: <Store className="w-8 h-8 text-[#c9a96e]" />,
+                icon: <Store className="w-6 h-6 text-[#745a27]" />,
                 title: "COD Toko Fisik",
                 desc: "Kunjungi hub kami di Cimahi untuk inspeksi unit secara langsung. Transaksi aman, transparan, dan terpercaya."
               },
               {
-                icon: <ShieldCheck className="w-8 h-8 text-[#c9a96e]" />,
+                icon: <ShieldCheck className="w-6 h-6 text-[#745a27]" />,
                 title: "KYC Instan",
                 desc: "Proses verifikasi data digital super cepat. Mulai sewa hanya dalam hitungan menit setelah data terverifikasi."
               },
               {
-                icon: <BadgeCheck className="w-8 h-8 text-[#c9a96e]" />,
+                icon: <BadgeCheck className="w-6 h-6 text-[#745a27]" />,
                 title: "Bebas Deposit",
                 desc: "Khusus warga dengan KTP Bandung & Cimahi, nikmati layanan sewa tanpa uang jaminan tambahan."
               }
             ].map((item) => (
-              <div key={item.title} className="text-center space-y-6 group">
-                <div className="mx-auto w-20 h-20 rounded-full flex items-center justify-center bg-[#F5F0E6] border border-[#c9a96e]/30 glowing-gold transition-all duration-500 group-hover:scale-105 group-hover:bg-[#c9a96e]/10">
+              <div key={item.title} className="bg-white/50 backdrop-blur-sm p-8 rounded-3xl border border-[#E8E4DB]/50 shadow-[0_8px_30px_rgba(201,169,110,0.03)] hover:shadow-[0_16px_40px_rgba(201,169,110,0.08)] hover:border-[#c9a96e]/60 transition-all duration-500 text-center space-y-6 group cursor-default">
+                <div className="mx-auto w-16 h-16 rounded-full flex items-center justify-center bg-[#F5F0E6] border border-[#c9a96e]/20 glowing-gold transition-all duration-500 group-hover:scale-105 group-hover:bg-[#c9a96e]/15">
                   {item.icon}
                 </div>
                 <div className="space-y-3">
-                  <h3 className="font-display text-xl text-[#1A1C1C] font-bold">{item.title}</h3>
+                  <h3 className="font-display text-lg text-[#1A1C1C] font-bold">{item.title}</h3>
                   <p className="text-sm text-[#4d463a] leading-relaxed">{item.desc}</p>
                 </div>
               </div>
@@ -347,10 +350,10 @@ export default async function HomePage() {
       {/* ── 5. TESTIMONIALS ── */}
       <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-xl mx-auto space-y-3 mb-16">
-          <span className="inline-flex items-center gap-2 bg-[#F5F0E6] text-[#745a27] text-xs font-semibold tracking-widest uppercase px-4 py-1.5 rounded-full border border-[#c9a96e]/30">
-            ULASAN PELANGGAN
+          <span className="inline-flex items-center gap-2 text-[10px] font-bold tracking-[0.2em] text-[#745a27] uppercase bg-[#F5F0E6]/80 px-4 py-1.5 rounded-full border border-[#c9a96e]/20">
+            ✦ ULASAN PELANGGAN
           </span>
-          <h2 className="text-3xl font-bold tracking-tight text-[#1A1C1C] font-display">
+          <h2 className="text-3xl font-medium tracking-tight text-[#1A1C1C] font-display">
             Apa Kata Mereka?
           </h2>
         </div>
@@ -378,40 +381,40 @@ export default async function HomePage() {
       <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
           {/* Info panel */}
-          <div className="lg:col-span-5 bg-white border border-[#E8E4DB] p-8 rounded-3xl flex flex-col justify-between space-y-8 shadow-sm">
+          <div className="lg:col-span-5 bg-white/70 backdrop-blur-sm border border-[#E8E4DB] p-8 sm:p-10 rounded-3xl flex flex-col justify-between space-y-8 shadow-[0_12px_40px_rgba(201,169,110,0.04)] paper-noise">
             <div className="space-y-4">
-              <span className="inline-flex items-center gap-2 bg-[#F5F0E6] text-[#745a27] text-xs font-semibold tracking-widest uppercase px-4 py-1.5 rounded-full border border-[#c9a96e]/30">
-                KUNJUNGI GERAI KAMI
+              <span className="inline-flex items-center gap-2 bg-[#F5F0E6]/80 text-[#745a27] text-[10px] font-bold tracking-[0.2em] uppercase px-4 py-1.5 rounded-full border border-[#c9a96e]/20">
+                ✦ KUNJUNGI GERAI KAMI
               </span>
               <h3 className="text-2xl font-bold font-display text-[#1A1C1C]">GadgetVault Cimahi</h3>
               <p className="text-sm text-[#4d463a] leading-relaxed">
-                Silakan datang langsung ke toko kami untuk mengambil unit sewa, melakukan cek fisik COD, atau mencairkan dana penjualan gadget Anda.
+                Silakan datang langsung ke gerai fisik kami untuk mengambil unit sewa, melakukan inspeksi fisik COD, atau mencairkan dana penjualan gadget Anda secara instan.
               </p>
             </div>
 
-            <div className="space-y-4 border-t border-[#E8E4DB] pt-6 text-sm">
-              <div className="flex gap-3 items-start">
-                <MapPin className="w-5 h-5 text-[#c9a96e] shrink-0 mt-0.5" />
+            <div className="space-y-5 border-t border-[#E8E4DB]/50 pt-6 text-sm">
+              <div className="flex gap-4 items-start">
+                <MapPin className="w-5 h-5 text-[#745a27] shrink-0 mt-0.5" />
                 <div>
-                  <span className="font-bold text-[#1A1C1C]">Alamat Toko:</span>
+                  <span className="font-bold text-[#1A1C1C] text-xs uppercase tracking-wider">Alamat Toko:</span>
                   <p className="text-[#4d463a] mt-1 leading-relaxed">{address}</p>
                 </div>
               </div>
-              <div className="flex gap-3 items-start">
-                <Clock className="w-5 h-5 text-[#c9a96e] shrink-0 mt-0.5" />
+              <div className="flex gap-4 items-start">
+                <Clock className="w-5 h-5 text-[#745a27] shrink-0 mt-0.5" />
                 <div>
-                  <span className="font-bold text-[#1A1C1C]">Jam Operasional:</span>
-                  <p className="text-[#4d463a] mt-1">{operatingHours}</p>
+                  <span className="font-bold text-[#1A1C1C] text-xs uppercase tracking-wider">Jam Operasional:</span>
+                  <p className="text-[#4d463a] mt-1 leading-relaxed">{operatingHours}</p>
                 </div>
               </div>
             </div>
 
-            <div className="pt-6 border-t border-[#E8E4DB]">
+            <div className="pt-6 border-t border-[#E8E4DB]/50">
               <a
                 href={`https://wa.me/${whatsapp}`}
                 target="_blank"
                 rel="noreferrer"
-                className="block w-full text-center bg-[#c9a96e] text-white font-sans text-sm font-semibold py-4 tracking-wide transition-all duration-300 rounded-lg hover:bg-[#b8944d] shadow-md hover:shadow-lg"
+                className="block w-full text-center bg-[#745a27] hover:bg-[#5f491f] text-white font-medium text-xs tracking-wider uppercase py-4 px-6 rounded-full transition-all duration-300 shadow-[0_4px_20px_rgba(116,90,39,0.12)] hover:shadow-[0_8px_30px_rgba(116,90,39,0.22)] hover:-translate-y-0.5"
               >
                 Tanya via WhatsApp
               </a>
@@ -419,7 +422,7 @@ export default async function HomePage() {
           </div>
 
           {/* Maps embed */}
-          <div className="lg:col-span-7 bg-[#F3F3F4] border border-[#E8E4DB] rounded-3xl overflow-hidden min-h-[380px] relative shadow-sm">
+          <div className="lg:col-span-7 bg-[#FAFAF8] border border-[#E8E4DB] rounded-3xl overflow-hidden min-h-[380px] relative shadow-[0_12px_40px_rgba(201,169,110,0.04)]">
             {settings?.googleMapsEmbed ? (
               <div
                 className="w-full h-full"
@@ -429,7 +432,7 @@ export default async function HomePage() {
               <iframe
                 title="Peta Lokasi GadgetVault"
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1980.5985871234125!2d107.5453!3d-6.8724!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e68e4...!2sCimahi!5e0!3m2!1sid!2sid!4v1700000000000"
-                className="w-full h-full border-0 absolute inset-0"
+                className="w-full h-full border-0 absolute inset-0 filter grayscale contrast-125 opacity-90 hover:grayscale-0 transition-all duration-700"
                 allowFullScreen
                 loading="lazy"
               />
@@ -451,16 +454,16 @@ function TestimonialCard({
   quote: string;
 }) {
   return (
-    <div className="bg-white border border-[#E8E4DB] p-8 rounded-2xl flex flex-col justify-between text-left space-y-6 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300">
-      <p className="text-sm text-[#4d463a] italic leading-relaxed">
+    <div className="bg-white/60 backdrop-blur-sm border border-[#E8E4DB] p-8 rounded-3xl flex flex-col justify-between text-left space-y-6 shadow-[0_8px_30px_rgba(201,169,110,0.03)] hover:shadow-[0_16px_40px_rgba(201,169,110,0.08)] hover:border-[#c9a96e]/50 hover:-translate-y-1 transition-all duration-500 paper-noise">
+      <p className="text-sm text-[#4d463a] italic leading-relaxed font-sans">
         &ldquo;{quote}&rdquo;
       </p>
-      <div className="flex justify-between items-center pt-4 border-t border-[#E8E4DB]">
+      <div className="flex justify-between items-center pt-5 border-t border-[#E8E4DB]/50">
         <div>
-          <h4 className="font-bold text-[#1A1C1C] text-sm">{name}</h4>
-          <span className="text-[10px] text-[#7f7668] mt-1 block uppercase tracking-wider">{role}</span>
+          <h4 className="font-bold text-[#1A1C1C] text-sm font-sans">{name}</h4>
+          <span className="text-[10px] text-[#7f7668] mt-0.5 block uppercase tracking-[0.1em] font-semibold">{role}</span>
         </div>
-        <div className="flex text-[#c9a96e]">
+        <div className="flex text-[#c9a96e] gap-0.5">
           {[...Array(5)].map((_, i) => (
             <Star key={i} className="w-3.5 h-3.5 fill-current" />
           ))}
