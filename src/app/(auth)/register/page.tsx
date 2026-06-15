@@ -26,6 +26,12 @@ export default function RegisterPage() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
 
+  // OTP Verification flow states
+  const [step, setStep] = useState<"form" | "verify">("form");
+  const [verificationCode, setVerificationCode] = useState("");
+  const [enteredCode, setEnteredCode] = useState("");
+  const [savedData, setSavedData] = useState<RegisterFormValues | null>(null);
+
   const {
     register,
     handleSubmit,
@@ -63,10 +69,33 @@ export default function RegisterPage() {
         console.log("Location detection skipped or blocked by adblocker");
       }
     };
-    detectLocation();
-  }, [setValue]);
+    if (step === "form") {
+      detectLocation();
+    }
+  }, [setValue, step]);
 
-  const onSubmit = async (data: RegisterFormValues) => {
+  const onFormSubmit = (data: RegisterFormValues) => {
+    // Generate 6-digit verification code
+    const code = Math.floor(100000 + Math.random() * 900000).toString();
+    setVerificationCode(code);
+    setSavedData(data);
+    setStep("verify");
+    
+    // Trigger mock notification of the code via toast
+    toast.success(`[DEMO] Kode verifikasi dikirim ke ${data.email} & ${data.phone}: ${code}`, {
+      duration: 20000,
+    });
+  };
+
+  const handleVerifySubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!savedData) return;
+
+    if (enteredCode !== verificationCode) {
+      toast.error("Kode verifikasi yang Anda masukkan salah.");
+      return;
+    }
+
     setIsLoading(true);
     try {
       const response = await fetch("/api/auth/register", {
@@ -74,7 +103,7 @@ export default function RegisterPage() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify(savedData),
       });
 
       const resData = await response.json();
@@ -92,6 +121,76 @@ export default function RegisterPage() {
     }
   };
 
+  const handleResendCode = () => {
+    if (!savedData) return;
+    const code = Math.floor(100000 + Math.random() * 900000).toString();
+    setVerificationCode(code);
+    toast.success(`[DEMO] Kode verifikasi baru dikirim: ${code}`, {
+      duration: 20000,
+    });
+  };
+
+  if (step === "verify" && savedData) {
+    return (
+      <div className="space-y-6">
+        <div className="space-y-2 text-center">
+          <h1 className="text-2xl font-bold tracking-tight text-text-primary">
+            Verifikasi Akun
+          </h1>
+          <p className="text-sm text-text-secondary text-center leading-relaxed">
+            Masukkan kode verifikasi 6 digit yang telah kami kirimkan ke email <span className="font-semibold text-text-primary block break-all">{savedData.email}</span> dan nomor telepon <span className="font-semibold text-text-primary block">{savedData.phone}</span>.
+          </p>
+        </div>
+
+        <form onSubmit={handleVerifySubmit} className="space-y-4">
+          <div className="space-y-1">
+            <label className="text-xs font-semibold text-text-secondary uppercase block text-center mb-1">
+              Kode Verifikasi (OTP)
+            </label>
+            <Input
+              id="otp"
+              type="text"
+              placeholder="Masukkan 6 digit kode"
+              maxLength={6}
+              value={enteredCode}
+              onChange={(e) => setEnteredCode(e.target.value.replace(/\D/g, ""))}
+              disabled={isLoading}
+              className="text-center text-lg tracking-widest font-semibold"
+              required
+            />
+          </div>
+
+          <Button
+            type="submit"
+            className="w-full bg-gradient-to-r from-accent-gold to-accent-gold-hover text-white py-2.5 rounded-lg shadow-md hover:from-accent-gold-hover hover:to-accent-gold transition-all duration-200"
+            disabled={isLoading || enteredCode.length !== 6}
+          >
+            {isLoading ? "Memproses..." : "Verifikasi & Buat Akun"}
+          </Button>
+        </form>
+
+        <div className="flex flex-col gap-2 text-center text-sm pt-2">
+          <button
+            type="button"
+            onClick={handleResendCode}
+            disabled={isLoading}
+            className="font-medium text-accent-gold hover:text-accent-gold-hover hover:underline cursor-pointer bg-transparent border-0"
+          >
+            Kirim Ulang Kode
+          </button>
+          <button
+            type="button"
+            onClick={() => setStep("form")}
+            disabled={isLoading}
+            className="text-text-secondary hover:underline cursor-pointer bg-transparent border-0"
+          >
+            Kembali & Edit Info
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="space-y-6">
       <div className="space-y-2 text-center">
@@ -103,7 +202,7 @@ export default function RegisterPage() {
         </p>
       </div>
 
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+      <form onSubmit={handleSubmit(onFormSubmit)} className="space-y-4">
         <div className="space-y-1">
           <label className="text-xs font-semibold text-text-secondary uppercase">
             Nama Lengkap
