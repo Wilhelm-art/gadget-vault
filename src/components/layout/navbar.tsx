@@ -46,6 +46,7 @@ export default function Navbar() {
 
   const navLinks = [
     { name: "Katalog", href: "/katalog" },
+    { name: "Beli", href: "/beli" },
     { name: "Sewa", href: "/sewa" },
     { name: "Jual Gadget", href: "/jual" },
     { name: "Tentang Kami", href: "/tentang" },

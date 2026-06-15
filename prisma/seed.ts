@@ -2170,8 +2170,11 @@ async function main() {
   // 6. Menyemai Semua Produk Ke Database
   console.log('Menyemai data Handphone...');
   const hpCat = categories['handphone'];
-  for (const hp of handphones) {
+  for (let i = 0; i < handphones.length; i++) {
+    const hp = handphones[i];
     const slug = slugify(hp.name);
+    const isRentable = i % 3 !== 2;
+    const isSellable = i % 3 !== 1;
     await prisma.product.create({
       data: {
         categoryId: hpCat.id,
@@ -2181,13 +2184,13 @@ async function main() {
         model: hp.model,
         description: hp.description,
         condition: hp.condition,
-        sellPrice: hp.sellPrice,
-        rentPriceDaily: hp.rentPriceDaily,
-        rentPriceWeekly: hp.rentPriceWeekly,
+        sellPrice: isSellable ? hp.sellPrice : null,
+        rentPriceDaily: isRentable ? hp.rentPriceDaily : null,
+        rentPriceWeekly: isRentable ? hp.rentPriceWeekly : null,
         status: "ready",
         isFeatured: hp.isFeatured,
-        isRentable: true,
-        isSellable: true,
+        isRentable,
+        isSellable,
         stockQuantity: hp.stockQuantity,
         images: {
           create: [
@@ -2212,8 +2215,11 @@ async function main() {
 
   console.log('Menyemai data Kamera & Lensa...');
   const camCat = categories['kamera-lensa'];
-  for (const cam of cameras) {
+  for (let i = 0; i < cameras.length; i++) {
+    const cam = cameras[i];
     const slug = slugify(cam.name);
+    const isRentable = i % 3 !== 2;
+    const isSellable = i % 3 !== 1;
     await prisma.product.create({
       data: {
         categoryId: camCat.id,
@@ -2223,13 +2229,13 @@ async function main() {
         model: cam.model,
         description: cam.description,
         condition: cam.condition,
-        sellPrice: cam.sellPrice,
-        rentPriceDaily: cam.rentPriceDaily,
-        rentPriceWeekly: cam.rentPriceWeekly,
+        sellPrice: isSellable ? cam.sellPrice : null,
+        rentPriceDaily: isRentable ? cam.rentPriceDaily : null,
+        rentPriceWeekly: isRentable ? cam.rentPriceWeekly : null,
         status: "ready",
         isFeatured: cam.isFeatured,
-        isRentable: true,
-        isSellable: true,
+        isRentable,
+        isSellable,
         stockQuantity: cam.stockQuantity,
         images: {
           create: [
@@ -2254,8 +2260,11 @@ async function main() {
 
   console.log('Menyemai data Drone...');
   const droneCat = categories['drone'];
-  for (const drone of drones) {
+  for (let i = 0; i < drones.length; i++) {
+    const drone = drones[i];
     const slug = slugify(drone.name);
+    const isRentable = i % 3 !== 2;
+    const isSellable = i % 3 !== 1;
     await prisma.product.create({
       data: {
         categoryId: droneCat.id,
@@ -2265,13 +2274,13 @@ async function main() {
         model: drone.model,
         description: drone.description,
         condition: drone.condition,
-        sellPrice: drone.sellPrice,
-        rentPriceDaily: drone.rentPriceDaily,
-        rentPriceWeekly: drone.rentPriceWeekly,
+        sellPrice: isSellable ? drone.sellPrice : null,
+        rentPriceDaily: isRentable ? drone.rentPriceDaily : null,
+        rentPriceWeekly: isRentable ? drone.rentPriceWeekly : null,
         status: "ready",
         isFeatured: drone.isFeatured,
-        isRentable: true,
-        isSellable: true,
+        isRentable,
+        isSellable,
         stockQuantity: drone.stockQuantity,
         images: {
           create: [
@@ -2296,8 +2305,11 @@ async function main() {
 
   console.log('Menyemai data Aksesoris...');
   const accCat = categories['aksesoris'];
-  for (const acc of accessories) {
+  for (let i = 0; i < accessories.length; i++) {
+    const acc = accessories[i];
     const slug = slugify(acc.name);
+    const isRentable = i % 3 !== 2;
+    const isSellable = i % 3 !== 1;
     await prisma.product.create({
       data: {
         categoryId: accCat.id,
@@ -2307,13 +2319,13 @@ async function main() {
         model: acc.model,
         description: acc.description,
         condition: acc.condition,
-        sellPrice: acc.sellPrice,
-        rentPriceDaily: acc.rentPriceDaily,
-        rentPriceWeekly: acc.rentPriceWeekly,
+        sellPrice: isSellable ? acc.sellPrice : null,
+        rentPriceDaily: isRentable ? acc.rentPriceDaily : null,
+        rentPriceWeekly: isRentable ? acc.rentPriceWeekly : null,
         status: "ready",
         isFeatured: acc.isFeatured,
-        isRentable: true,
-        isSellable: true,
+        isRentable,
+        isSellable,
         stockQuantity: acc.stockQuantity,
         images: {
           create: [
