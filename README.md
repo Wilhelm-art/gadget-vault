@@ -1,36 +1,90 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# GadgetVault
+
+GadgetVault is a premium, high-end ecosystem for buying, selling, and renting flagship gadgets (handphones, mirrorless cameras, cinematic drones, and accessories) in Bandung & Cimahi. 
+
+Designed with a boutique light-mode editorial aesthetic (inspired by Leica camera bodies, Apple, and Teenage Engineering), it focuses on tactile details, fluid client-side animations, and strict security standards.
+
+---
+
+## Key Features
+
+- **Dynamic Curated Catalog**: Clean classification of products for Rent, Purchase, or both.
+- **tactile 3D Product Cards**: real-time pointer calculation creates an organic client-side 3D tilt effect with ambient cursor glass reflections.
+- **OTP Verification Flow**: 2-step registration process requiring phone and email verification code before database record creation.
+- **Admin Dashboard**: Comprehensive management interface for KYC queue verification, reservation deposits, product creation, and store settings.
+- **Responsive Web Design (RWD)**: Optimized for all screens, featuring fixed bottom bars on mobile, and a collapsible slide-over navigation drawer in the admin console.
+- **Security Hardened**: 
+  - Strict upload validation (limiting file sizes to 5MB and allowing only secure image/PDF MIME types).
+  - Global secure HTTP response headers (`X-Frame-Options`, `X-Content-Type-Options`, `Referrer-Policy`, `Permissions-Policy`, and HSTS).
+  - Clean separation of database schemas and data.
+
+---
+
+## Tech Stack
+
+- **Framework**: Next.js 16 (App Router, Turbopack, Partial Prerendering)
+- **Database / ORM**: Prisma ORM with PostgreSQL (Supabase DB)
+- **Storage**: Supabase Storage Buckets
+- **Authentication**: NextAuth.js v5 (Auth.js)
+- **Styling**: Tailwind CSS v4 & custom animations (`tw-animate-css`)
+- **State & Forms**: Zustand (store management), React Hook Form, Zod (schema validations)
+- **Icons**: Lucide React
+
+---
+
+## Folder Structure
+
+```text
+├── prisma/               # Database schemas and seed scripts
+├── public/               # Static assets
+├── scripts/              # Automation scripts (verify connection, seed, etc.)
+└── src/
+    ├── app/              # Next.js App Router (Auth, User, Admin, API routes)
+    ├── components/       # UI, layout, and domain-specific React components
+    ├── lib/              # Client/Server utilities, Prisma client, storage wrapper
+    └── auth.ts           # NextAuth configuration
+```
+
+---
 
 ## Getting Started
 
-First, run the development server:
+### 1. Prerequisites
+Ensure you have Node.js (version 20+) and npm installed.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+### 2. Environment Variables
+Create a `.env` or `.env.local` file in the root directory and configure the following variables:
+
+```env
+DATABASE_URL="postgresql://username:password@host:port/database?schema=public"
+NEXTAUTH_SECRET="your-nextauth-secret-key"
+GOOGLE_CLIENT_ID="your-google-client-id"
+GOOGLE_CLIENT_SECRET="your-google-client-secret"
+NEXT_PUBLIC_SUPABASE_URL="your-supabase-url"
+NEXT_PUBLIC_SUPABASE_ANON_KEY="your-supabase-anon-key"
+SUPABASE_SERVICE_ROLE_KEY="your-supabase-service-role-key"
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 3. Installation & Database Setup
+```bash
+# Install dependencies
+npm install
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+# Run database migrations
+npx prisma migrate dev
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+# Seed the database
+npx prisma db seed
+```
 
-## Learn More
+### 4. Running the Project
+```bash
+# Start development server (using Turbopack)
+npm run dev
 
-To learn more about Next.js, take a look at the following resources:
+# Compile and verify production build
+npm run build
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+# Start production server
+npm run start
+```
