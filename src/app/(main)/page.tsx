@@ -90,12 +90,12 @@ export default async function HomePage() {
             <div className="absolute w-[360px] h-[360px] bg-[#c9a96e]/10 blur-[90px] rounded-full pointer-events-none" />
 
             {/* Back Card: Mirrorless Camera (slightly rotated and offset) */}
-            <div className="absolute w-[250px] h-[330px] bg-white/60 backdrop-blur-sm border border-[#E8E4DB] rounded-3xl shadow-[0_20px_50px_rgba(201,169,110,0.06)] paper-noise -rotate-6 -translate-x-12 -translate-y-8 opacity-70 hover:opacity-100 hover:scale-105 transition-all duration-500 z-10 flex flex-col justify-between p-5 group/back">
+            <div className="absolute w-[210px] sm:w-[250px] h-[280px] sm:h-[330px] bg-white/60 backdrop-blur-sm border border-[#E8E4DB] rounded-3xl shadow-[0_20px_50px_rgba(201,169,110,0.06)] paper-noise -rotate-6 -translate-x-8 sm:-translate-x-12 -translate-y-6 sm:-translate-y-8 opacity-70 hover:opacity-100 hover:scale-105 transition-all duration-500 z-10 flex flex-col justify-between p-4 sm:p-5 group/back">
               <div className="flex justify-between items-center">
                 <span className="text-[9px] font-bold text-[#7f7668] tracking-[0.15em] uppercase">Mirrorless</span>
                 <span className="w-1.5 h-1.5 rounded-full bg-[#c9a96e]" />
               </div>
-              <div className="relative h-[150px] w-full my-3 flex items-center justify-center">
+              <div className="relative h-[120px] sm:h-[150px] w-full my-2 sm:my-3 flex items-center justify-center">
                 <Image
                   alt="Sony A7IV"
                   src="https://lh3.googleusercontent.com/aida-public/AB6AXuB6zz3eFrt6v2Tb4Jh8kCLTwi8Kv_wh-NFtu3C8KkMBq7zFBlJz0-t2zSfOGQ5eKavxGpiXMZaBdVwHrr8YhMevFnvrIi5uSFtvCN4VV5F_hWpnjX5eC-1tBwrFrLdfvLps0P1NzgFdPwRupKYgNDAlpAMJX91rfvpFfJhgkyzfJbVStdUZCYcNxKhNS8Dwh8sIKqE88bIxOH0_hg9AGcqofgdkErbp8V5DD6m4cQBAXk4EctdiE49snvgIznbjtfnSkLBQWmrWces"
@@ -103,22 +103,22 @@ export default async function HomePage() {
                   className="object-contain p-2 group-hover/back:scale-105 transition-transform duration-700 ease-out"
                 />
               </div>
-              <div className="flex justify-between items-end border-t border-[#E8E4DB]/40 pt-3">
+              <div className="flex justify-between items-end border-t border-[#E8E4DB]/40 pt-2 sm:pt-3">
                 <div className="text-left">
                   <p className="text-[9px] text-[#7f7668] uppercase tracking-wider">Sony A7 IV</p>
-                  <p className="font-display text-xs font-bold text-[#1A1C1C]">Body Only</p>
+                  <p className="font-display text-[10px] sm:text-xs font-bold text-[#1A1C1C]">Body Only</p>
                 </div>
-                <p className="font-mono text-xs font-bold text-[#745a27]">Rp 320K/H</p>
+                <p className="font-mono text-[10px] sm:text-xs font-bold text-[#745a27]">Rp 320K/H</p>
               </div>
             </div>
 
             {/* Front Card: Flagship Smartphone (centered and rotated) */}
-            <div className="absolute w-[270px] h-[350px] bg-white/95 border border-[#E8E4DB] shadow-[0_32px_80px_rgba(201,169,110,0.12),0_8px_32px_rgba(26,28,28,0.04)] rounded-3xl paper-noise rotate-3 translate-x-12 translate-y-12 hover:rotate-0 hover:scale-[1.03] transition-all duration-500 z-20 flex flex-col justify-between p-6 group/front">
+            <div className="absolute w-[230px] sm:w-[270px] h-[300px] sm:h-[350px] bg-white/95 border border-[#E8E4DB] shadow-[0_32px_80px_rgba(201,169,110,0.12),0_8px_32px_rgba(26,28,28,0.04)] rounded-3xl paper-noise rotate-3 translate-x-8 sm:translate-x-12 translate-y-8 sm:translate-y-12 hover:rotate-0 hover:scale-[1.03] transition-all duration-500 z-20 flex flex-col justify-between p-5 sm:p-6 group/front">
               <div className="flex justify-between items-center">
                 <span className="text-[9px] font-bold text-[#7f7668] tracking-[0.15em] uppercase">Flagship</span>
                 <span className="text-[9px] font-bold tracking-[0.1em] text-emerald-600 bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 rounded-full uppercase">NEW</span>
               </div>
-              <div className="relative h-[160px] w-full my-3 flex items-center justify-center">
+              <div className="relative h-[130px] sm:h-[160px] w-full my-2 sm:my-3 flex items-center justify-center">
                 <Image
                   alt="iPhone 14 Pro Max"
                   src="https://lh3.googleusercontent.com/aida-public/AB6AXuB6zz3eFrt6v2Tb4Jh8kCLTwi8Kv_wh-NFtu3C8KkMBq7zFBlJz0-t2zSfOGQ5eKavxGpiXMZaBdVwHrr8YhMevFnvrIi5uSFtvCN4VV5F_hWpnjX5eC-1tBwrFrLdfvLps0P1NzgFdPwRupKYgNDAlpAMJX91rfvpFfJhgkyzfJbVStdUZCYcNxKhNS8Dwh8sIKqE88bIxOH0_hg9AGcqofgdkErbp8V5DD6m4cQBAXk4EctdiE49snvgIznbjtfnSkLBQWmrWces"
@@ -126,12 +126,12 @@ export default async function HomePage() {
                   className="object-contain p-2 drop-shadow-[0_16px_32px_rgba(0,0,0,0.06)] group-hover/front:scale-105 transition-transform duration-700 ease-out"
                 />
               </div>
-              <div className="flex justify-between items-end border-t border-[#E8E4DB]/40 pt-3">
+              <div className="flex justify-between items-end border-t border-[#E8E4DB]/40 pt-2 sm:pt-3">
                 <div className="text-left">
                   <p className="text-[9px] text-[#7f7668] uppercase tracking-wider">iPhone 14 Pro Max</p>
-                  <p className="font-display text-xs font-bold text-[#1A1C1C]">256GB Deep Purple</p>
+                  <p className="font-display text-[10px] sm:text-xs font-bold text-[#1A1C1C]">256GB Deep Purple</p>
                 </div>
-                <p className="font-mono text-xs font-bold text-[#745a27]">Rp 145K/H</p>
+                <p className="font-mono text-[10px] sm:text-xs font-bold text-[#745a27]">Rp 145K/H</p>
               </div>
             </div>
           </div>
