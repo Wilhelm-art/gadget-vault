@@ -3,30 +3,44 @@
 import React from "react";
 import Link from "next/link";
 import { useSession, signOut } from "next-auth/react";
-import { LogOut, Shield, Bell, ChevronDown } from "lucide-react";
+import { LogOut, Shield, Bell, Menu, X } from "lucide-react";
+import { useAdminLayout } from "@/components/admin/admin-layout-context";
 
 export default function AdminNavbar() {
   const { data: session } = useSession();
   const user = session?.user as { name?: string | null; email?: string | null } | undefined;
+  const { isSidebarOpen, toggleSidebar } = useAdminLayout();
 
   return (
     <header className="sticky top-0 z-50 w-full bg-slate-900 border-b border-slate-700/60 shadow-md">
       <div className="mx-auto max-w-screen-2xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-14 items-center justify-between">
-          {/* Left: Logo */}
-          <Link href="/admin" className="flex items-center gap-2.5 group">
-            <div className="flex items-center justify-center w-7 h-7 rounded-lg bg-amber-500/20 border border-amber-500/30">
-              <Shield className="w-4 h-4 text-amber-400" />
-            </div>
-            <div className="flex flex-col leading-none">
-              <span className="font-display text-base font-bold text-white tracking-tight">
-                GadgetVault
-              </span>
-              <span className="text-[10px] text-amber-400/80 font-medium tracking-widest uppercase">
-                Admin Console
-              </span>
-            </div>
-          </Link>
+          {/* Left: Menu Toggle + Logo */}
+          <div className="flex items-center gap-3">
+            {/* Hamburger Menu Toggle (Mobile Only) */}
+            <button
+              type="button"
+              onClick={toggleSidebar}
+              className="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-colors md:hidden focus:outline-none"
+              aria-label={isSidebarOpen ? "Tutup menu" : "Buka menu"}
+            >
+              {isSidebarOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            </button>
+
+            <Link href="/admin" className="flex items-center gap-2.5 group">
+              <div className="flex items-center justify-center w-7 h-7 rounded-lg bg-amber-500/20 border border-amber-500/30">
+                <Shield className="w-4 h-4 text-amber-400" />
+              </div>
+              <div className="flex flex-col leading-none">
+                <span className="font-display text-base font-bold text-white tracking-tight">
+                  GadgetVault
+                </span>
+                <span className="text-[10px] text-amber-400/80 font-medium tracking-widest uppercase">
+                  Admin Console
+                </span>
+              </div>
+            </Link>
+          </div>
 
           {/* Right: Admin Profile + Actions */}
           <div className="flex items-center gap-4">

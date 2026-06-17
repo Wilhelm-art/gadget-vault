@@ -45,6 +45,47 @@ export async function POST(req: Request) {
       );
     }
 
+    // Validate file sizes and types
+    const allowedMimeTypes = ["image/jpeg", "image/png", "image/webp", "application/pdf"];
+    const allowedExtensions = ["jpg", "jpeg", "png", "webp", "pdf"];
+    const maxSizeBytes = 5 * 1024 * 1024; // 5MB
+
+    const filesToValidate = [
+      { name: "KTP Depan", file: ktpFrontFile },
+      { name: "KTP Belakang", file: ktpBackFile },
+      { name: "Selfie dengan KTP", file: selfieKtpFile },
+      { name: "Kartu Keluarga", file: kkFile },
+    ];
+
+    for (const f of filesToValidate) {
+      if (f.file) {
+        // Size validation
+        if (f.file.size > maxSizeBytes) {
+          return NextResponse.json(
+            { message: `Ukuran file ${f.name} tidak boleh melebihi 5MB.` },
+            { status: 400 }
+          );
+        }
+        
+        // Mime-type validation
+        if (!allowedMimeTypes.includes(f.file.type)) {
+          return NextResponse.json(
+            { message: `Format file ${f.name} tidak didukung. Harap unggah file Gambar (JPG, PNG, WEBP) atau PDF.` },
+            { status: 400 }
+          );
+        }
+
+        // Extension validation
+        const ext = f.file.name.split(".").pop()?.toLowerCase();
+        if (!ext || !allowedExtensions.includes(ext)) {
+          return NextResponse.json(
+            { message: `Ekstensi file ${f.name} tidak valid. Harap unggah file Gambar (JPG, PNG, WEBP) atau PDF.` },
+            { status: 400 }
+          );
+        }
+      }
+    }
+
     // 3. Convert files to buffers
     const ktpFrontBuffer = Buffer.from(await ktpFrontFile.arrayBuffer());
     const ktpBackBuffer = Buffer.from(await ktpBackFile.arrayBuffer());

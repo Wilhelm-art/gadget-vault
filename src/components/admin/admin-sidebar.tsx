@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useAdminLayout } from "@/components/admin/admin-layout-context";
 import {
   LayoutDashboard,
   Package,
@@ -43,6 +44,7 @@ export default function AdminSidebar({
 }: AdminSidebarProps) {
   const pathname = usePathname();
   const [openGroups, setOpenGroups] = useState<string[]>(["Dashboard", "Katalog", "Pelanggan", "Keuangan", "Sistem"]);
+  const { isSidebarOpen, closeSidebar } = useAdminLayout();
 
   const navGroups: NavGroup[] = [
     {
@@ -100,8 +102,20 @@ export default function AdminSidebar({
     group.items.reduce((sum, item) => sum + (item.badge || 0), 0);
 
   return (
-    <aside className="w-full md:w-60 shrink-0 bg-slate-900 min-h-screen border-r border-slate-700/60 flex flex-col">
-      {/* Navigation */}
+    <>
+      {/* Backdrop Overlay (Mobile Only) */}
+      {isSidebarOpen && (
+        <div
+          className="fixed inset-0 z-30 bg-black/50 backdrop-blur-sm transition-opacity duration-300 md:hidden cursor-pointer"
+          onClick={closeSidebar}
+        />
+      )}
+      <aside
+        className={`fixed inset-y-0 left-0 z-40 w-64 bg-slate-900 border-r border-slate-700/60 flex flex-col transform transition-transform duration-300 ease-in-out md:static md:w-60 md:translate-x-0 md:min-h-screen ${
+          isSidebarOpen ? "translate-x-0" : "-translate-x-full"
+        }`}
+      >
+        {/* Navigation */}
       <nav className="flex-1 px-3 py-4 space-y-1 overflow-y-auto">
         {navGroups.map((group) => {
           const isOpen = openGroups.includes(group.label);
@@ -185,6 +199,7 @@ export default function AdminSidebar({
           <span>Lihat Toko (customer view)</span>
         </Link>
       </div>
-    </aside>
+      </aside>
+    </>
   );
 }

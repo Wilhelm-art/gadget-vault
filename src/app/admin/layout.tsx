@@ -5,6 +5,7 @@ import prisma from "@/lib/prisma";
 import AdminNavbar from "@/components/admin/admin-navbar";
 import AdminSidebar from "@/components/admin/admin-sidebar";
 import { connection } from "next/server";
+import { AdminLayoutProvider } from "@/components/admin/admin-layout-context";
 
 export const unstable_instant = false;
 
@@ -14,12 +15,14 @@ export default function AdminLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="min-h-screen flex flex-col bg-slate-950">
-      <AdminNavbar />
-      <Suspense fallback={<AdminLayoutSkeleton />}>
-        <AdminLayoutContent>{children}</AdminLayoutContent>
-      </Suspense>
-    </div>
+    <AdminLayoutProvider>
+      <div className="min-h-screen flex flex-col bg-slate-950">
+        <AdminNavbar />
+        <Suspense fallback={<AdminLayoutSkeleton />}>
+          <AdminLayoutContent>{children}</AdminLayoutContent>
+        </Suspense>
+      </div>
+    </AdminLayoutProvider>
   );
 }
 
@@ -68,14 +71,14 @@ async function AdminLayoutContent({
   ]);
 
   return (
-    <div className="flex flex-1 overflow-hidden">
+    <div className="flex flex-col md:flex-row flex-1 overflow-hidden relative">
       <AdminSidebar
         pendingKyc={pendingKyc}
         pendingDeposit={pendingDeposit}
         pendingRentals={pendingRentals}
       />
-      <main className="flex-grow bg-slate-50 overflow-y-auto">
-        <div className="max-w-screen-xl mx-auto px-6 py-8">
+      <main className="flex-grow bg-slate-50 overflow-y-auto min-h-[calc(100vh-3.5rem)]">
+        <div className="max-w-screen-xl mx-auto px-4 sm:px-6 py-8">
           {children}
         </div>
       </main>
