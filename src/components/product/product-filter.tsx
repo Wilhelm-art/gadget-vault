@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -25,15 +25,6 @@ export default function ProductFilter({ categories }: ProductFilterProps) {
   const [minPrice, setMinPrice] = useState(searchParams.get("minPrice") || "");
   const [maxPrice, setMaxPrice] = useState(searchParams.get("maxPrice") || "");
   const [sort, setSort] = useState(searchParams.get("sort") || "latest");
-
-  // Sync state with URL search params
-  useEffect(() => {
-    setSelectedCategory(searchParams.get("category") || "");
-    setSelectedCondition(searchParams.get("condition") || "");
-    setMinPrice(searchParams.get("minPrice") || "");
-    setMaxPrice(searchParams.get("maxPrice") || "");
-    setSort(searchParams.get("sort") || "latest");
-  }, [searchParams]);
 
   const applyFilters = () => {
     const params = new URLSearchParams(searchParams.toString());

@@ -68,7 +68,7 @@ export async function PATCH(
     }
 
     // Role and status verification
-    let updateData: any = {};
+    const updateData: any = {};
     let notificationTitle = "";
     let notificationMessage = "";
 

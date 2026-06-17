@@ -22,6 +22,10 @@ const registerSchema = z.object({
 
 type RegisterFormValues = z.infer<typeof registerSchema>;
 
+function generateVerificationCode(): string {
+  return Math.floor(100000 + Math.random() * 900000).toString();
+}
+
 export default function RegisterPage() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
@@ -76,7 +80,7 @@ export default function RegisterPage() {
 
   const onFormSubmit = (data: RegisterFormValues) => {
     // Generate 6-digit verification code
-    const code = Math.floor(100000 + Math.random() * 900000).toString();
+    const code = generateVerificationCode();
     setVerificationCode(code);
     setSavedData(data);
     setStep("verify");

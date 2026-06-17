@@ -45,59 +45,19 @@ export default function RentalForm({
 }: RentalFormProps) {
   const router = useRouter();
 
-  const [startDateStr, setStartDateStr] = useState("");
-  const [endDateStr, setEndDateStr] = useState("");
   const [range, setRange] = useState<DateRange | undefined>(undefined);
   const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const [durationDays, setDurationDays] = useState(0);
-  const [subtotal, setSubtotal] = useState(0);
-  const [depositAmount, setDepositAmount] = useState(0);
 
   const dailyRate = parseFloat(product.rentPriceDaily || "0");
   const depositPercent = parseFloat(settings.depositPercentage || "0.20");
 
-  // Sync calendar selection to string states for form submission
-  useEffect(() => {
-    if (range?.from) {
-      setStartDateStr(format(range.from, "yyyy-MM-dd"));
-    } else {
-      setStartDateStr("");
-    }
-    if (range?.to) {
-      setEndDateStr(format(range.to, "yyyy-MM-dd"));
-    } else {
-      setEndDateStr("");
-    }
-  }, [range]);
+  // Derive values directly from range state during render
+  const startDateStr = range?.from ? format(range.from, "yyyy-MM-dd") : "";
+  const endDateStr = range?.to ? format(range.to, "yyyy-MM-dd") : "";
 
-  // Calculate duration and pricing
-  useEffect(() => {
-    if (startDateStr && endDateStr) {
-      const start = new Date(startDateStr);
-      const end = new Date(endDateStr);
-      
-      const days = differenceInCalendarDays(end, start) + 1; // inclusive
-      if (days > 0) {
-        setDurationDays(days);
-        const cost = days * dailyRate;
-        setSubtotal(cost);
-        if (userLocation.isOutOfTown) {
-          setDepositAmount(cost * depositPercent);
-        } else {
-          setDepositAmount(0);
-        }
-      } else {
-        setDurationDays(0);
-        setSubtotal(0);
-        setDepositAmount(0);
-      }
-    } else {
-      setDurationDays(0);
-      setSubtotal(0);
-      setDepositAmount(0);
-    }
-  }, [startDateStr, endDateStr, dailyRate, userLocation.isOutOfTown, depositPercent]);
+  const durationDays = (range?.from && range?.to) ? differenceInCalendarDays(range.to, range.from) + 1 : 0;
+  const subtotal = durationDays * dailyRate;
+  const depositAmount = (userLocation.isOutOfTown && durationDays > 0) ? subtotal * depositPercent : 0;
 
   // Check if date is booked
   const isBooked = (date: Date) => {

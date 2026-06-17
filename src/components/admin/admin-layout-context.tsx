@@ -15,10 +15,12 @@ export function AdminLayoutProvider({ children }: { children: React.ReactNode })
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const pathname = usePathname();
 
-  // Automatically close sidebar when navigating to a new page
-  useEffect(() => {
+  // Close sidebar when navigating to a new page (adapting state to pathname changes during render)
+  const [prevPathname, setPrevPathname] = useState(pathname);
+  if (pathname !== prevPathname) {
+    setPrevPathname(pathname);
     setIsSidebarOpen(false);
-  }, [pathname]);
+  }
 
   // Prevent scroll when sidebar is open on mobile
   useEffect(() => {

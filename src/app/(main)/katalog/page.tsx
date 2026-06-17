@@ -36,6 +36,8 @@ export const unstable_instant = {
 export default async function CatalogPage({ searchParams }: PageProps) {
   // 1. Fetch categories for filtering (Cached)
   const categories = await getCachedCategories();
+  const params = await searchParams;
+  const filterKey = `${params.category || ""}-${params.condition || ""}-${params.minPrice || ""}-${params.maxPrice || ""}-${params.sort || ""}`;
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
@@ -44,7 +46,7 @@ export default async function CatalogPage({ searchParams }: PageProps) {
       <div className="flex flex-col md:flex-row gap-8 mt-4">
         {/* Filters Sidebar */}
         <aside className="w-full md:w-64 shrink-0">
-          <ProductFilter categories={categories} />
+          <ProductFilter categories={categories} key={filterKey} />
         </aside>
 
         {/* Product Grid Area */}
