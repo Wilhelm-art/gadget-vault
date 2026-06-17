@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 import { 
   User, Mail, Phone, MapPin, Calendar, 
   ShieldCheck, ShieldAlert, Heart, History, Clock,
@@ -147,7 +148,15 @@ export default function CustomerDetailClient({
                     rel="noreferrer"
                     className="block aspect-[4/3] rounded-lg overflow-hidden border border-border"
                   >
-                    <img src={kycDoc.signedKtpFront} alt="KTP" className="w-full h-full object-cover" />
+                    <div className="relative w-full h-full">
+                      <Image 
+                        src={kycDoc.signedKtpFront} 
+                        alt="KTP" 
+                        fill 
+                        sizes="300px" 
+                        className="object-cover" 
+                      />
+                    </div>
                   </a>
                 </div>
               )}
@@ -161,7 +170,15 @@ export default function CustomerDetailClient({
                     rel="noreferrer"
                     className="block aspect-[4/3] rounded-lg overflow-hidden border border-border"
                   >
-                    <img src={kycDoc.signedSelfieKtp} alt="Selfie" className="w-full h-full object-cover" />
+                    <div className="relative w-full h-full">
+                      <Image 
+                        src={kycDoc.signedSelfieKtp} 
+                        alt="Selfie" 
+                        fill 
+                        sizes="300px" 
+                        className="object-cover" 
+                      />
+                    </div>
                   </a>
                 </div>
               )}

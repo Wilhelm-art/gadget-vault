@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 import { Plus, Trash, Image as ImageIcon, Check, Loader2 } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -431,8 +432,13 @@ export default function ProductForm({ categories, initialData }: ProductFormProp
                 <div className="grid grid-cols-2 gap-2 mt-4">
                   {images.map((img, idx) => (
                     <div key={idx} className="relative aspect-[4/3] border border-border rounded-lg overflow-hidden bg-bg-secondary group">
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img src={img.imageUrl} alt="preview" className="object-cover w-full h-full" />
+                      <Image 
+                        src={img.imageUrl} 
+                        alt="preview" 
+                        fill 
+                        sizes="200px" 
+                        className="object-cover" 
+                      />
                       
                       {/* Selection Panel Hover overlay */}
                       <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 flex items-center justify-center gap-1.5 transition-opacity">

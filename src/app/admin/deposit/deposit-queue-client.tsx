@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 import { 
   Check, X, Eye, CircleDollarSign, 
   User, Calendar, CreditCard, ShieldCheck
@@ -214,7 +215,15 @@ export default function DepositQueueClient({ initialDeposits }: DepositQueueClie
                     rel="noreferrer"
                     className="block aspect-[3/4] rounded-xl border border-border overflow-hidden bg-bg-secondary hover:opacity-95"
                   >
-                    <img src={selectedDeposit.signedProofUrl} alt="Transfer Proof" className="w-full h-full object-cover" />
+                    <div className="relative w-full h-full">
+                      <Image 
+                        src={selectedDeposit.signedProofUrl} 
+                        alt="Transfer Proof" 
+                        fill 
+                        sizes="(max-width: 640px) 100vw, 400px" 
+                        className="object-cover" 
+                      />
+                    </div>
                   </a>
                 </div>
               ) : (

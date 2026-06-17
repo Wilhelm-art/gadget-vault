@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 import { 
   Check, X, Eye, ShieldCheck, AlertCircle, 
   User, Calendar, Info, ShieldAlert
@@ -208,7 +209,15 @@ export default function KycQueueClient({ initialDocs }: KycQueueClientProps) {
                       rel="noreferrer"
                       className="aspect-[4/3] block rounded-xl overflow-hidden border border-border bg-bg-secondary hover:opacity-95"
                     >
-                      <img src={selectedDoc.signedKtpFront} alt="KTP Depan" className="w-full h-full object-cover" />
+                      <div className="relative w-full h-full">
+                        <Image 
+                          src={selectedDoc.signedKtpFront} 
+                          alt="KTP Depan" 
+                          fill 
+                          sizes="200px" 
+                          className="object-cover" 
+                        />
+                      </div>
                     </a>
                   </div>
                   
@@ -220,7 +229,15 @@ export default function KycQueueClient({ initialDocs }: KycQueueClientProps) {
                       rel="noreferrer"
                       className="aspect-[4/3] block rounded-xl overflow-hidden border border-border bg-bg-secondary hover:opacity-95"
                     >
-                      <img src={selectedDoc.signedKtpBack} alt="KTP Belakang" className="w-full h-full object-cover" />
+                      <div className="relative w-full h-full">
+                        <Image 
+                          src={selectedDoc.signedKtpBack} 
+                          alt="KTP Belakang" 
+                          fill 
+                          sizes="200px" 
+                          className="object-cover" 
+                        />
+                      </div>
                     </a>
                   </div>
 
@@ -232,7 +249,15 @@ export default function KycQueueClient({ initialDocs }: KycQueueClientProps) {
                       rel="noreferrer"
                       className="aspect-[4/3] block rounded-xl overflow-hidden border border-border bg-bg-secondary hover:opacity-95"
                     >
-                      <img src={selectedDoc.signedSelfieKtp} alt="Selfie" className="w-full h-full object-cover" />
+                      <div className="relative w-full h-full">
+                        <Image 
+                          src={selectedDoc.signedSelfieKtp} 
+                          alt="Selfie" 
+                          fill 
+                          sizes="200px" 
+                          className="object-cover" 
+                        />
+                      </div>
                     </a>
                   </div>
 
@@ -245,7 +270,15 @@ export default function KycQueueClient({ initialDocs }: KycQueueClientProps) {
                         rel="noreferrer"
                         className="aspect-[4/3] block rounded-xl overflow-hidden border border-border bg-bg-secondary hover:opacity-95"
                       >
-                        <img src={selectedDoc.signedKk} alt="Kartu Keluarga" className="w-full h-full object-cover" />
+                        <div className="relative w-full h-full">
+                          <Image 
+                            src={selectedDoc.signedKk} 
+                            alt="Kartu Keluarga" 
+                            fill 
+                            sizes="200px" 
+                            className="object-cover" 
+                          />
+                        </div>
                       </a>
                     ) : (
                       <div className="aspect-[4/3] flex items-center justify-center rounded-xl border border-border bg-bg-secondary text-text-muted text-[10px]">

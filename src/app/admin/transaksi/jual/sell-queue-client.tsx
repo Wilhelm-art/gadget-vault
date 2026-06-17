@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 import { 
   Check, X, Eye, Info, Clock, 
   Smartphone, User, Coins, AlertTriangle
@@ -270,7 +271,15 @@ export default function SellQueueClient({ initialOffers }: SellQueueClientProps)
                         rel="noreferrer"
                         className="aspect-square rounded-lg border border-border overflow-hidden bg-bg-secondary block"
                       >
-                        <img src={img.imageUrl} alt="Offer Item" className="w-full h-full object-cover" />
+                        <div className="relative w-full h-full">
+                          <Image 
+                            src={img.imageUrl} 
+                            alt="Offer Item" 
+                            fill 
+                            sizes="150px" 
+                            className="object-cover" 
+                          />
+                        </div>
                       </a>
                     ))}
                   </div>

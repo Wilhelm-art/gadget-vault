@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 import { 
   Check, X, Camera, Eye, Info, Clock, AlertCircle, 
   User, Smartphone, DollarSign, Calendar
@@ -411,7 +412,15 @@ export default function RentalQueueClient({ initialRentals }: RentalQueueClientP
                           rel="noreferrer"
                           className="aspect-square block rounded-lg overflow-hidden border border-border"
                         >
-                          <img src={p.photoUrl} alt="dokumentasi" className="w-full h-full object-cover" />
+                          <div className="relative w-full h-full">
+                            <Image 
+                              src={p.photoUrl} 
+                              alt="dokumentasi" 
+                              fill 
+                              sizes="200px" 
+                              className="object-cover" 
+                            />
+                          </div>
                         </a>
                       </div>
                     ))}
